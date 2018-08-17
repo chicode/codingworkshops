@@ -1,0 +1,6 @@
+query {
+  allWorkshops {
+    name
+    description
+  }
+}

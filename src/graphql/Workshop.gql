@@ -1,0 +1,6 @@
+query($name: String!) {
+  workshop(name: $name) {
+    name
+    description
+  }
+}
