@@ -4,8 +4,6 @@
     <router-view />
   </div>
 </template>
-<style lang="stylus">
-@import '~@/styles/index.styl'
 
 <script>
 import StatusBar from '@/components/StatusBar'
