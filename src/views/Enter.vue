@@ -6,14 +6,17 @@
   >
     <template slot-scope="{ mutate }">
       <p v-if="incorrectLogin">wrong username or password</p>
-      <input v-model="username">
+      <input
+        v-model="username"
+        @keyup.enter="mutate()"
+      >
       <input
         v-model="password"
         type="password"
+        @keyup.enter="mutate()"
       >
       <button
         @click="mutate()"
-        @keyup.enter="mutate()"
       >let me in!</button>
     </template>
   </Mutation>
