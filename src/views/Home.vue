@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-@import '../styles/defs.styl'
+@import '~@/styles/defs.styl'
 
 .workshops {
   display: flex;
