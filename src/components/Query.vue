@@ -8,14 +8,17 @@
 
       <div v-else-if="error">An error occured</div>
 
-      <slot v-else-if="data" :data="data"></slot>
+      <slot
+        v-else-if="data"
+        :data="data"
+      />
     </template>
   </ApolloQuery>
 </template>
 
 <script>
 export default {
-  name: 'query',
+  name: 'Query',
   props: {
     query: {
       type: Object,
