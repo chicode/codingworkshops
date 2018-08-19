@@ -9,6 +9,7 @@
 import StatusBar from '@/components/StatusBar'
 
 export default {
+  name: 'App',
   components: { StatusBar },
 }
 </script>
