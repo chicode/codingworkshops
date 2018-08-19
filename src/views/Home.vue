@@ -6,14 +6,14 @@
       <h1>coding workshops</h1>
       <ul class="workshops">
         <router-link
+          v-for="{ name, description } in allWorkshops"
+          :to="{ name: 'workshop', params: { name } }"
+          :key="name"
           class="workshop"
-          v-for="workshop in allWorkshops"
-          :to="`workshops/${workshop.name}`"
-          :key="workshop.name"
           tag="li"
         >
-          <h2>{{ workshop.name }}</h2>
-          <p>{{ workshop.description }}</p>
+          <h2>{{ name }}</h2>
+          <p>{{ description }}</p>
         </router-link>
       </ul>
     </template>
@@ -24,8 +24,8 @@
 import Query from '@/components/Query'
 
 export default {
+  name: 'Home',
   components: { Query },
-  name: 'home',
 }
 </script>
 

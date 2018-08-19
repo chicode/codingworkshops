@@ -9,22 +9,27 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
       name: 'home',
+      path: '/',
       component: Home,
+      meta: {
+        noStatusBar: true,
+      },
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-    },
-    {
-      path: '/workshops/:name',
       name: 'workshop',
+      path: '/workshops/:name',
       component: () => import(/* webpackChunkName: "workshop" */ './views/Workshop.vue'),
+    },
+    {
+      name: 'human',
+      path: '/humans/:username',
+      component: () => import(/* webpackChunkName: "workshop" */ './views/Human.vue'),
+    },
+    {
+      name: 'enter',
+      path: '/enter',
+      component: () => import(/* webpackChunkName: "workshop" */ './views/Enter.vue'),
     },
   ],
 })
