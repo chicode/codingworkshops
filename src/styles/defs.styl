@@ -1,0 +1,88 @@
+// base colors
+palette = {
+  accent-1: #AE5CFF,
+  accent-2: #3976D0,
+  accent-3: #FF8A00,
+  accent-4: #1CB893,
+  gray-1: #C4C4C4,
+}
+// where the base colors should be used
+colors = {
+  shadow: palette.gray-1,
+}
+border-radius = 10px
+border-width = 3px
+transition-duration = .1s
+
+absolute() {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+full-size() {
+  width: 100%;
+  height: 100%;
+}
+
+psuedo-element() {
+  absolute();
+  full-size();
+  content: "";
+}
+
+border() {
+  border: border-width solid black;
+  border-radius: border-radius;
+}
+
+
+shadow-offsets = {
+  tile: 10px,
+  botton: 20px,
+}
+
+tile(shadow-offset) {
+  shadow-offset = shadow-offsets[shadow-offset]
+
+  border()
+  position: relative;
+  transition-duration: transition-duration;
+
+  // 1
+  transform-style: preserve-3d;
+
+
+  // the tile shadow
+  &::after {
+    psuedo-element()
+    border()
+    bottom: -1 * shadow-offset;
+    z-index: -1;
+    background: colors.shadow;
+    transition-duration: transition-duration;
+
+    // this makes sure that the shadow takes up the same width
+    // including the border
+    box-sizing: content-box;
+    left: -1 * border-width;
+
+    // 1
+    transform: translateZ(-1em);
+  }
+
+  &:active {
+    transform: translateY(shadow-offset / 2)
+
+    &::after {
+      bottom: 0;
+    }
+  }
+
+  // 1: this makes it so that the psuedo element appears behind the parent
+  // event when the parent's transform causes it to shift to a new stacking context
+  // https://katydecorah.com/code/z-index-and-transform/
+}
