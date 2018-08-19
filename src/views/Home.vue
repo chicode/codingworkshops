@@ -11,10 +11,8 @@
           :key="workshop.name"
           tag="li"
         >
-          <li>
-            <h2>{{ workshop.name }}</h2>
-            <p>{{ workshop.description }}</p>
-          </li>
+          <h2>{{ workshop.name }}</h2>
+          <p>{{ workshop.description }}</p>
         </router-link>
       </ul>
     </template>
