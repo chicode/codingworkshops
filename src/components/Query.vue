@@ -17,8 +17,14 @@
 export default {
   name: 'query',
   props: {
-    query: Object,
-    variables: Object,
+    query: {
+      type: Object,
+      required: true,
+    },
+    variables: {
+      type: Object,
+      default: () => {},
+    },
   },
 }
 </script>
