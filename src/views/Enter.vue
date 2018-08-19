@@ -2,6 +2,7 @@
   <Mutation
     :mutation="require('@/graphql/Login.gql')"
     :on-done="onLogin"
+    :variables="{ username, password }"
   >
     <template slot-scope="{ mutate }">
       <p v-if="incorrectLogin">wrong username or password</p>
@@ -11,8 +12,8 @@
         type="password"
       >
       <button
-        @click="mutate({ variables: { username, password } })"
-        @keyup.enter="mutate({ variables: { username, password } })"
+        @click="mutate()"
+        @keyup.enter="mutate()"
       >let me in!</button>
     </template>
   </Mutation>
