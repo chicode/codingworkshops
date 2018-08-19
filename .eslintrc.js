@@ -10,6 +10,14 @@ module.exports = {
 
     'comma-dangle': ['error', 'always-multiline'],
     'object-curly-spacing': ['error', 'always'],
+
+    'vue/html-closing-bracket-newline': [
+      'error',
+      {
+        singleline: 'never',
+        multiline: 'always',
+      },
+    ],
   },
   parserOptions: {
     parser: 'babel-eslint',
