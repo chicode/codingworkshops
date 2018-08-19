@@ -16,8 +16,5 @@ import Query from '@/components/Query'
 export default {
   name: 'Workshop',
   components: { Query },
-  mounted () {
-    console.log(this.$route)
-  },
 }
 </script>
