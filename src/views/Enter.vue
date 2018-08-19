@@ -1,9 +1,44 @@
 <template>
-  <p>hi!</p>
+  <Mutation
+    :mutation="require('@/graphql/Login.gql')"
+    :on-done="onLogin"
+  >
+    <template slot-scope="{ mutate }">
+      <p v-if="incorrectLogin">wrong username or password</p>
+      <input v-model="username">
+      <input
+        v-model="password"
+        type="password"
+      >
+      <button
+        @click="mutate({ variables: { username, password } })"
+        @keyup.enter="mutate({ variables: { username, password } })"
+      >let me in!</button>
+    </template>
+  </Mutation>
 </template>
 
 <script>
+import Mutation from '@/components/Mutation'
+
 export default {
   name: 'Enter',
+  components: { Mutation },
+  data () {
+    return {
+      username: '',
+      password: '',
+      incorrectLogin: false,
+    }
+  },
+  methods: {
+    onLogin ({ loginUser: { ok } }) {
+      if (ok) {
+        this.$router.push({ name: 'home' })
+      } else {
+        this.incorrectLogin = true
+      }
+    },
+  },
 }
 </script>

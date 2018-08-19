@@ -26,7 +26,7 @@ export default {
     },
     variables: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
 }
