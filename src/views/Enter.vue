@@ -38,7 +38,10 @@ export default {
   methods: {
     onLogin ({ loginUser: { ok } }) {
       if (ok) {
-        this.$router.push({ name: 'home' })
+        this.$apolloProvider.defaultClient.query({
+          query: require('@/graphql/CurrentUser_minimal.gql'),
+          fetchPolicy: 'network-only',
+        }).then((result) => console.log(result.data))
       } else {
         this.incorrectLogin = true
       }

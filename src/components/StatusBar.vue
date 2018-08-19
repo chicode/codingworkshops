@@ -5,6 +5,7 @@
     </div>
     <Query
       :query="require('@/graphql/CurrentUser_minimal.gql')"
+      fetch-policy="network-only"
     >
       <template slot-scope="{ data: { username }}">
         <div v-if="username">
