@@ -24,12 +24,12 @@ export default new Router({
     {
       name: 'human',
       path: '/humans/:username',
-      component: () => import(/* webpackChunkName: "workshop" */ './views/Human.vue'),
+      component: () => import(/* webpackChunkName: "human" */ './views/Human.vue'),
     },
     {
       name: 'enter',
       path: '/enter',
-      component: () => import(/* webpackChunkName: "workshop" */ './views/Enter.vue'),
+      component: () => import(/* webpackChunkName: "enter" */ './views/Enter.vue'),
     },
   ],
 })
