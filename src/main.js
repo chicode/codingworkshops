@@ -18,8 +18,6 @@ const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
-console.log(require('@/graphql/Workshop.gql'))
-
 new Vue({
   router,
   store,
