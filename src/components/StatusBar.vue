@@ -5,11 +5,12 @@
     </div>
     <Query
       :query="require('@/graphql/CurrentUser_minimal.gql')"
-      fetch-policy="network-only"
     >
-      <template slot-scope="{ data: { username }}">
-        <div v-if="username">
-          <router-link :to="{ name: 'human', params: { username } }">{{ username }}</router-link>
+      <template slot-scope="{ data: { currentUser } }">
+        <div v-if="currentUser">
+          <router-link :to="{ name: 'human', params: { username: currentUser.username } }">
+            {{ currentUser.username }}
+          </router-link>
         </div>
         <div v-else>
           <router-link :to="{ name: 'enter' }">login</router-link>

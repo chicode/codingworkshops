@@ -12,11 +12,6 @@ const apolloClient = new ApolloClient({
   uri: 'http://127.0.0.1:8000/graphql/',
   credentials: 'include',
 
-  fetch: (uri, options) => {
-    console.log(options)
-    return fetch(uri, options)
-  },
-
   fetchOptions: {
     credentials: 'include',
   },
