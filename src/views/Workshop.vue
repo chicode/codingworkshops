@@ -1,6 +1,6 @@
 <template>
   <Query
-    :query="require('@/graphql/Workshop.gql')"
+    :query="require('@/graphql/q/Workshop.gql')"
     :variables="{ name: $route.params.name }"
   >
     <template slot-scope="{ data: { workshop: { name, description } } }">

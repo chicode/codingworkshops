@@ -1,6 +1,6 @@
 <template>
   <Query
-    :query="require('@/graphql/AllWorkshops.gql')"
+    :query="require('@/graphql/q/AllWorkshops.gql')"
   >
     <template slot-scope="{ data: { allWorkshops } }">
       <h1>coding workshops</h1>

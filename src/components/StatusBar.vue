@@ -4,7 +4,7 @@
       <router-link :to="{ name: 'home' }">Home</router-link>
     </div>
     <Query
-      :query="require('@/graphql/CurrentUser_minimal.gql')"
+      :query="require('@/graphql/q/CurrentUser_minimal.gql')"
       fetch-policy="network-only"
     >
       <template slot-scope="{ data: { currentUser } }">
@@ -31,7 +31,7 @@ export default {
   methods: {
     async logout () {
       await this.$apollo.mutate({
-        mutation: require('@/graphql/Logout.gql'),
+        mutation: require('@/graphql/m/Logout.gql'),
       })
       this.$router.push({ name: 'home' })
     },

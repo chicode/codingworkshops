@@ -31,7 +31,7 @@ export default {
   methods: {
     async login () {
       const { data } = await this.$apollo.mutate({
-        mutation: require('@/graphql/Login.gql'),
+        mutation: require('@/graphql/m/Login.gql'),
         variables: {
           username: this.username,
           password: this.password,
