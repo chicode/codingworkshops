@@ -1,18 +1,23 @@
 <template>
   <div>
-    <p v-if="incorrectLogin">wrong username or password</p>
+    <p
+      v-if="error"
+      class="error"
+    >{{ error }}</p>
     <input
-      v-model="username"
-      @keyup.enter="login"
+      v-model="data.username"
+      placeholder="username"
     >
     <input
-      v-model="password"
+      v-model="data.password"
+      placeholder="password"
       type="password"
       @keyup.enter="login"
     >
     <button
       @click="login"
-    >let me in!</button>
+    >login</button>
+    <router-link :to="{ name: 'signup' }">sign up</router-link>
   </div>
 </template>
 
@@ -22,26 +27,30 @@ export default {
 
   data () {
     return {
-      username: '',
-      password: '',
-      incorrectLogin: false,
+      data: {
+        username: '',
+        password: '',
+      },
+      error: '',
     }
   },
 
   methods: {
     async login () {
-      const { data } = await this.$apollo.mutate({
+      if (!this.data.username || !this.data.password) {
+        this.error = 'please enter some data'
+        return
+      }
+
+      const { data: { loginUser: { ok } } } = await this.$apollo.mutate({
         mutation: require('@/graphql/m/Login.gql'),
-        variables: {
-          username: this.username,
-          password: this.password,
-        },
+        variables: this.data,
       })
 
-      if (data.loginUser.ok) {
+      if (ok) {
         this.$router.push({ name: 'home' })
       } else {
-        this.incorrectLogin = true
+        this.error = 'wrong username or password'
       }
     },
   },
