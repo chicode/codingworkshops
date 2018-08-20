@@ -2,6 +2,7 @@
   <ApolloQuery
     :query="query"
     :variables="variables"
+    :fetch-policy="fetchPolicy"
   >
     <template slot-scope="{ result: { loading, error, data } }">
       <div v-if="loading">Loading...</div>
@@ -27,6 +28,10 @@ export default {
     variables: {
       type: Object,
       default: () => ({}),
+    },
+    fetchPolicy: {
+      type: String,
+      default: 'cache-first',
     },
   },
 }
