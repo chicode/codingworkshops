@@ -1,33 +1,25 @@
 <template>
-  <Mutation
-    :mutation="require('@/graphql/Login.gql')"
-    :on-done="onLogin"
-    :variables="{ username, password }"
-  >
-    <template slot-scope="{ mutate }">
-      <p v-if="incorrectLogin">wrong username or password</p>
-      <input
-        v-model="username"
-        @keyup.enter="mutate()"
-      >
-      <input
-        v-model="password"
-        type="password"
-        @keyup.enter="mutate()"
-      >
-      <button
-        @click="mutate()"
-      >let me in!</button>
-    </template>
-  </Mutation>
+  <div>
+    <p v-if="incorrectLogin">wrong username or password</p>
+    <input
+      v-model="username"
+      @keyup.enter="login"
+    >
+    <input
+      v-model="password"
+      type="password"
+      @keyup.enter="login"
+    >
+    <button
+      @click="login"
+    >let me in!</button>
+  </div>
 </template>
 
 <script>
-import Mutation from '@/components/Mutation'
-
 export default {
   name: 'Enter',
-  components: { Mutation },
+
   data () {
     return {
       username: '',
@@ -35,9 +27,18 @@ export default {
       incorrectLogin: false,
     }
   },
+
   methods: {
-    onLogin ({ loginUser: { ok } }) {
-      if (ok) {
+    async login () {
+      const { data } = await this.$apollo.mutate({
+        mutation: require('@/graphql/Login.gql'),
+        variables: {
+          username: this.username,
+          password: this.password,
+        },
+      })
+
+      if (data.loginUser.ok) {
         this.$router.push({ name: 'home' })
       } else {
         this.incorrectLogin = true

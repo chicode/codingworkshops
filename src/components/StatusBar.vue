@@ -12,6 +12,7 @@
           <router-link :to="{ name: 'human', params: { username: currentUser.username } }">
             {{ currentUser.username }}
           </router-link>
+          <button @click="logout">logout</button>
         </div>
         <div v-else>
           <router-link :to="{ name: 'enter' }">login</router-link>
@@ -26,6 +27,15 @@ import Query from '@/components/Query'
 
 export default {
   components: { Query },
+
+  methods: {
+    async logout () {
+      await this.$apollo.mutate({
+        mutation: require('@/graphql/Logout.gql'),
+      })
+      this.$router.push({ name: 'home' })
+    },
+  },
 }
 </script>
 
