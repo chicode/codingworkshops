@@ -1,18 +1,32 @@
 // base colors
 palette = {
-  accent-1: #AE5CFF,
-  accent-2: #3976D0,
-  accent-3: #FF8A00,
-  accent-4: #1CB893,
+  purple: #AE5CFF,
+  blue: #3976D0,
+  orange: #FF8A00,
+  green: #1CB893,
+  light-purple: #E2C5FF,
+  light-green: #9AFFB8,
+  light-blue: #C0D9FF,
+  light-orange: #FFEAD1,
   gray-1: #C4C4C4,
 }
 // where the base colors should be used
 colors = {
   shadow: palette.gray-1,
+  accent-1: palette.purple,
+  accent-2: palette.blue,
+  warning: palette.orange,
+  accent-4: palette.green,
 }
+
 border-radius = 10px
 border-width = 3px
 transition-duration = .1s
+font-sizes = 60px 40px 30px 20px
+fonts = {
+  heading: Comfortaa,
+  body: Karla,
+}
 
 absolute() {
   position: absolute;
@@ -42,15 +56,17 @@ border() {
 
 shadow-offsets = {
   tile: 10px,
-  botton: 20px,
+  button: 20px,
 }
 
-tile(shadow-offset) {
+tile(shadow-offset, background-color) {
   shadow-offset = shadow-offsets[shadow-offset]
 
   border()
   position: relative;
   transition-duration: transition-duration;
+  background-color: background-color;
+  display: inline-block;
 
   // 1
   transform-style: preserve-3d;
@@ -85,4 +101,10 @@ tile(shadow-offset) {
   // 1: this makes it so that the psuedo element appears behind the parent
   // event when the parent's transform causes it to shift to a new stacking context
   // https://katydecorah.com/code/z-index-and-transform/
+}
+
+button(background-color) {
+  tile('button', background-color)
+  cursor: pointer;
+  padding: 3px 10px;
 }
