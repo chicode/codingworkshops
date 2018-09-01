@@ -1,43 +1,5 @@
+@import '~@/styles/fixes.styl'
 @import '~@/styles/defs.styl'
-
-html, body {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  padding: 0;
-  margin: 0;
-  box-sizing: inherit;
-}
-
-button,
-input,
-select {
-  border: 0;
-}
-button:focus,
-input:focus,
-select:focus {
-  outline: 0;
-}
-
-button,
-img {
-  display: block;
-}
-
-ul {
-  list-style: none;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: normal;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
 
 * {
   font-family: fonts.body;
@@ -46,4 +8,46 @@ a {
 h1, h2, h3, h4, h5, h6,
 h1 *, h2 *, h3 *, h4 *, h5 *, h6 * {
   font-family: fonts.heading;
+}
+
+h1, .h1 {
+  font-size: font-sizes[0];
+}
+
+h2, .h2 {
+  font-size: font-sizes[1];
+}
+
+p, h3, .h3 {
+  font-size: font-sizes[2];
+}
+
+.button {
+  button(palette.light-green);
+}
+
+.tile {
+  tile('tile', white)
+}
+
+.accent-1 {
+  color: colors.accent-1;
+}
+.accent-2 {
+  color: colors.accent-2;
+}
+.accent-3 {
+  color: colors.accent-3;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.bold {
+  font-emphasis: bold;
+}
+
+.empty {
+  height: 0;
 }

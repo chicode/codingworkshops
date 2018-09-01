@@ -3,7 +3,7 @@
     <WorkshopTile
       v-for="workshop in workshops"
       :workshop="workshop"
-      :key="workshop.title"
+      :key="workshop.name"
       class="workshop"
     />
     <!-- the empty elements help make the flex grid look -->
@@ -34,7 +34,6 @@ export default {
 <style scoped lang="stylus">
 @import '~@/styles/defs'
 .workshops {
-
   align-items: flex-start;
   margin-top: 100px;
   display: flex;
@@ -44,10 +43,6 @@ export default {
   .empty, .workshop {
     width: 300px;
     margin: 10px;
-  }
-
-  .empty {
-    height: 0;
   }
 }
 </style>

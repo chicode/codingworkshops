@@ -2,5 +2,9 @@ query($name: String!) {
   workshop(name: $name) {
     name
     description
+    lessonSet {
+      name
+      description
+    }
   }
 }

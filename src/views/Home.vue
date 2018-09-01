@@ -13,10 +13,10 @@
         </h1>
       </div>
       <h2 class="explainer">
-        <span class="title">coding workshops</span> is a set of interactive coding tutorials, for all skill levels!
+        <span class="underline">coding workshops</span> is a set of interactive coding tutorials, for all skill levels!
       </h2>
 
-      <p class="login">
+      <p class="login h2">
         <router-link
           :to="{ name: 'enter' }"
           class="button"
@@ -56,40 +56,21 @@ export default {
     margin-right: 100px;
   }
   h1 {
-    font-size: font-sizes[0];
     width: 500px;
   }
-  .accent-1 {
-    color: colors.accent-1;
-  }
-  .accent-2 {
-    color: colors.accent-2;
-  }
-  .accent-3 {
-    color: colors.accent-3;
-  }
+
+  // to make them act like words
   span {
     display: inline-block;
   }
 }
 
 .explainer {
-  font-size: font-sizes[1];
   margin-top: 100px;
   text-align: center;
-
-  .title {
-    text-decoration: underline;
-  }
 }
 
 .login {
-  .button {
-    button(palette.light-green);
-  }
-
-  font-size: font-sizes[1];
-  font-family: fonts.heading;
   text-align: center;
   margin-top: 100px;
 }

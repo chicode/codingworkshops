@@ -4,7 +4,7 @@
     class="workshop"
     tag="li"
   >
-    <h2>{{ workshop.name }}</h2>
+    <h2 class="bold">{{ workshop.name }}</h2>
     <p>{{ workshop.description }}</p>
   </router-link>
 </template>
