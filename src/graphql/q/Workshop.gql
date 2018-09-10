@@ -5,6 +5,10 @@ query($name: String!) {
     lessonSet {
       name
       description
+      id
+      workshop {
+        name
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import LessonTile from '@/components/LessonTile'
+import LessonTile from './LessonTile'
 
 export default {
   name: 'LessonTiles',
@@ -28,7 +28,7 @@ export default {
 @import '~@/styles/defs'
 .lessons {
   .lesson {
-    width: 100%;
+   width: 100%;
   }
 }
 </style>

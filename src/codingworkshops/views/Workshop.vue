@@ -16,7 +16,7 @@
 
 <script>
 import Query from '@/components/Query'
-import LessonTiles from '@/components/LessonTiles'
+import LessonTiles from '../components/LessonTiles'
 
 export default {
   name: 'Workshop',

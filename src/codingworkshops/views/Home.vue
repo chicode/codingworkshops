@@ -30,7 +30,7 @@
 
 <script>
 import Query from '@/components/Query'
-import WorkshopTiles from '@/components/WorkshopTiles'
+import WorkshopTiles from '../components/WorkshopTiles'
 
 export default {
   name: 'Home',
@@ -39,10 +39,10 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-@import '~@/styles/defs.styl'
+import '~@/styles/defs.styl'
 
 .root {
-  margin-top: 100px;
+ margin-top: 100px;
 }
 
 .welcome {

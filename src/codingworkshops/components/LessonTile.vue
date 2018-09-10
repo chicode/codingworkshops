@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'lesson', params: { name: lesson.name } }"
+    :to="{ path: `workshop/${lesson.workshop.name}/${lesson.id}` }"
     class="lesson"
     tag="li"
   >
@@ -25,7 +25,7 @@ export default {
 @import '~@/styles/defs'
 
 .lesson {
-  tile('tile', palette.light-purple);
+  tile('tile', palette.light-purple)
   padding: 20px;
 }
 </style>

@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
 import VueApollo from 'vue-apollo'
 import ApolloClient from 'apollo-boost'
+
+import router from './codingworkshops/router'
+import App from './codingworkshops/App.vue'
 import './registerServiceWorker'
 
 Vue.config.productionTip = false
@@ -25,7 +25,6 @@ const apolloProvider = new VueApollo({
 
 new Vue({
   router,
-  store,
   provide: apolloProvider.provide(),
   render: (h) => h(App),
 }).$mount('#app')

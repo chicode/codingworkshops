@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import WorkshopTile from '@/components/WorkshopTile'
+import WorkshopTile from './WorkshopTile'
 
 export default {
   name: 'WorkshopTiles',
@@ -34,8 +34,8 @@ export default {
 <style scoped lang="stylus">
 @import '~@/styles/defs'
 .workshops {
-  align-items: flex-start;
-  margin-top: 100px;
+ align-items: flex-start;
+ margin-top: 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

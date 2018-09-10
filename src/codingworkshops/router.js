@@ -20,6 +20,13 @@ export default new Router({
       name: 'workshop',
       path: '/workshops/:name',
       component: () => import(/* webpackChunkName: "workshop" */ './views/Workshop.vue'),
+      children: [
+        {
+          name: 'lesson',
+          path: ':id',
+          component: () => import(/* webpackChunkName: "human" */ './views/Lesson.vue'),
+        },
+      ],
     },
     {
       name: 'human',

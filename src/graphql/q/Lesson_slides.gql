@@ -1,0 +1,13 @@
+query($id: ID!) {
+  lesson(id: $id) {
+    slides {
+      name
+      description
+      startingCode
+      directions {
+        description
+        hint
+      }
+    }
+  }
+}
