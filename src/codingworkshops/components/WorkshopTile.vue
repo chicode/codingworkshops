@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'workshop', params: { name: workshop.name } }"
+    :to="{ name: 'workshop', params: { workshop: workshop.name } }"
     class="workshop"
     tag="li"
   >

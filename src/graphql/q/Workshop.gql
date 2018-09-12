@@ -1,5 +1,5 @@
-query($name: String!) {
-  workshop(name: $name) {
+query($workshop: String!) {
+  workshop(workshop: $workshop) {
     name
     description
     lessonSet {

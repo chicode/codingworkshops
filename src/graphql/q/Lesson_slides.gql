@@ -1,10 +1,10 @@
-query($id: ID!) {
-  lesson(id: $id) {
-    slides {
+query($lesson: ID!, $workshop: String!) {
+  lesson(lesson: $lesson, workshop: $workshop) {
+    slideSet {
       name
       description
       startingCode
-      directions {
+      directionSet {
         description
         hint
       }

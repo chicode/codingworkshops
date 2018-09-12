@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from './views/Home'
 
 Vue.use(Router)
 
@@ -18,15 +18,13 @@ export default new Router({
     },
     {
       name: 'workshop',
-      path: '/workshops/:name',
+      path: '/workshops/:workshop',
       component: () => import(/* webpackChunkName: "workshop" */ './views/Workshop.vue'),
-      children: [
-        {
-          name: 'lesson',
-          path: ':id',
-          component: () => import(/* webpackChunkName: "human" */ './views/Lesson.vue'),
-        },
-      ],
+    },
+    {
+      name: 'lesson',
+      path: '/workshops/:workshop/:lesson',
+      component: () => import(/* webpackChunkName: "lesson" */ './views/Lesson.vue'),
     },
     {
       name: 'human',

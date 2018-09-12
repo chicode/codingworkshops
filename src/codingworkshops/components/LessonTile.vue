@@ -1,6 +1,12 @@
 <template>
   <router-link
-    :to="{ path: `workshop/${lesson.workshop.name}/${lesson.id}` }"
+    :to="{
+      name: 'lesson',
+      params: {
+        workshop: lesson.workshop.name,
+        lesson: lesson.id
+      }
+    }"
     class="lesson"
     tag="li"
   >

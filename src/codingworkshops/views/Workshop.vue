@@ -1,7 +1,7 @@
 <template>
   <Query
     :query="require('@/graphql/q/Workshop.gql')"
-    :variables="{ name: $route.params.name }"
+    :variables="{ workshop: $route.params.workshop }"
     class="root"
   >
     <template
