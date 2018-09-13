@@ -76,7 +76,7 @@ export default {
 </style>
 
 <style lang="stylus">
-@import "~@/styles/defs.styl"
+@import '../../styles/defs.styl'
 
 .CodeMirror {
   height: 100%;
