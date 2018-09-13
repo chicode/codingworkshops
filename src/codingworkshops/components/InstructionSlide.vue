@@ -1,19 +1,14 @@
-<template>
-  <div>
-    <div class="instruction-slide">
-      <h1>{{ slide.name }}</h1>
-      <p>{{ slide.description }}</p>
-      <ul>
-        <li
+<template lang="pug">
+  div.root
+    div.instructions
+      h1.name {{ slide.name }}
+      p.description {{ slide.description }}
+      ul.directions
+        li(
           v-for="{ description } in slide.directions"
           :key="description"
-        >
-          {{ description }}
-        </li>
-      </ul>
-    </div>
-    <Nico />
-  </div>
+        ) {{ description }}
+    Nico.nico
 </template>
 
 <script>
