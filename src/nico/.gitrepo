@@ -1,0 +1,13 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@gitlab.com:chicode/nico
+	branch = master
+	commit = 33bea1b1bae16b462d18e3f8e7dc75f5b1059a58
+	parent = da7e20ea22e15452882bf1149879e21be4bca3c2
+	method = merge
+	update = auto
+	cmdver = 0.4.1

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="30.280001mm"
+   height="30.280001mm"
+   viewBox="0 0 30.280001 30.280001"
+   version="1.1"
+   id="svg3268"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="rectangle-select.svg">
+  <defs
+     id="defs3262">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect1621-8"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.4566399"
+     inkscape:cx="12.184316"
+     inkscape:cy="115.11178"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g1444"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="945"
+     inkscape:window-height="1016"
+     inkscape:window-x="965"
+     inkscape:window-y="32"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="false" />
+  <metadata
+     id="metadata3265">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-140.16208,-117.96204)">
+    <g
+       transform="translate(-613.46975,146.67379)"
+       id="g1444">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#AE5CFF;stroke-width:2.64599991;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:5.29199976, 5.29199976;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+         id="rect1364"
+         width="27.634001"
+         height="27.634001"
+         x="754.95483"
+         y="-27.38875"
+         rx="0.31949496"
+         ry="0.31949496" />
+    </g>
+  </g>
+</svg>

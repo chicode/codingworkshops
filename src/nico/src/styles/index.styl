@@ -1,0 +1,153 @@
+@import '~@/styles/fixes.styl'
+@import '~@/styles/defs.styl'
+@import '~@/styles/fantasque/stylesheet.css'
+
+* {
+  font-family: fonts.body;
+  font-size: font-sizes[2];
+  color: black;
+}
+
+h1, h2, h3, h4, h5, h6,
+h1 *, h2 *, h3 *, h4 *, h5 *, h6 * {
+  font-family: fonts.heading;
+}
+
+h1, .h1 {
+  font-size: font-sizes[0];
+}
+
+h2, .h2 {
+  font-size: font-sizes[1];
+}
+
+p, h3, .h3 {
+  font-size: font-sizes[2];
+}
+
+button {
+  cursor: pointer;
+}
+
+.button, .button-2 {
+  cursor: pointer;
+  font-family: fonts.heading;
+}
+
+.button {
+  button(palette.light-green);
+}
+
+.tile {
+  tile('tile', white)
+}
+
+.button-2 {
+  text-weight: bold;
+}
+.button-2.active {
+  color: colors.accent-1;
+}
+
+.accent-1 {
+  color: colors.accent-1;
+}
+.accent-2 {
+  color: colors.accent-2;
+}
+.accent-3 {
+  color: colors.accent-3;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.bold {
+  font-emphasis: bold;
+}
+
+.empty {
+  height: 0;
+}
+
+.error {
+  color: colors.warning !important;
+  position: relative;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background: colors.warning;
+  }
+}
+
+
+/* Slider resets https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+
+input[type=range] {
+  thumb() {
+    standard-border()
+    background: colors.accent-1;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    margin-top: -13px;
+  }
+  track() {
+    height: 10px;
+    cursor: pointer;
+    standard-border()
+    background: colors.shadow;
+  }
+
+  &::-webkit-slider-thumb {
+    thumb()
+  }
+  &::-moz-range-thumb {
+    thumb()
+  }
+  &::-ms-thumb {
+    thumb()
+  }
+
+  &::-webkit-slider-runnable-track {
+    track()
+  }
+  &::-moz-range-track {
+    track()
+    height: 5px;
+  }
+  &::-ms-track {
+    track()
+  }
+}

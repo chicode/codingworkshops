@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="13.03924mm"
+   height="30.280001mm"
+   viewBox="0 0 13.03924 30.280001"
+   version="1.1"
+   id="svg2077"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="eraser.svg">
+  <defs
+     id="defs2071" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.86415997"
+     inkscape:cx="-673.76318"
+     inkscape:cy="-136.90979"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g1424"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="945"
+     inkscape:window-height="1016"
+     inkscape:window-x="965"
+     inkscape:window-y="32"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata2074">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-145.88327,-91.35636)">
+    <g
+       transform="translate(-667.1689,221.75623)"
+       id="g1424">
+      <path
+         sodipodi:nodetypes="cccccccccc"
+         inkscape:connector-curvature="0"
+         d="m 814.50717,-101.57487 h 10.12924 v -7.91079 h -10.12924 z m 0,-7.91079 h 10.12924 v -19.45921 h -10.12924 z"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#AE5CFF;stroke-width:2.91000009;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+         id="path1352" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,131 @@
+// base colors
+palette = {
+  purple: #AE5CFF,
+  blue: #3976D0,
+  orange: #FF8A00,
+  green: #1CB893,
+  light-purple: #E2C5FF,
+  light-green: #9AFFB8,
+  light-blue: #C0D9FF,
+  light-orange: #FFEAD1,
+  gray-1: #C4C4C4,
+  gray-2: #E5E5E5,
+  gray-3: #F7F7F7,
+}
+// where the base colors should be used
+colors = {
+  shadow: palette.gray-1,
+  light-border: palette.gray-2,
+  light-background: palette.gray-3,
+  accent-1: palette.purple,
+  accent-2: palette.blue,
+  warning: palette.orange,
+  accent-3: palette.green,
+}
+
+border-radius = 10px
+border-width = 3px
+
+standard-border() {
+  border: border-width solid black;
+  border-radius: border-radius;
+}
+
+transition-duration = .1s
+font-sizes = 60px 40px 30px 20px
+fonts = {
+  heading: Comfortaa,
+  body: Karla,
+  code: Fantasque Sans Mono,
+}
+
+absolute() {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+full-size() {
+  width: 100%;
+  height: 100%;
+}
+
+psuedo-element() {
+  absolute();
+  full-size();
+  content: "";
+}
+
+light-border-width = 2px
+
+light-border() {
+  border: light-border-width solid colors.light-border;
+}
+
+
+shadow-offsets = {
+  tile: 10px,
+  button: 20px,
+}
+
+tile(shadow-offset, background-color) {
+  shadow-offset = shadow-offsets[shadow-offset]
+  position: relative;
+  display: inline-block;
+
+  div {
+    standard-border()
+    transition-duration: transition-duration;
+    background-color: background-color;
+
+    transform: translateY(-1 * shadow-offset / 2);
+
+    {block}
+  }
+
+  // the tile shadow
+  &::after {
+    psuedo-element()
+    standard-border()
+    bottom: -1 * shadow-offset / 2;
+    z-index: -1;
+    background: colors.shadow;
+    transition-duration: transition-duration;
+
+    // this makes sure that the shadow takes up the same width
+    // including the border
+    box-sizing: border-box;
+  }
+
+  &:active {
+    div {
+      transform: translateY(0)
+    }
+
+    &::after {
+      bottom: 0;
+    }
+  }
+
+  &:disabled {
+    div {
+      background: colors.shadow;
+      color: black;
+    }
+  }
+
+  // 1: this makes it so that the psuedo element appears behind the parent
+  // event when the parent's transform causes it to shift to a new stacking context
+  // https://katydecorah.com/code/z-index-and-transform/
+}
+
+button(background-color) {
+  +tile('button', background-color) {
+    padding: 3px 10px;
+    cursor: pointer;
+    font-family: fonts.heading;
+  }
+}
