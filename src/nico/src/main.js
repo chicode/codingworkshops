@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './nico/App.vue'
 import storeConfig from './store'
+import './styles/index.styl'
 
 Vue.config.productionTip = false
 

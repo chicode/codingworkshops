@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <Header />
-    <!-- https://vuejs.org/v2/guide/components.html#Dynamic-Components -->
+
     <Game v-show="view === 'game'" />
     <Editor v-show="view === 'editor'" />
     <Sprite v-show="view === 'sprite'" />
@@ -29,9 +29,6 @@ export default {
 </script>
 
 <styles lang="stylus">
-@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400')
-@import '../styles/index.styl'
-
 .app {
   margin: 30px;
 }
