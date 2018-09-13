@@ -8,6 +8,8 @@ import storeConfig from './store'
 import App from './codingworkshops/App.vue'
 import './registerServiceWorker'
 
+import './styles/index.styl'
+
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
