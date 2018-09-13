@@ -12,13 +12,16 @@
         </li>
       </ul>
     </div>
-    <slot />
+    <Nico />
   </div>
 </template>
 
 <script>
+import Nico from '@/nico/src/nico/App'
+
 export default {
   name: 'InstructionSlide',
+  components: { Nico },
   props: {
     slide: {
       type: Object,
