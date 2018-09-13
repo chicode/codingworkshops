@@ -1,14 +1,14 @@
 <template lang="pug">
-  div.root
-    div.instructions.light-tile
-      h1.name {{ slide.name }}
-      p.description {{ slide.description }}
-      ul.directions
-        li(
-          v-for="{ description } in slide.directions"
-          :key="description"
-        ) {{ description }}
-    Nico.nico.light-tile
+div.root
+  div.instructions.light-tile
+    h1.name {{ slide.name }}
+    p.description {{ slide.description }}
+    ul.directions
+      li(
+        v-for="{ description } in slide.directions"
+        :key="description"
+      ) {{ description }}
+  Nico.nico.light-tile
 </template>
 
 <script>

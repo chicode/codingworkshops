@@ -1,8 +1,8 @@
-<template>
-  <canvas
-    ref="main"
-    :style="{ padding: $options.CANVAS_PADDING + $options.CANVAS_PADDING_OUTER + 'px' }"
-  />
+<template lang="pug">
+canvas(
+  ref="main"
+  :style="{ padding: $options.CANVAS_PADDING + $options.CANVAS_PADDING_OUTER + 'px' }"
+)
 </template>
 
 <script>

@@ -1,8 +1,8 @@
-<template>
-  <canvas
-    ref="overlay"
-    :style="{ padding: $options.CANVAS_PADDING_OUTER + 'px' }"
-  />
+<template lang="pug">
+canvas(
+  ref="overlay"
+  :style="{ padding: $options.CANVAS_PADDING_OUTER + 'px' }"
+)
 </template>
 
 <script>

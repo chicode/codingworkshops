@@ -1,12 +1,12 @@
 <template lang="pug">
-  router-link(
-    :to=`{ name: 'workshop', params: { workshop: workshop.name } }`
-    class="workshop"
-    tag="li"
-  )
-    div
-      h2.bold {{ workshop.name }}
-      p {{ workshop.description }}
+router-link(
+  :to=`{ name: 'workshop', params: { workshop: workshop.name } }`
+  class="workshop"
+  tag="li"
+)
+  div
+    h2.bold {{ workshop.name }}
+    p {{ workshop.description }}
 </template>
 
 <script>

@@ -1,12 +1,10 @@
-<template>
-  <ul class="lessons">
-    <LessonTile
-      v-for="lesson in lessons"
-      :lesson="lesson"
-      :key="lesson.name"
-      class="lesson"
-    />
-  </ul>
+<template lang="pug">
+ul.lessons
+  LessonTile.lesson(
+    v-for='lesson in lessons',
+    :lesson='lesson',
+    :key='lesson.name'
+  )
 </template>
 
 <script>

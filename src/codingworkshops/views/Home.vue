@@ -1,31 +1,20 @@
-<template>
-  <Query
-    :query="require('@/graphql/q/AllWorkshops.gql')"
-  >
-    <template slot-scope="{ data: { allWorkshops } }">
-      <div class="welcome">
-        <img src="img/landing-welcome.svg">
-        <h1>Anyone can
-          <!-- &nbsp; creates spaces between span tags -->
-          <span class="accent-1">learn&nbsp;</span>
-          <span class="accent-2">to&nbsp;</span>
-          <span class="accent-3">code!</span>
-        </h1>
-      </div>
-      <h2 class="explainer">
-        <span class="underline">coding workshops</span> is a set of interactive coding tutorials, for all skill levels!
-      </h2>
-
-      <p class="login h2">
-        <router-link
-          :to="{ name: 'enter' }"
-          class="button"
-        ><div>login</div></router-link> to save progress
-      </p>
-
-      <WorkshopTiles :workshops="allWorkshops" />
-    </template>
-  </Query>
+<template lang="pug">
+query(:query="require('@/graphql/q/AllWorkshops.gql')")
+  template(slot-scope='{ data: { allWorkshops } }')
+    .welcome
+      img(src='img/landing-welcome.svg')
+      h1 Anyone can
+        // &nbsp; creates spaces between span tags
+        span.accent-1 learn&nbsp;
+        span.accent-2 to&nbsp;
+        span.accent-3 code!
+    h2.explainer
+      span.underline coding workshops is a set of interactive coding tutorials, for all skill levels!
+    p.login.h2
+      router-link.button(:to="{ name: 'enter' }")
+    div login to save progress
+    p
+    WorkshopTiles(:workshops='allWorkshops')
 </template>
 
 <script>

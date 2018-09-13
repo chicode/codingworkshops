@@ -1,17 +1,12 @@
-<template>
-  <div
-    class="root"
-  >
-    <div class="controls no-interaction">
-      <ToolBar />
-      <OptionBar />
-    </div>
-    <div class="canvas">
-      <MainCanvas />
-      <GridCanvas />
-      <OverlayCanvas ref="canvas" />
-    </div>
-  </div>
+<template lang="pug">
+  .root
+    .controls.no-interaction
+      toolbar
+        optionbar
+    .canvas
+      maincanvas
+        gridcanvas
+          overlaycanvas(ref='canvas')
 </template>
 
 <script>

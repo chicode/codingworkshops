@@ -1,16 +1,14 @@
-<template>
-  <div class="editor">
-    <Booklet />
-
-    <codemirror
-      ref="cm"
-      :options="$options.cmOptions"
-      :value="code"
-      class="vue-CodeMirror"
-      @input="setCode"
-      @ready="init"
-    />
-  </div>
+<template lang="pug">
+.editor
+  Booklet
+  codemirror(
+    ref="cm"
+    :options="$options.cmOptions"
+    :value="code"
+    class="vue-CodeMirror"
+    @input="setCode"
+    @ready="init"
+  )
 </template>
 
 <script>

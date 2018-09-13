@@ -1,65 +1,46 @@
-<template>
-  <div>
-    <div>
-      <p
-        v-if="errors.email"
-      >{{ errors.email[0] }}</p>
-      <input
-        v-model="data.email"
-        placeholder="email"
-        type="email"
-      >
-    </div>
-    <div>
-      <p
-        v-if="errors.username"
-      >{{ errors.username[0] }}</p>
-      <input
-        v-model="data.username"
-        placeholder="username"
-      >
-    </div>
-    <div>
-      <p
-        v-if="errors.password"
-      >{{ errors.password[0] }}</p>
-      <input
-        v-model="data.password"
-        placeholder="password"
-        type="password"
-      >
-    </div>
-    <div>
-      <input
-        v-model="data.password2"
-        placeholder="repeat password"
-        type="password"
-      >
-    </div>
-    <div>
-      <p
-        v-if="errors.bio"
-      >{{ errors.bio[0] }}</p>
-      <textarea
-        v-model="data.bio"
-        placeholder="write a little bit about yourself!"
-      />
-    </div>
-    <div>
-      <p
-        v-if="errors.bio"
-      >{{ errors.bio[0] }}</p>
-      <input
-        v-model="data.location"
-        placeholder="where you reside, like a city"
-        @keyup.enter="signup"
-      >
-    </div>
+<template  lang="pug">
+div
+  div
+    p(v-if="errors.email") {{ errors.email[0] }}
+    input(
+      v-model="data.email"
+      placeholder="email"
+      type="email"
+    )
+  div
+    p(v-if="errors.username") {{ errors.username[0] }}
+    input(
+      v-model="data.username"
+      placeholder="username"
+    )
+  div
+    p(v-if="errors.password")   {{ errors.password[0] }}
+    input(
+      v-model="data.password"
+      placeholder="password"
+      type="password"
+    )
+  div
+    input(
+      v-model="data.password2"
+      placeholder="repeat password"
+      type="password"
+    )
+  div
+    p(v-if="errors.bio") {{ errors.bio[0] }}
+    textarea(
+      v-model="data.bio"
+      placeholder="write a little bit about yourself!"
+    )
+  div
+    p(v-if="errors.bio") {{ errors.bio[0] }}
+    input(
+      v-model="data.location"
+      placeholder="where you reside, like a city"
+      @keyup.enter="signup"
+    )
 
-    <button
-      @click="signup"
-    >signup!</button>
-  </div>
+  button(@click="signup") signup!
 </template>
 
 <script>

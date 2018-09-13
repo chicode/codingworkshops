@@ -1,27 +1,20 @@
-<template>
-  <div
-    v-if="slides"
-  >
-    <div v-if="slides.length">
-      <InstructionSlide :slide="slides[slideIndex]" />
-      <div>
-        <button
-          :disabled="isFirstSlide"
-          @click="nextSlide"
-        >previous</button>
-        <button
-          :disabled="isLastSlide"
-          @click="previousSlide"
-        >next</button>
-      </div>
-    </div>
-    <div v-else>
-      no slides!
-    </div>
-  </div>
-  <div v-else>
-    <p>loading</p>
-  </div>
+<template lang="pug">
+div(v-if="slides")
+  div(v-if="slides.length")
+    InstructionSlide(:slide="slides[slideIndex]")
+    div
+      button(
+        :disabled="isFirstSlide"
+        @click="nextSlide"
+      ) previous
+      button(
+        :disabled="isLastSlide"
+        @click="previousSlide"
+      ) next
+  div(v-else) no slides!
+
+div(v-else)
+  p loading
 </template>
 
 <script>

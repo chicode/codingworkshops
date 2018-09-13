@@ -1,18 +1,22 @@
-<template>
-  <div>
-    <p>
-      Hi! Welcome to nico, the friendly online game engine. It may seem simple at first, but the reality is that this site contains all the tools you need to make really awesome games.
-    </p>
-    <p>
-      Nico is divided into three main tabs. You are currently looking at the <span class="accent-1">Game</span> tab, which is where you will run your games. The <span class="accent-2">Editor</span> tab allows you to edit your game's code. The <span class="accent-3">Sprite</span> tab allows you to draw all of your sprites.
-    </p>
-    <p>
-      For starters, try drawing a sprite in the first grid square and getting it to display on the screen. Hint: the editor tab has a useful booklet that will tell you all about the different functions you can use to do stuff like that.
-    </p>
-    <p>
-      After that, the possibilities really are endless - you can think of nico as that <span class="accent-3">secret</span>&nbsp;<span class="accent-1">superpower</span> that you always thought you had. And if you ever decide to come back, you don't have to worry about anything - nico saves everything automatically (as long as you don't clear your cache or go into incognito mode).
-    </p>
-  </div>
+<template lang="pug">
+div
+  p
+    | Hi! Welcome to nico, the friendly online game engine. It may seem simple at first, but the reality is that this site contains all the tools you need to make really awesome games.
+  p
+    | Nico is divided into three main tabs. You are currently looking at the
+    span.accent-1 Game
+    |  tab, which is where you will run your games. The
+    span.accent-2 Editor
+    |  tab allows you to edit your game's code. The
+    span.accent-3 Sprite
+    |  tab allows you to draw all of your sprites.
+  p
+    | For starters, try drawing a sprite in the first grid square and getting it to display on the screen. Hint: the editor tab has a useful booklet that will tell you all about the different functions you can use to do stuff like that.
+  p
+    | After that, the possibilities really are endless - you can think of nico as that
+    span.accent-3 secret
+    span.accent-1 superpower
+    |  that you always thought you had. And if you ever decide to come back, you don't have to worry about anything - nico saves everything automatically (as long as you don't clear your cache or go into incognito mode).
 </template>
 
 <style scoped lang="stylus">

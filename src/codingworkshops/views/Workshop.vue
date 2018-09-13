@@ -1,17 +1,13 @@
-<template>
-  <Query
-    :query="require('@/graphql/q/Workshop.gql')"
-    :variables="{ workshop: $route.params.workshop }"
-    class="root"
-  >
-    <template
-      slot-scope="{ data: { workshop: { name, description, lessonSet } } }"
-    >
-      <h1>{{ name }}</h1>
-      <p>{{ description }}</p>
-      <LessonTiles :lessons="lessonSet" />
-    </template>
-  </Query>
+<template lang="pug">
+Query(
+  :query="require('@/graphql/q/Workshop.gql')"
+  :variables="{ workshop: $route.params.workshop }"
+  class="root"
+)
+  template(slot-scope="{ data: { workshop: { name, description, lessonSet } } }")
+    h1 {{ name }}
+    p {{ description }}
+    LessonTiles(:lessons="lessonSet")
 </template>
 
 <script>

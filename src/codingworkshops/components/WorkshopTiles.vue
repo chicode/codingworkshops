@@ -1,19 +1,9 @@
-<template>
-  <ul class="workshops">
-    <WorkshopTile
-      v-for="workshop in workshops"
-      :workshop="workshop"
-      :key="workshop.name"
-      class="workshop"
-    />
-    <!-- the empty elements help make the flex grid look -->
-    <!-- like it's a list despite it actually having justify-content: center -->
-    <div
-      v-for="i in 20"
-      :key="i"
-      class="empty"
-    />
-  </ul>
+<template lang="pug">
+ul.workshops
+  WorkshopTile.workshop(v-for='workshop in workshops', :workshop='workshop', :key='workshop.name')
+    // the empty elements help make the flex grid look
+    // like it's a list despite it actually having justify-content: center
+    .empty(v-for='i in 20', :key='i')
 </template>
 
 <script>

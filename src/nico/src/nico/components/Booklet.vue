@@ -1,49 +1,19 @@
-<template>
-  <div class="booklet">
-    <button
-      class="expand"
-      @click="toggleExpand"
-    >
-      <img src="../assets/booklet.svg">
-    </button>
-    <div
-      v-show="expanded"
-      class="main"
-    >
-      <div
-        ref="sectionsBuffer"
-        class="sections-buffer"
-      />
-      <div
-        ref="sections"
-        class="sections"
-      >
-        <button
-          v-for="isection in $options.BOOKLET_SECTIONS"
-          :key="isection.title"
-          :class="'button-2' + (isection.title === section.title ? ' active' : '')"
-          @click="switchSection(isection)"
-        >
-          {{ isection.title }}
-        </button>
-      </div>
-      <div class="content">
-        <h2 class="title">{{ section.title }}</h2>
-        <p>{{ section.description }}</p>
-
-        <ul>
-          <li
-            v-for="function_ in section.functions"
-            :key="function_.code"
-            class="function"
-          >
-            <h3 class="code">{{ function_.code }}</h3>
-            <p>{{ function_.description }}</p>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+.booklet
+  button.expand(@click='toggleExpand')
+    img(src='../assets/booklet.svg')
+  .main(v-show='expanded')
+    .sections-buffer(ref='sectionsBuffer')
+      .sections(ref='sections')
+        button(v-for='isection in $options.BOOKLET_SECTIONS', :key='isection.title', :class="'button-2' + (isection.title === section.title ? ' active' : '')", @click='switchSection(isection)')
+          | {{ isection.title }}
+      .content
+        h2.title {{ section.title }}
+        p {{ section.description }}
+        ul
+          li.function(v-for='function_ in section.functions', :key='function_.code')
+            h3.code {{ function_.code }}
+            p {{ function_.description }}
 </template>
 
 <script>

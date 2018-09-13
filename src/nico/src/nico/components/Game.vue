@@ -1,19 +1,9 @@
-<template>
-  <div class="game">
-    <p
-      v-if="error"
-      class="error"
-    >
-      {{ error.message }}
-    </p>
-    <Greeting v-else-if="!hasBeenRun" />
-    <!-- v-show has to be used because the ref needs to be initiated -->
-    <canvas
-      v-show="running"
-      ref="mainCanvas"
-      class="main-canvas"
-    />
-  </div>
+<template lang="pug">
+.game
+  p.error(v-if='error') {{ error.message }}
+  greeting(v-else-if='!hasBeenRun')
+  // v-show has to be used because the ref needs to be initiated
+  canvas.main-canvas(v-show='running', ref='mainCanvas')
 </template>
 
 <script>

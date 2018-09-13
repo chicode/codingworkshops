@@ -1,11 +1,10 @@
-<template>
-  <div class="app">
-    <Header />
+<template lang="pug">
+.app
+  header
 
-    <Game v-show="view === 'game'" />
-    <Editor v-show="view === 'editor'" />
-    <Sprite v-show="view === 'sprite'" />
-  </div>
+  game(v-show="view === 'game'")
+  editor(v-show="view === 'editor'")
+  sprite(v-show="view === 'sprite'")
 </template>
 
 <script>

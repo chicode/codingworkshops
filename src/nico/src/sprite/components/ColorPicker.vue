@@ -1,13 +1,12 @@
-<template>
-  <div class="colorpicker">
-    <div
-      v-for="color in $options.COLORS"
-      :style="{ background: color }"
-      :key="color"
-      class="color"
-      @click="setColor(color)"
-    />
-  </div>
+<template lang="pug">
+div.colorpicker
+  div(
+    v-for="color in $options.COLORS"
+    :style="{ background: color }"
+    :key="color"
+    class="color"
+    @click="setColor(color)"
+  )
 </template>
 
 <script>

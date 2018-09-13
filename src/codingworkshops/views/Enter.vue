@@ -1,24 +1,10 @@
-<template>
-  <div>
-    <p
-      v-if="error"
-      class="error"
-    >{{ error }}</p>
-    <input
-      v-model="data.username"
-      placeholder="username"
-    >
-    <input
-      v-model="data.password"
-      placeholder="password"
-      type="password"
-      @keyup.enter="login"
-    >
-    <button
-      @click="login"
-    >login</button>
-    <router-link :to="{ name: 'signup' }">sign up</router-link>
-  </div>
+<template lang="pug">
+div
+  p.error(v-if='error') {{ error }}
+  input(v-model='data.username', placeholder='username')
+  input(v-model='data.password', placeholder='password', type='password', @keyup.enter='login')
+  button(@click='login') login
+  router-link(:to="{ name: 'signup' }") sign up
 </template>
 
 <script>

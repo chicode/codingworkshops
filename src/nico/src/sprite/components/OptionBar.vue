@@ -1,23 +1,11 @@
-<template>
-  <div
-    v-if="tool === 'pencil'"
-    class="option-bar"
-  >
-    <ColorPicker />
-    <SizeSlider />
-  </div>
-  <div
-    v-else-if="tool === 'bucket'"
-    class="option-bar"
-  >
-    <ColorPicker />
-  </div>
-  <div
-    v-else-if="tool === 'eraser'"
-    class="option-bar"
-  >
-    <SizeSlider />
-  </div>
+<template lang="pug">
+.option-bar(v-if="tool === 'pencil'")
+  colorpicker
+  sizeslider
+.option-bar(v-else-if="tool === 'bucket'")
+  colorpicker
+.option-bar(v-else-if="tool === 'eraser'")
+  sizeslider
 </template>
 
 <script>

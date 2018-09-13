@@ -1,5 +1,5 @@
-<template>
-  <p>hi!</p>
+<template lang="pug">
+p hi!
 </template>
 
 <script>

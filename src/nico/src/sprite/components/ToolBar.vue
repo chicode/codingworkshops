@@ -1,34 +1,16 @@
-<template>
-  <div class="toolbar">
-    <!-- see nico/App.vue for definition of no-interaction -->
-    <div class="tools no-interaction">
-      <button
-        v-for="itool in $options.TOOLS"
-        :key="itool"
-        :class="itool"
-        @click="setTool(itool)"
-      >
-        <!-- the require here is necessary because otherwise webpack won't know that the dynamic asset exists -->
-        <img :src="require(`../assets/${itool}${itool === tool ? '-active' : ''}.svg`)">
-      </button>
-      <button
-        class="clear"
-        @click="clear"
-      >
-        <img src="../assets/clear.svg">
-      </button>
-      <button
-        @click="undo"
-      >
-        <img src="../assets/undo.svg">
-      </button>
-      <button
-        @click="redo"
-      >
-        <img src="../assets/redo.svg">
-      </button>
-    </div>
-  </div>
+<template lang="pug">
+.toolbar
+  // see nico/App.vue for definition of no-interaction
+  .tools.no-interaction
+    button(v-for='itool in $options.TOOLS', :key='itool', :class='itool', @click='setTool(itool)')
+      // the require here is necessary because otherwise webpack won't know that the dynamic asset exists
+      img(:src="require(`../assets/${itool}${itool === tool ? '-active' : ''}.svg`)")
+    button.clear(@click='clear')
+      img(src='../assets/clear.svg')
+    button(@click='undo')
+      img(src='../assets/undo.svg')
+    button(@click='redo')
+      img(src='../assets/redo.svg')
 </template>
 
 <script>
