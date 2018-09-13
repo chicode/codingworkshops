@@ -11,11 +11,12 @@ palette = {
   gray-1: #C4C4C4,
   gray-2: #E5E5E5,
   gray-3: #F7F7F7,
+  black: #000000,
 }
+
 // where the base colors should be used
 colors = {
   shadow: palette.gray-1,
-  light-border: palette.gray-2,
   light-background: palette.gray-3,
   accent-1: palette.purple,
   accent-2: palette.blue,
@@ -23,15 +24,28 @@ colors = {
   accent-3: palette.green,
 }
 
-border-radius = 10px
-border-width = 3px
-
-standard-border() {
-  border: border-width solid black;
-  border-radius: border-radius;
+borders = {
+  standard: {
+    radius: 10px,
+    width: 3px,
+    color: palette.black,
+  },
+  light: {
+    radius: 0,
+    width: 2px,
+    color: palette.gray-2,
+  }
 }
 
-transition-duration = .1s
+standard-border() {
+  border: borders.standard.width solid borders.standard.color;
+  border-radius: borders.standard.radius;
+}
+
+light-border() {
+  border: borders.light.width solid borders.light.color;
+}
+
 font-sizes = 60px 40px 30px 20px
 fonts = {
   heading: Comfortaa,
@@ -59,12 +73,6 @@ psuedo-element() {
   content: "";
 }
 
-light-border-width = 2px
-
-light-border() {
-  border: light-border-width solid colors.light-border;
-}
-
 
 shadow-offsets = {
   tile: 10px,
@@ -73,6 +81,7 @@ shadow-offsets = {
 
 tile(shadow-offset, background-color) {
   shadow-offset = shadow-offsets[shadow-offset]
+  transition-duration = .1s
   position: relative;
   display: inline-block;
 
@@ -122,10 +131,3 @@ tile(shadow-offset, background-color) {
   // https://katydecorah.com/code/z-index-and-transform/
 }
 
-button(background-color) {
-  +tile('button', background-color) {
-    padding: 3px 10px;
-    cursor: pointer;
-    font-family: fonts.heading;
-  }
-}

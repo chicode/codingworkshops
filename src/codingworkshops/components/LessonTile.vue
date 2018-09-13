@@ -1,18 +1,18 @@
-<template>
-  <router-link
-    :to="{
+<template lang="pug">
+  router-link(
+    :to=`{
       name: 'lesson',
       params: {
         workshop: lesson.workshop.name,
         lesson: lesson.id
       }
-    }"
+    }`
     class="lesson"
     tag="li"
-  >
-    <h2>{{ lesson.name }}</h2>
-    <p>{{ lesson.description }}</p>
-  </router-link>
+  )
+    div
+      h2 {{ lesson.name }}
+      p {{ lesson.description }}
 </template>
 
 <script>

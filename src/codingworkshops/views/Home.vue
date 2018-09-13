@@ -20,7 +20,7 @@
         <router-link
           :to="{ name: 'enter' }"
           class="button"
-        >login</router-link> to save progress
+        ><div>login</div></router-link> to save progress
       </p>
 
       <WorkshopTiles :workshops="allWorkshops" />

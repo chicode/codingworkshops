@@ -5,8 +5,6 @@
 // not sure why the .. is needed but otherwise it doesn't work
 @import '../styles/fantasque/stylesheet.css'
 
-
-
 * {
   font-family: fonts.body;
   font-size: font-sizes[2];
@@ -30,17 +28,16 @@ p, h3, .h3 {
   font-size: font-sizes[2];
 }
 
-button {
-  cursor: pointer;
-}
-
-.button, .button-2 {
+button-properties() {
+  padding: 3px 10px;
   cursor: pointer;
   font-family: fonts.heading;
 }
 
 .button {
-  button(palette.light-green);
+  +tile('button', red) {
+    button-properties()
+  }
 }
 
 .tile {
@@ -48,6 +45,7 @@ button {
 }
 
 .button-2 {
+  button-properties()
   text-weight: bold;
 }
 .button-2.active {
@@ -90,7 +88,6 @@ button {
     background: colors.warning;
   }
 }
-
 
 /* Slider resets https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
 

@@ -25,6 +25,9 @@ export default new Router({
       name: 'lesson',
       path: '/workshops/:workshop/:lesson',
       component: () => import(/* webpackChunkName: "lesson" */ './views/Lesson.vue'),
+      meta: {
+        noStatusBar: true,
+      },
     },
     {
       name: 'human',
