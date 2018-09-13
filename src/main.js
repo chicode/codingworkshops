@@ -32,6 +32,6 @@ const apolloProvider = new VueApollo({
 new Vue({
   router,
   store: new Vuex.Store(storeConfig),
-  provide: apolloProvider.provide(),
+  apolloProvider,
   render: (h) => h(App),
 }).$mount('#app')
