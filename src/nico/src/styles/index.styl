@@ -35,13 +35,15 @@ button-properties() {
 }
 
 .button {
-  +tile('button', red) {
+  +tile('button', palette.light-green) {
     button-properties()
   }
 }
 
 .tile {
-  tile('tile', white)
+  +tile('tile', white) {
+    padding: 20px;
+  }
 }
 
 .button-2 {

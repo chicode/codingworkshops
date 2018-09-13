@@ -12,8 +12,8 @@ query(:query="require('@/graphql/q/AllWorkshops.gql')")
       span.underline coding workshops is a set of interactive coding tutorials, for all skill levels!
     p.login.h2
       router-link.button(:to="{ name: 'enter' }")
-    div login to save progress
-    p
+        div login
+      | to save progress
     WorkshopTiles(:workshops='allWorkshops')
 </template>
 

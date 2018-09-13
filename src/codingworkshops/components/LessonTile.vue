@@ -1,5 +1,5 @@
 <template lang="pug">
-router-link(
+router-link.lesson.tile(
   :to=`{
     name: 'lesson',
     params: {
@@ -7,7 +7,6 @@ router-link(
       lesson: lesson.id
     }
   }`
-  class="lesson"
   tag="li"
 )
   div
@@ -26,12 +25,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="stylus">
-@import '~@/styles/defs'
-
-.lesson {
-  tile('tile', palette.light-purple)
-  padding: 20px;
-}
-</style>

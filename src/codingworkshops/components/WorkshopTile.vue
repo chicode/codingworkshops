@@ -1,7 +1,6 @@
 <template lang="pug">
-router-link(
+router-link.workshop.tile(
   :to=`{ name: 'workshop', params: { workshop: workshop.name } }`
-  class="workshop"
   tag="li"
 )
   div
@@ -25,9 +24,6 @@ export default {
 @import '~@/styles/defs'
 
 .workshop {
- tile('tile', palette.light-purple);
-  padding: 20px;
-
   h2 {
     font-size: font-sizes[2];
     font-weight: bold;
