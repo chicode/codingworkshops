@@ -8,23 +8,24 @@
         :class="itool"
         @click="setTool(itool)"
       >
-        <img :src="`icons/tools/${itool}${itool === tool ? '-active' : ''}.svg`">
+        <!-- the require here is necessary because otherwise webpack won't know that the dynamic asset exists -->
+        <img :src="require(`../assets/${itool}${itool === tool ? '-active' : ''}.svg`)">
       </button>
       <button
         class="clear"
         @click="clear"
       >
-        <img src="icons/clear.svg">
+        <img src="../assets/clear.svg">
       </button>
       <button
         @click="undo"
       >
-        <img src="icons/undo.svg">
+        <img src="../assets/undo.svg">
       </button>
       <button
         @click="redo"
       >
-        <img src="icons/redo.svg">
+        <img src="../assets/redo.svg">
       </button>
     </div>
   </div>

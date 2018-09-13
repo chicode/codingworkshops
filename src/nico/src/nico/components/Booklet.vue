@@ -4,7 +4,7 @@
       class="expand"
       @click="toggleExpand"
     >
-      <img src="icons/booklet.svg">
+      <img src="../assets/booklet.svg">
     </button>
     <div
       v-show="expanded"
