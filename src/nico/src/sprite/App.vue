@@ -1,12 +1,12 @@
 <template lang="pug">
   .root
     .controls.no-interaction
-      toolbar
-        optionbar
+      ToolBar
+      OptionBar
     .canvas
-      maincanvas
-        gridcanvas
-          overlaycanvas(ref='canvas')
+      MainCanvas
+      GridCanvas
+      OverlayCanvas(ref='canvas')
 </template>
 
 <script>

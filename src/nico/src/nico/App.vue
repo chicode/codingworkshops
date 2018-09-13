@@ -1,10 +1,10 @@
 <template lang="pug">
 .app
-  header
+  Header
 
-  game(v-show="view === 'game'")
-  editor(v-show="view === 'editor'")
-  sprite(v-show="view === 'sprite'")
+  Game(v-show="view === 'game'")
+  Editor(v-show="view === 'editor'")
+  Sprite(v-show="view === 'sprite'")
 </template>
 
 <script>

@@ -10,6 +10,23 @@
       div {{ paused ? 'resume' : (' ' + 'pause' + ' ') }}
 </template>
 
+<script>
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
+
+export default {
+  name: 'Header',
+  VIEWS: ['game', 'editor', 'sprite'],
+  computed: {
+    ...mapGetters('nico', ['pauseDisabled']),
+    ...mapState('nico', ['view', 'paused']),
+  },
+  methods: {
+    ...mapMutations('nico', ['togglePause', 'setView']),
+    ...mapActions('nico', ['run']),
+  },
+}
+</script>
+
 <style scoped lang="stylus">
 .header {
   display: flex;

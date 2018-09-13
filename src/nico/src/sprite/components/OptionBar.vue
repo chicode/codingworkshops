@@ -1,11 +1,11 @@
 <template lang="pug">
 .option-bar(v-if="tool === 'pencil'")
-  colorpicker
-  sizeslider
+  ColorPicker
+  SizeSlider
 .option-bar(v-else-if="tool === 'bucket'")
-  colorpicker
+  ColorPicker
 .option-bar(v-else-if="tool === 'eraser'")
-  sizeslider
+  SizeSlider
 </template>
 
 <script>
