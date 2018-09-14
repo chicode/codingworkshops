@@ -26,9 +26,3 @@ export default {
   },
 }
 </script>
-
-<styles lang="stylus">
-.app {
-  margin: 30px;
-}
-</styles>
