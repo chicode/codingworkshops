@@ -9,7 +9,7 @@ div.root
         v-for="({ description }, index) in slide.directionSet"
         :key="description"
       )
-        span(:style="directionStyle(index)") {{ description }}
+        span.text(:style="directionStyle(index)") {{ description }}
         div.buttons(v-if="index === directionIndex")
           button.button(@click="nextDirection")
             div done!
@@ -83,6 +83,10 @@ export default {
 
     .direction {
       margin-top: 20px;
+
+      .text {
+        transition-duration: .2s;
+      }
 
       .buttons {
         display: inline;
