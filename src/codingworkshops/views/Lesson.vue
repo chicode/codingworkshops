@@ -1,16 +1,18 @@
 <template lang="pug">
 div(v-if="slides")
   div.root(v-if="slides.length")
-    InstructionSlide.content(:slide="slides[slideIndex]")
+    InstructionSlide(@finished="slideFinished").content(:slide="slide")
     div.footer
-      button(
+      button.button(
         :disabled="isFirstSlide"
-        @click="nextSlide"
-      ) previous
-      button(
-        :disabled="isLastSlide"
         @click="previousSlide"
-      ) next
+      )
+        div previous
+      button.button(
+        :disabled="!finished || isLastSlide"
+        @click="nextSlide"
+      )
+        div next
   div(v-else) no slides!
 
 div(v-else)
@@ -27,6 +29,7 @@ export default {
   data: () => ({
     slideIndex: 0,
     slides: null,
+    finished: false,
   }),
   computed: {
     isFirstSlide () {
@@ -35,13 +38,21 @@ export default {
     isLastSlide () {
       return this.slideIndex === this.slides.length - 1
     },
+    slide () {
+      console.log(this.slides, this.slideIndex)
+      return this.slides[this.slideIndex]
+    },
   },
   methods: {
     nextSlide () {
       this.slideIndex += 1
+      console.log(this.slides, this.slideIndex)
     },
     previousSlide () {
       this.slideIndex -= 1
+    },
+    slideFinished () {
+      this.finished = true
     },
   },
   apollo: {
@@ -64,5 +75,10 @@ export default {
 
 .footer {
   height: 10vh;
+  padding: 20px;
+
+  .button {
+    margin-right: 20px;
+  }
 }
 </style>

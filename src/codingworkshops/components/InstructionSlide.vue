@@ -4,10 +4,17 @@ div.root
     h1.name {{ slide.name }}
     p.description {{ slide.description }}
     ul.directions
-      li(
-        v-for="{ description } in slide.directions"
+      h2 Directions
+      li.direction(
+        v-for="({ description }, index) in slide.directionSet"
         :key="description"
-      ) {{ description }}
+      )
+        span(:style="directionStyle(index)") {{ description }}
+        div.buttons(v-if="index === directionIndex")
+          button.button(@click="nextDirection")
+            div done!
+          // TODO: implement help
+
   Nico.nico
 </template>
 
@@ -23,6 +30,28 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    directionIndex: 0,
+  }),
+  methods: {
+    nextDirection () {
+      this.directionIndex += 1
+      if (this.directionIndex === this.slide.directionSet.length) {
+        this.$emit('finished')
+      }
+    },
+    directionStyle (index) {
+      let color
+      if (index < this.directionIndex) {
+        color = '#1CB893'
+      } else if (index === this.directionIndex) {
+        color = 'black'
+      } else {
+        color = '#C1C1C1'
+      }
+      return { color }
+    },
+  },
 }
 </script>
 
@@ -35,13 +64,38 @@ export default {
 }
 
 .instructions {
+  overflow-y: auto;
   flex: 1 0 20%;
   padding: 50px;
   light-border()
+
+  .name {
+    margin-bottom: 20px;
+  }
+
+  .directions {
+    margin-top: 30px;
+
+    .direction {
+      margin-top: 10px;
+
+      .buttons {
+        display: inline;
+        margin-left: 15px;
+        position: relative;
+        bottom: -10px;
+
+        div {
+          font-family: fonts.body;
+          padding: 0 5px;
+        }
+      }
+    }
+  }
 }
 
 .nico {
-  overflow-y: scroll;
+  overflow-y: auto;
   flex: 1 0 60%;
   padding: 50px;
   light-border()
