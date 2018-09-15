@@ -33,6 +33,11 @@ export default {
   data: () => ({
     directionIndex: 0,
   }),
+  watch: {
+    slide () {
+      this.directionIndex = 0
+    },
+  },
   methods: {
     nextDirection () {
       this.directionIndex += 1
