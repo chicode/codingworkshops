@@ -39,14 +39,12 @@ export default {
       return this.slideIndex === this.slides.length - 1
     },
     slide () {
-      console.log(this.slides, this.slideIndex)
       return this.slides[this.slideIndex]
     },
   },
   methods: {
     nextSlide () {
       this.slideIndex += 1
-      console.log(this.slides, this.slideIndex)
     },
     previousSlide () {
       this.slideIndex -= 1
