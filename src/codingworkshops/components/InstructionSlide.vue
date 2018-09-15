@@ -91,8 +91,8 @@ export default {
         bottom: -10px;
 
         div {
-          font-family: fonts.body;
           padding: 0 5px;
+          font-size: 25px;
         }
       }
     }
