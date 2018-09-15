@@ -64,17 +64,20 @@ export default {
 <style scoped lang="stylus">
 .root {
   canvas {
-    position: absolute;
+    // TODO: compute this number automatically
+    margin-top: -824px;
 
-   image-rendering: optimizeSpeed; // Older versions of FF
-   image-rendering: -moz-crisp-edges; // FF 6.0+ image-rendering:
-   -webkit-optimize-contrast; // Webkit // (Safari now, Chrome soon)
-   image-rendering: -o-crisp-edges; // OS X & Windows Opera (12.02+)
-   image-rendering: optimize-contrast; // Possible future browsers.
-   -ms-interpolation-mode: nearest-neighbor; // IE
-  }
-  canvas:last-of-type {
     position: relative;
+
+    image-rendering: optimizeSpeed; // Older versions of FF
+    image-rendering: -moz-crisp-edges; // FF 6.0+ image-rendering:
+    -webkit-optimize-contrast; // Webkit // (Safari now, Chrome soon)
+    image-rendering: -o-crisp-edges; // OS X & Windows Opera (12.02+)
+    image-rendering: optimize-contrast; // Possible future browsers.
+    -ms-interpolation-mode: nearest-neighbor; // IE
+  }
+  canvas:first-of-type {
+    margin: 0;
   }
 
 }
@@ -84,7 +87,13 @@ export default {
   margin: 10px 0;
 }
 .canvas {
+  // the canvases are stracked vertically rather than horizontally so that
+  // aligning them horizontally is possible
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  // fix incorrect mouse detection on firefox
+  box-sizing: content-box;
 }
 </style>
