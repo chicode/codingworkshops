@@ -1,6 +1,6 @@
 <template lang="pug">
 div.root
-  div.instructions.light-tile
+  div.instructions
     h1.name {{ slide.name }}
     p.description {{ slide.description }}
     ul.directions
@@ -8,7 +8,7 @@ div.root
         v-for="{ description } in slide.directions"
         :key="description"
       ) {{ description }}
-  Nico.nico.light-tile
+  Nico.nico
 </template>
 
 <script>
@@ -27,16 +27,24 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+@import '~@/styles/defs'
+
 .root {
   display: flex;
+  height: 100%;
 }
 
 .instructions {
   flex: 1 0 20%;
-  margin: 50px;
+  padding: 50px;
+  light-border()
 }
 
 .nico {
+  overflow-y: scroll;
   flex: 1 0 60%;
+  padding: 50px;
+  light-border()
+  light-margin-left()
 }
 </style>

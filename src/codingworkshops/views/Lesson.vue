@@ -1,8 +1,8 @@
 <template lang="pug">
 div(v-if="slides")
-  div(v-if="slides.length")
-    InstructionSlide(:slide="slides[slideIndex]")
-    div
+  div.root(v-if="slides.length")
+    InstructionSlide.content(:slide="slides[slideIndex]")
+    div.footer
       button(
         :disabled="isFirstSlide"
         @click="nextSlide"
@@ -58,4 +58,11 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+.content {
+  height: 90vh;
+}
+
+.footer {
+  height: 10vh;
+}
 </style>

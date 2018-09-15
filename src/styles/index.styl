@@ -47,15 +47,16 @@ button-properties() {
 }
 
 .tile-light {
-  border-light()
+  light-border()
 }
 
 .button-2 {
   button-properties()
   font-weight: bold;
-}
-.button-2.active {
-  color: colors.accent-1;
+
+  &.active {
+    color: colors.accent-1;
+  }
 }
 
 .accent-1 {
