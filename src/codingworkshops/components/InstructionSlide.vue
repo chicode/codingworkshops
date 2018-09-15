@@ -79,10 +79,10 @@ export default {
   }
 
   .directions {
-    margin-top: 30px;
+    margin-top: 40px;
 
     .direction {
-      margin-top: 10px;
+      margin-top: 20px;
 
       .buttons {
         display: inline;
