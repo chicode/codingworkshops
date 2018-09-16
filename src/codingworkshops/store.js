@@ -83,9 +83,13 @@ export default {
       )
     },
 
-    nextSlide ({ dispatch, state, rootActions }) {
-      dispatch('setSlideIndex', state.slideIndex + 1)
-      dispatch('setDirectionIndexFromStorage')
+    nextSlide ({ dispatch, getters, state, rootActions }) {
+      if (getters.isLastSlide) {
+        router.push({ name: 'workshop', params: getters.routeContext() })
+      } else {
+        dispatch('setSlideIndex', state.slideIndex + 1)
+        dispatch('setDirectionIndexFromStorage')
+      }
     },
     previousSlide ({ dispatch, state }) {
       dispatch('setSlideIndex', state.slideIndex - 1)

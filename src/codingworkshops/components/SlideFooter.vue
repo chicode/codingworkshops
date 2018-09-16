@@ -5,9 +5,9 @@ div.footer
     @click="previousSlide"
   ): div previous
   button.button(
-    :disabled="!isSlideDone || isLastSlide"
+    :disabled="!isSlideDone"
     @click="nextSlide"
-  ): div next
+  ): div {{ isLastSlide ? 'finish' : 'next' }}
 </template>
 
 <script>
