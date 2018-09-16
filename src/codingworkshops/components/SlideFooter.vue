@@ -1,13 +1,19 @@
 <template lang="pug">
 div.footer
-  button.button(
-    :disabled="isFirstSlide"
-    @click="previousSlide"
-  ): div previous
-  button.button(
-    :disabled="!isSlideDone"
-    @click="nextSlide"
-  ): div {{ isLastSlide ? 'finish' : 'next' }}
+  div.breadcrumbs
+    router-link(:to="{ name: 'home' }")
+      span.accent-2 coding
+      span.accent-1 workshops
+    router-link.workshop(:to="{ name: 'workshop', params: { workshop: $route.params.workshop } }") {{ $route.params.workshop }}
+  div.buttons
+    button.button(
+      :disabled="isFirstSlide"
+      @click="previousSlide"
+    ): div previous
+    button.button(
+      :disabled="!isSlideDone"
+      @click="nextSlide"
+    ): div {{ isLastSlide ? 'finish' : 'next' }}
 </template>
 
 <script>
@@ -28,7 +34,23 @@ export default {
 <style scoped lang="stylus">
 .footer {
   padding: 20px;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: space-between;
 
+}
+
+.breadcrumbs {
+  > * {
+    margin-right: 20px
+  }
+
+  .workshop {
+    text-decoration: underline;
+  }
+}
+
+.buttons {
   .button {
     margin-right: 20px;
   }

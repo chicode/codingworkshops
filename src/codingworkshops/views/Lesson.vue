@@ -33,10 +33,6 @@ export default {
 
 <style scoped lang="stylus">
 .content {
-  height: 90vh;
-}
-
-.footer {
-  height: 10vh;
+  height: 92vh;
 }
 </style>
