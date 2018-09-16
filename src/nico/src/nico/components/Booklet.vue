@@ -4,16 +4,16 @@
     img(src='../assets/booklet.svg')
   .main(v-show='expanded')
     .sections-buffer(ref='sectionsBuffer')
-      .sections(ref='sections')
-        button(v-for='isection in $options.BOOKLET_SECTIONS', :key='isection.title', :class="'button-2' + (isection.title === section.title ? ' active' : '')", @click='switchSection(isection)')
-          | {{ isection.title }}
-      .content
-        h2.title {{ section.title }}
-        p {{ section.description }}
-        ul
-          li.function(v-for='function_ in section.functions', :key='function_.code')
-            h3.code {{ function_.code }}
-            p {{ function_.description }}
+    .sections(ref='sections')
+      button(v-for='isection in $options.BOOKLET_SECTIONS', :key='isection.title', :class="'button-2' + (isection.title === section.title ? ' active' : '')", @click='switchSection(isection)')
+        | {{ isection.title }}
+    .content
+      h2.title {{ section.title }}
+      p {{ section.description }}
+      ul
+        li.function(v-for='function_ in section.functions', :key='function_.code')
+          h3.code {{ function_.code }}
+          p {{ function_.description }}
 </template>
 
 <script>
@@ -47,7 +47,7 @@ export default {
     },
     correctWidth () {
       if (this.$refs.sectionsBuffer) {
-        // sets the sections buffer to the right width, so that enough space is given
+        r // sets the sections buffer to the right width, so that enough space is given
         // for the position: absolute sections
         this.$refs.sectionsBuffer.style.flex = `1 0 ${this.$refs.sections.offsetHeight}px`
       }
