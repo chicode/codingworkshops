@@ -47,7 +47,7 @@ export default {
     },
     correctWidth () {
       if (this.$refs.sectionsBuffer) {
-        r // sets the sections buffer to the right width, so that enough space is given
+        // sets the sections buffer to the right width, so that enough space is given
         // for the position: absolute sections
         this.$refs.sectionsBuffer.style.flex = `1 0 ${this.$refs.sections.offsetHeight}px`
       }
@@ -81,6 +81,7 @@ padding = 10px
 .expand {
   background: white;
   pointer-events: all;
+  cursor: pointer;
 
   align-self: flex-start;
   img {
