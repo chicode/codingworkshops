@@ -1,10 +1,6 @@
-import Vue from 'vue'
-import Router from 'vue-router'
 import Home from './views/Home'
 
-Vue.use(Router)
-
-export default new Router({
+export default {
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -30,6 +26,14 @@ export default new Router({
       },
     },
     {
+      name: 'slide',
+      path: '/workshops/:workshop/:lesson/:slide',
+      component: () => import(/* webpackChunkName: "lesson" */ './views/Lesson.vue'),
+      meta: {
+        noStatusBar: true,
+      },
+    },
+    {
       name: 'human',
       path: '/humans/:username',
       component: () => import(/* webpackChunkName: "human" */ './views/Human.vue'),
@@ -45,4 +49,4 @@ export default new Router({
       component: () => import(/* webpackChunkName: "signup" */ './views/Signup.vue'),
     },
   ],
-})
+}

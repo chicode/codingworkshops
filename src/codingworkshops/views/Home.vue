@@ -13,7 +13,7 @@ query(:query="require('@/graphql/q/AllWorkshops.gql')")
     p.login.h2
       router-link.button(:to="{ name: 'enter' }")
         div login
-      | to save progress
+      | &nbsp;to save progress
     WorkshopTiles(:workshops='allWorkshops')
 </template>
 
@@ -62,6 +62,10 @@ import '~@/styles/defs.styl'
 .login {
   text-align: center;
   margin-top: 100px;
+
+  .button div {
+    font-weight: normal;
+  }
 }
 
 </style>

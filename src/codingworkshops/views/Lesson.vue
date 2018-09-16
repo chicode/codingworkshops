@@ -1,18 +1,8 @@
 <template lang="pug">
-div(v-if="slides")
+div(v-if="!loading")
   div.root(v-if="slides.length")
-    InstructionSlide(@finished="slideFinished").content(:slide="slide")
-    div.footer
-      button.button(
-        :disabled="isFirstSlide"
-        @click="previousSlide"
-      )
-        div previous
-      button.button(
-        :disabled="!finished || isLastSlide"
-        @click="nextSlide"
-      )
-        div next
+    InstructionSlide.content
+    SlideFooter.footer
   div(v-else) no slides!
 
 div(v-else)
@@ -20,48 +10,23 @@ div(v-else)
 </template>
 
 <script>
-import Query from '@/components/Query'
+import { mapActions, mapState } from 'vuex'
+
 import InstructionSlide from '../components/InstructionSlide'
+import SlideFooter from '../components/SlideFooter'
 
 export default {
   name: 'Lesson',
-  components: { Query, InstructionSlide },
-  data: () => ({
-    slideIndex: 0,
-    slides: null,
-    finished: false,
-  }),
+  components: { InstructionSlide, SlideFooter },
   computed: {
-    isFirstSlide () {
-      return !this.slideIndex
-    },
-    isLastSlide () {
-      return this.slideIndex === this.slides.length - 1
-    },
-    slide () {
-      return this.slides[this.slideIndex]
-    },
+    ...mapState('codingworkshops', ['slides', 'loading']),
+  },
+  mounted () {
+    this.fetchLesson()
+    this.setInitialSlideIndex(parseInt(this.$route.params.slide))
   },
   methods: {
-    nextSlide () {
-      this.slideIndex += 1
-    },
-    previousSlide () {
-      this.slideIndex -= 1
-    },
-    slideFinished () {
-      this.finished = true
-    },
-  },
-  apollo: {
-    slides: {
-      query: require('@/graphql/q/Lesson_slides.gql'),
-      variables () {
-        const { lesson, workshop } = this.$route.params
-        return { lesson, workshop }
-      },
-      update: data => data.lesson.slideSet,
-    },
+    ...mapActions('codingworkshops', ['fetchLesson', 'setInitialSlideIndex']),
   },
 }
 </script>
@@ -73,10 +38,5 @@ export default {
 
 .footer {
   height: 10vh;
-  padding: 20px;
-
-  .button {
-    margin-right: 20px;
-  }
 }
 </style>

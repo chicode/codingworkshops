@@ -19,32 +19,19 @@ div.root
 </template>
 
 <script>
+import { mapActions, mapState, mapGetters } from 'vuex'
+
 import Nico from '@/nico/src/nico/App'
 
 export default {
   name: 'InstructionSlide',
   components: { Nico },
-  props: {
-    slide: {
-      type: Object,
-      required: true,
-    },
-  },
-  data: () => ({
-    directionIndex: 0,
-  }),
-  watch: {
-    slide () {
-      this.directionIndex = 0
-    },
+  computed: {
+    ...mapState('codingworkshops', ['directionIndex']),
+    ...mapGetters('codingworkshops', ['slide']),
   },
   methods: {
-    nextDirection () {
-      this.directionIndex += 1
-      if (this.directionIndex === this.slide.directionSet.length) {
-        this.$emit('finished')
-      }
-    },
+    ...mapActions('codingworkshops', ['nextDirection']),
     directionStyle (index) {
       let color
       if (index < this.directionIndex) {

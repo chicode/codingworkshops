@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Router from 'vue-router'
 import VueApollo from 'vue-apollo'
 import ApolloClient from 'apollo-boost'
+import { sync } from 'vuex-router-sync'
 
-import router from './codingworkshops/router'
+import routerConfig from './codingworkshops/router'
 import storeConfig from './store'
 import App from './codingworkshops/App.vue'
 import './registerServiceWorker'
@@ -13,8 +15,15 @@ import './styles/index.styl'
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
+Vue.use(Router)
+Vue.use(VueApollo)
 
-const apolloClient = new ApolloClient({
+export const store = new Vuex.Store(storeConfig)
+export const router = new Router(routerConfig)
+
+sync(store, router, { moduleName: 'router' })
+
+export const apolloClient = new ApolloClient({
   uri: 'http://127.0.0.1:8000/graphql/',
   credentials: 'include',
 
@@ -23,15 +32,13 @@ const apolloClient = new ApolloClient({
   },
 })
 
-Vue.use(VueApollo)
-
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
 new Vue({
   router,
-  store: new Vuex.Store(storeConfig),
+  store,
   apolloProvider,
   render: (h) => h(App),
 }).$mount('#app')

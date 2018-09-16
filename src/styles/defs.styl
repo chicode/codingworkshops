@@ -115,7 +115,7 @@ tile(shadow-offset, background-color) {
     box-sizing: border-box;
   }
 
-  &:active:enabled {
+  &:active:not(:disabled) {
     div {
       transform: translateY(0)
     }
