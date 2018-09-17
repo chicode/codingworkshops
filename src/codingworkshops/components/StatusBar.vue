@@ -1,21 +1,27 @@
 <template lang="pug">
 .root
   div
-    router-link(:to="{ name: 'home' }") Home
-  query(:query="require('@/graphql/q/CurrentUser_minimal.gql')", fetch-policy='network-only')
-    template(slot-scope='{ data: { currentUser } }')
-      div(v-if='currentUser')
-        router-link(:to="{ name: 'human', params: { username: currentUser.username } }")
-          | {{ currentUser.username }}
-        button(@click='logout') logout
-      div(v-else='')
-        router-link(:to="{ name: 'enter' }") login
+    router-link(:to="{ name: 'home' }")
+      span.accent-2 coding
+      span.accent-1 workshops
+  //
+    query(:query="require('@/graphql/q/CurrentUser_minimal.gql')", fetch-policy='network-only')
+      template(slot-scope='{ data: { currentUser } }')
+        div(v-if='currentUser')
+          router-link(:to="{ name: 'human', params: { username: currentUser.username } }")
+            | {{ currentUser.username }}
+          button(@click='logout') logout
+        div(v-else='')
+          router-link(:to="{ name: 'enter' }") login
 </template>
 
 <script>
-import Query from '@/components/Query'
+// import Query from '@/components/Query'
 
 export default {
+  name: 'StatusBar',
+
+/*
   components: { Query },
 
   methods: {
@@ -26,6 +32,7 @@ export default {
       this.$router.push({ name: 'home' })
     },
   },
+*/
 }
 </script>
 
@@ -33,5 +40,6 @@ export default {
 .root {
   display: flex;
   justify-content: space-between;
+  padding: 40px;
 }
 </style>
