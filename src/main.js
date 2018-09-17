@@ -23,7 +23,6 @@ export const router = new Router(routerConfig)
 
 sync(store, router, { moduleName: 'router' })
 
-console.log('test')
 export const apolloClient = new ApolloClient({
   uri: `${
     process.env.NODE_ENV === 'development'
