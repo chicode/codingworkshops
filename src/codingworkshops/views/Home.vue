@@ -9,12 +9,8 @@ query(:query="require('@/graphql/q/AllWorkshops.gql')")
         span.accent-2 to&nbsp;
         span.accent-3 code!
     h2.explainer
-      span.underline coding workshops is a set of interactive coding tutorials, for all skill levels!
-    p.login.h2
-      router-link.button(:to="{ name: 'enter' }")
-        div login
-      | &nbsp;to save progress
-    WorkshopTiles(:workshops='allWorkshops')
+      span coding workshops is a set of interactive coding tutorials, for all skill levels!
+    WorkshopTiles.tiles(:workshops='allWorkshops')
 </template>
 
 <script>
@@ -31,7 +27,7 @@ export default {
 import '~@/styles/defs.styl'
 
 .root {
- margin-top: 100px;
+  margin-top: 100px;
 }
 
 .welcome {
@@ -55,17 +51,13 @@ import '~@/styles/defs.styl'
 }
 
 .explainer {
-  margin-top: 100px;
+  margin: auto;
+  margin-top: 80px;
   text-align: center;
+  max-width: 1000px;
 }
 
-.login {
-  text-align: center;
-  margin-top: 100px;
-
-  .button div {
-    font-weight: normal;
-  }
+.tiles {
+  margin-top: 50px;
 }
-
 </style>

@@ -23,9 +23,9 @@ export default {
 
 <style scoped lang="stylus">
 @import '~@/styles/defs'
+
 .workshops {
- align-items: flex-start;
- margin-top: 100px;
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

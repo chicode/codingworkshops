@@ -5,9 +5,9 @@ Query(
   class="root"
 )
   template(slot-scope="{ data: { workshop: { name, description, lessonSet } } }")
-    h1 {{ name }}
-    p {{ description }}
-    LessonTiles(:lessons="lessonSet")
+    h1.name {{ name }}
+    p.description {{ description }}
+    LessonTiles.tiles(:lessons="lessonSet")
 </template>
 
 <script>
@@ -24,4 +24,13 @@ export default {
 .root {
   margin: 100px 100px;
 }
+
+.description {
+  margin-top: 10px;
+}
+
+.tiles {
+  margin-top: 50px;
+}
+
 </style>
