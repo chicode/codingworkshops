@@ -24,7 +24,11 @@ export const router = new Router(routerConfig)
 sync(store, router, { moduleName: 'router' })
 
 export const apolloClient = new ApolloClient({
-  uri: 'http://127.0.0.1:8000/graphql/',
+  uri: `${
+    process.env.NODE_ENV === 'production'
+      ? 'http://127.0.0.1'
+      : 'http://ec2-18-216-16-19.us-east-2.compute.amazonaws.com'
+  }:8000/graphql/`,
   credentials: 'include',
 
   fetchOptions: {
