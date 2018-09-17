@@ -1893,6 +1893,10 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+codemirror@^5.32.0:
+  version "5.40.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.40.0.tgz#2f5ed47366e514f41349ba0fe34daaa39be4e257"
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -2496,6 +2500,10 @@ detect-libc@^1.0.2:
 detect-node@^2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
+
+diff-match-patch@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/diff-match-patch/-/diff-match-patch-1.0.4.tgz#6ac4b55237463761c4daf0dc603eb869124744b1"
 
 diffie-hellman@^5.0.0:
   version "5.0.3"
@@ -7120,6 +7128,13 @@ vue-apollo@^3.0.0-beta.19:
   dependencies:
     chalk "^2.4.1"
     throttle-debounce "^2.0.0"
+
+vue-codemirror@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/vue-codemirror/-/vue-codemirror-4.0.5.tgz#3a784d454fbfb17ce769b9fc90f10e9868687ecb"
+  dependencies:
+    codemirror "^5.32.0"
+    diff-match-patch "^1.0.0"
 
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
