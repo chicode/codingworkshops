@@ -36,7 +36,7 @@ export default {
   computed: {
     ...mapState('nico', ['code', 'view', 'error']),
     cm () {
-      return this.$refs.cm.codemirror
+      return this.$refs.cm ? this.$refs.cm.codemirror : null
     },
   },
 
@@ -60,7 +60,7 @@ export default {
     init () {
       // must wait for webfonts to finish loading, or else editor will be improperly initialized
       document.fonts.ready.then(() => {
-        this.cm.refresh()
+        if (this.cm) this.cm.refresh()
       })
     },
   },
