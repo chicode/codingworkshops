@@ -3,7 +3,7 @@ query(:query="require('@/graphql/q/AllWorkshops.gql')")
   template(slot-scope='{ data: { allWorkshops } }')
     .welcome
       img(src='img/landing-welcome.svg')
-      h1 Anyone can
+      h1 Anyone can&nbsp;
         // &nbsp; creates spaces between span tags
         span.accent-1 learn&nbsp;
         span.accent-2 to&nbsp;
