@@ -26,8 +26,10 @@ sync(store, router, { moduleName: 'router' })
 console.log(process.env.NODE_ENV)
 export const apolloClient = new ApolloClient({
   uri: `${
-    process.env.NODE_ENV === 'development' ? 'http://127.0.0.1' : 'https://api.codingworkshops.org'
-  }:8000/graphql/`,
+    process.env.NODE_ENV === 'development'
+      ? 'http://127.0.0.1:8000'
+      : 'https://api.codingworkshops.org'
+  }/graphql/`,
   credentials: 'include',
 
   fetchOptions: {
