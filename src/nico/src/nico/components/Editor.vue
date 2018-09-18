@@ -3,7 +3,7 @@
   Booklet
   codemirror(
     ref="cm"
-    :options="$options.cmOptions"
+    :options="cmOptions"
     :value="code"
     class="vue-CodeMirror"
     @input="setCode"
@@ -16,21 +16,42 @@ import { mapState, mapMutations } from 'vuex'
 import { codemirror } from 'vue-codemirror'
 
 import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/mllike/mllike.js'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/addon/display/autorefresh.js'
+import 'codemirror/addon/edit/matchbrackets.js'
 
 import Booklet from './Booklet'
+
+function getModeFromLanguage (language) {
+  switch (language) {
+    case 'javascript': return 'text/javascript'
+    case 'fsharp': return 'text/x-fsharp'
+  }
+}
 
 export default {
   name: 'Editor',
 
   components: { codemirror, Booklet },
 
-  cmOptions: {
-    tabSize: 2,
-    mode: 'text/javascript',
-    lineNumbers: true,
-    autorefresh: true,
+  props: {
+    language: {
+      type: String,
+      required: true,
+    },
+  },
+
+  data: function () {
+    return {
+      cmOptions: {
+        tabSize: 2,
+        mode: getModeFromLanguage(this.language),
+        lineNumbers: true,
+        matchBrackets: true,
+        autoRefresh: true,
+      },
+    }
   },
 
   computed: {

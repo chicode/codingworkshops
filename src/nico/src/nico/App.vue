@@ -2,9 +2,9 @@
 .app
   Header
 
-  Game(v-show="view === 'game'")
-  Editor(v-show="view === 'editor'")
-  Sprite(v-show="view === 'sprite'")
+  Game(v-if="showTabs.game" v-show="view === 'game'" :show-greeting="showGreeting")
+  Editor(v-if="showTabs.editor" v-show="view === 'editor'" :language="language")
+  Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'")
 </template>
 
 <script>
@@ -20,6 +20,22 @@ export default {
   name: 'App',
   components: {
     Header, Game, Editor, Sprite,
+  },
+  props: {
+    showGreeting: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showTabs: {
+      type: Object,
+      required: false,
+      default: () => ({ game: true, sprite: true, editor: true }),
+    },
+    language: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
     ...mapState('nico', ['view']),

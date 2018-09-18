@@ -1,6 +1,7 @@
 <template lang="pug">
 .game
   p.error(v-if='error') {{ error.message }}
+  p(v-else-if='!hasBeenRun && !showGreeting') Press 'run code' to run your game for the first time
   greeting(v-else-if='!hasBeenRun')
   // v-show has to be used because the ref needs to be initiated
   canvas.main-canvas(v-show='running', ref='mainCanvas')
@@ -17,6 +18,14 @@ export default {
   name: 'Game',
 
   components: { Greeting },
+
+  props: {
+    showGreeting: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
 
   computed: {
     ...mapState('nico', ['error', 'hasBeenRun', 'running']),
