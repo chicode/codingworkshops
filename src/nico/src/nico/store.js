@@ -21,8 +21,10 @@ const COLUMN_OFFSET = (() => {
 // mars goes in front so that a user syntax error does not accidentally
 // propogate to the mars code
 function prepareCode (code) {
-  return `${mars}
-  ${code}`
+  return `
+    ${mars}
+    ${code}
+  `
 }
 
 function lowerLimit (n) {
@@ -31,8 +33,6 @@ function lowerLimit (n) {
 
 function convertError (error) {
   const { lineno: lineNumber, colno: columnNumber } = error
-
-  console.log(lineNumber, columnNumber, error)
 
   // error came from the mars part of the code
   // this means that it was raised intentionally
@@ -66,6 +66,7 @@ export default {
     running: false,
     mainCtx: null,
     hasBeenRun: false,
+    worker: null,
   },
 
   getters: {
@@ -98,6 +99,7 @@ export default {
     },
     setPaused (state, pause) {
       state.paused = pause
+      if (state.worker) state.worker.postMessage(pause ? 'pause' : 'resume')
     },
     setError (state, error) {
       state.error = error ? convertError(error) : null
@@ -105,44 +107,48 @@ export default {
     initMainCtx (state, ctx) {
       state.mainCtx = ctx
     },
+    setWorker (state, worker) {
+      state.worker = worker
+    },
   },
 
   actions: {
     run ({ state, commit, rootGetters, rootState }) {
+      if (state.worker) state.worker.terminate()
+
       commit('setView', 'game')
-      commit('setRunning', false)
       commit('setError', null)
+      commit('setRunning', true)
+      commit('setPaused', false)
 
-      // TODO: lint code and set error state variable
+      const blob = new Blob([prepareCode(state.code)])
 
-      // this hacky timeout serves two purposes:
-      // 1) to make sure that vue registers the change to the running
-      // state variable, even if it's going from true -> true
-      // 2) to give the currently running game one frame to not trigger the
-      // requestAnimationFrame, thereby terminating it
-      setTimeout(() => {
-        commit('setRunning', true)
-        commit('setPaused', false)
+      const worker = new Worker(window.URL.createObjectURL(blob))
+      commit('setWorker', worker)
 
-        // eslint-disable-next-line no-unused-vars
-        const _env = {
-          ctx: state.mainCtx,
-          sprites: rootGetters['sprite/sprite/sprites'],
-          state,
+      const sprites = rootGetters['sprite/sprite/sprites']
+      const ctx = state.mainCtx
+      worker.onmessage = function ({ data: { cmd, payload } }) {
+        switch (cmd) {
+          case 'rect':
+            ctx.rect(...payload)
+            if (payload[4]) {
+              ctx.stroke()
+            } else {
+              ctx.fill()
+            }
+            break
+
+          case 'sprite':
+            ctx.putImageData(sprites[payload[0]], payload[1], payload[2])
+            break
+
+          case 'clear-screen':
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+            break
         }
-
-        window.onerror = (message, source, lineno, colno, error) => {
-          commit('setError', { message, source, lineno, colno, error })
-          commit('setRunning', false)
-        }
-
-        // eslint-disable-next-line
-        eval(prepareCode(state.code))
-
-        // error handling done in window event listener because that's the only way to
-        // get an error from an eval statement
-        // https://stackoverflow.com/a/26929319
-      })
+      }
+      worker.postMessage({ cmd: 'init' })
     },
   },
 }
