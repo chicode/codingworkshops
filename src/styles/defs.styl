@@ -101,6 +101,8 @@ tile(shadow-offset, background-color) {
     standard-border()
     transition-duration: transition-duration;
     background-color: background-color;
+    // this line makes this animation way smoother on firefox
+    transform: translateY(0);
 
     {block}
   }
