@@ -89,8 +89,8 @@ padding = 10px
   }
   padding: padding;
   light-border()
-  border-top-left-radius: border-radius;
-  border-bottom-left-radius: border-radius;
+  border-top-left-radius: borders.light.radius;
+  border-bottom-left-radius: borders.light.radius;
 }
 
 .main {
