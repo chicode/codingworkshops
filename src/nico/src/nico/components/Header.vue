@@ -20,6 +20,9 @@ import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'Header',
   VIEWS: ['game', 'editor', 'sprite'],
+  data: () => ({
+    buttonState: false,
+  }),
   computed: {
     ...mapGetters('nico', ['pauseDisabled']),
     ...mapState('nico', ['view', 'paused']),
@@ -27,16 +30,6 @@ export default {
   methods: {
     ...mapMutations('nico', ['togglePause', 'setView']),
     ...mapActions('nico', ['run']),
-  },
-  data: function () {
-    return {
-      buttonState: false,
-    }
-  },
-  mounted () {
-    window.addEventListener('wheel', () => {
-      this.buttonState = !this.buttonState
-    })
   },
 }
 </script>
