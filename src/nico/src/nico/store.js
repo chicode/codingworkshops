@@ -53,21 +53,46 @@ export default {
     prepareCode: (state) => async (apolloClient) => {
       if (state.language === 'javascript') {
         // this code uses var instead of const because that's the only way to rewrite the value of the variables
-        return `${state.code};
+        return {
+          success: true,
+          code: `${state.code};
 
-        var init = init || (() => {})
-        var update = update || (() => {})
+          var init = init || (() => {})
+          var update = update || (() => {})
 
-        ${mars}`
+          ${mars}`,
+        }
       } else {
-        const result = await apolloClient.mutate({
+        const {
+          data: { compileCode },
+        } = await apolloClient.mutate({
           mutation: gql`
             mutation($language: Language!, $code: String!) {
               compileCode(language: $language, code: $code) {
                 success
                 code
-                error
-                warning
+                errors {
+                  message
+                  from_ {
+                    line
+                    ch
+                  }
+                  to {
+                    line
+                    ch
+                  }
+                }
+                warnings {
+                  message
+                  from_ {
+                    line
+                    ch
+                  }
+                  to {
+                    line
+                    ch
+                  }
+                }
               }
             }
           `,
@@ -76,18 +101,34 @@ export default {
             code: state.code,
           },
         })
+        console.log(compileCode)
 
-        const code = result.data.compileCode.code
-        // the var is required because `require` is defined without a declaration
-        return `
-        var ${code};
-        const module = require('4')
+        if (compileCode.success) {
+          // the var is required because `require` is defined without a declaration
+          return {
+            success: true,
+            code: `
+            var ${compileCode.code};
+            const module = require('4')
 
-        const init = module.init || (() => {})
-        const update = module.update || (() => {})
-        const draw = module.draw
+            const init = module.init || (() => {})
+            const update = module.update || (() => {})
+            const draw = module.draw
 
-        ${mars}`
+            ${mars}`,
+          }
+        } else {
+          return {
+            success: false,
+            // rename from_ to from
+            errors: compileCode.errors.map((error) => ({
+              ...error,
+              from: error.from_,
+              from_: undefined,
+              isSyntax: true,
+            })),
+          }
+        }
       }
     },
   },
@@ -121,7 +162,7 @@ export default {
       state.language = language
     },
     setError (state, error) {
-      state.error = error ? convertError(error) : null
+      state.error = error
     },
     initMainCtx (state, ctx) {
       state.mainCtx = ctx
@@ -135,7 +176,7 @@ export default {
       commit('setError', null)
 
       window.onerror = (message, source, lineno, colno, error) => {
-        commit('setError', { message, source, lineno, colno, error })
+        commit('setError', convertError({ message, source, lineno, colno, error }))
         commit('setRunning', false)
       }
 
@@ -148,19 +189,24 @@ export default {
       // requestAnimationFrame, thereby terminating it
 
       setTimeout(() => {
-        commit('setRunning', true)
-        commit('setPaused', false)
+        getters.prepareCode(this.apolloClient).then(({ success, code, errors }) => {
+          if (success) {
+            commit('setRunning', true)
+            commit('setPaused', false)
 
-        const _ctx = state.mainCtx // eslint-disable-line no-unused-vars
-        const _state = state // eslint-disable-line no-unused-vars
-        const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
+            const _ctx = state.mainCtx // eslint-disable-line no-unused-vars
+            const _state = state // eslint-disable-line no-unused-vars
+            const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
 
-        getters.prepareCode(this.apolloClient).then((code) => {
-          // eslint-disable-next-line
-          // this timeout makes the error throw on the window level
-          // 'escaping' this promise
-          // eslint-disable-next-line no-eval
-          setTimeout(() => eval(code))
+            // eslint-disable-next-line
+            // this timeout makes the error throw on the window level
+            // 'escaping' this promise
+            // eslint-disable-next-line no-eval
+            setTimeout(() => eval(code))
+          } else {
+            console.log(errors)
+            commit('setError', errors[0])
+          }
         })
       })
     },
