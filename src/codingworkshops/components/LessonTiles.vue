@@ -26,7 +26,8 @@ export default {
 @import '~@/styles/defs'
 .lessons {
   .lesson {
-   width: 100%;
+     width: 100%;
+     margin-bottom: 20px;
   }
 }
 </style>
