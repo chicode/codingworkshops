@@ -52,7 +52,7 @@ export const BOOKLET_SECTIONS = [
           'Draws an 8x8 sprite given its index (the number in the top left corner of every grid square) and coordinates.',
       },
       {
-        code: ['rect(x, y, w, h)', 'sprite x y w h'],
+        code: ['rect(x, y, w, h)', 'rect x y w h'],
         description: 'Draw a rectangle, given its coordinates and size.',
       },
     ],
