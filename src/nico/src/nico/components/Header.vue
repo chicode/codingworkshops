@@ -1,11 +1,15 @@
 <template lang="pug">
 .header
   .views
-    button(v-for='iview in $options.VIEWS', :key='iview', :class="'button-2' + (view === iview ? ' active' : '')", @click='setView(iview)') {{ iview }}
+    button(v-for='iview in $options.VIEWS' :key='iview' :class="'button-2' + (view === iview ? ' active' : '')" @click='setView(iview)') {{ iview }}
   div
-    button.button.run(@click='run')
+    // super hacky way to make the button update on scroll
+    // this is necessary because of a chromium bug (?) that stops position: absolute elements
+    // from moving with the scroll when a parent's overflow is set to auto or scroll
+    // TODO figure out a proper solution
+    button.button.run(@click='run' :style='{ zIndex: buttonState ? 10 : 10 }')
       div run code
-    button.button(:disabled='pauseDisabled', @click='togglePause')
+    button.button(:disabled='pauseDisabled' @click='togglePause' :style='{ zIndex: buttonState ? 10 : 10 }')
       // ' ' + 'pause' + ' ' to stop eslint from complaining
       div {{ paused ? 'resume' : (' ' + 'pause' + ' ') }}
 </template>
@@ -23,6 +27,16 @@ export default {
   methods: {
     ...mapMutations('nico', ['togglePause', 'setView']),
     ...mapActions('nico', ['run']),
+  },
+  data: function () {
+    return {
+      buttonState: false,
+    }
+  },
+  mounted () {
+    window.addEventListener('wheel', () => {
+      this.buttonState = !this.buttonState
+    })
   },
 }
 </script>
