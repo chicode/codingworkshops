@@ -9,7 +9,7 @@ div.root
         v-for="({ description }, index) in slide.directionSet"
         :key="description"
       )
-        span.text(:style="directionStyle(index)") {{ description }}
+        p.text(:style="directionStyle(index)") {{ description }}
         div.buttons(v-if="index === directionIndex")
           button.button(@click="nextDirection")
             div done!
@@ -76,10 +76,9 @@ export default {
       }
 
       .buttons {
-        display: inline;
-        margin-left: 15px;
-        position: relative;
-        bottom: -10px;
+        margin-top: 20px;
+        display: flex;
+        height: 30px;
 
         div {
           padding: 0 5px;

@@ -2,7 +2,7 @@
 .header
   .views
     button(v-for='iview in $options.VIEWS' :key='iview' :class="'button-2' + (view === iview ? ' active' : '')" @click='setView(iview)') {{ iview }}
-  div
+  div.buttons
     // super hacky way to make the button update on scroll
     // this is necessary because of a chromium bug (?) that stops position: absolute elements
     // from moving with the scroll when a parent's overflow is set to auto or scroll
@@ -45,6 +45,10 @@ export default {
     & > * {
       margin-right: 10px;
     }
+  }
+
+  .buttons {
+    display: flex;
   }
 
   .run {

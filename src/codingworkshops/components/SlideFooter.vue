@@ -50,6 +50,7 @@ export default {
 }
 
 .buttons {
+  display: flex;
   .button {
     margin-right: 20px;
   }
