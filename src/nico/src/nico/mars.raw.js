@@ -1,28 +1,31 @@
-/* global _module, _env */
+/* global _state, _ctx, _sprites, draw, init, update */
+/* eslint-disable no-unused-vars */
 
-if (typeof _module.draw !== 'function') throw new Error('You must define a "draw" function.')
+if (!draw) throw new Error('You must define a "draw" function.')
+
+const UPDATE_WAIT = 3
 
 window.rect = (x, y, width, height, outline = false, color = null) => {
-  _env.ctx.rect(x, y, width, height)
+  _ctx.rect(x, y, width, height)
   if (outline) {
-    _env.ctx.stroke()
+    _ctx.stroke()
   } else {
-    _env.ctx.fill()
+    _ctx.fill()
   }
 }
 
 window.sprite = (i, x, y) => {
-  _env.ctx.putImageData(_env.sprites[i], x, y)
+  _ctx.putImageData(_sprites[i], x, y)
 }
 
-if (typeof _module.load === 'function') _module.load()
+init()
 
-const main = () => {
-  if (!_env.state.paused) {
-    if (typeof _module.update === 'function') _module.update()
-    _env.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    _module.draw()
+function main () {
+  if (!_state.paused) {
+    update()
+    _ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+    draw()
   }
-  if (_env.state.running) window.requestAnimationFrame(main)
+  if (_state.running) window.requestAnimationFrame(main)
 }
 window.requestAnimationFrame(main)

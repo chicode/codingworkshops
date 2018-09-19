@@ -73,7 +73,14 @@ export default {
     // propogate to the mars code
     prepareCode: (state) => async (apolloClient) => {
       if (state.language === 'javascript') {
-        return `${mars}\n${state.code}`
+        // this code uses var instead of const because that's the only way to rewrite the value of the variables
+        return `
+        ${mars};
+
+        var init = init || (() => {})
+        var update = update || (() => {})
+
+        ${state.code}`
       } else {
         const result = await apolloClient.mutate({
           mutation: gql`
@@ -93,11 +100,16 @@ export default {
         })
 
         const code = result.data.compileCode.code
-        return `var ${code}
-        const _module = require('4')
+        // the var is required because `require` is defined without a declaration
+        return `
+        var ${code};
+        const module = require('4')
 
-        ${mars}
-        `
+        const init = module.init || (() => {})
+        const update = module.update || (() => {})
+        const draw = module.draw
+
+        ${mars}`
       }
     },
   },
@@ -155,12 +167,9 @@ export default {
         commit('setRunning', true)
         commit('setPaused', false)
 
-        // eslint-disable-next-line no-unused-vars
-        const _env = {
-          ctx: state.mainCtx,
-          sprites: rootGetters['sprite/sprite/sprites'],
-          state,
-        }
+        const _ctx = state.mainCtx // eslint-disable-line no-unused-vars
+        const _state = state // eslint-disable-line no-unused-vars
+        const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
 
         window.onerror = (message, source, lineno, colno, error) => {
           commit('setError', { message, source, lineno, colno, error })
