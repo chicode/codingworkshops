@@ -2,7 +2,7 @@
 div.root
   div.instructions
     h1.name {{ slide.name }}
-    p.description(v-html="$options.filters.marked(slide.description)")
+    p.description.marked(v-html="$options.filters.marked(slide.description)")
     ul.directions(v-if="slide.directionSet.length")
       h2 Directions
       li.direction(
