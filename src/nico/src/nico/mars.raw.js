@@ -3,8 +3,6 @@
 
 if (!draw) throw new Error('You must define a "draw" function.')
 
-const UPDATE_WAIT = 3
-
 window.rect = (x, y, width, height, outline = false, color = null) => {
   _ctx.rect(x, y, width, height)
   if (outline) {
