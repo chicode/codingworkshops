@@ -20,7 +20,9 @@ window.sprite = (i, x, y) => {
 
 init()
 
-function main () {
+// this being an arrow function is important because it makes the browser treat
+// the errors thrown inside of the function as normal errors and not cross-origin errors
+const main = () => {
   if (!_state.paused) {
     update()
     _ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)

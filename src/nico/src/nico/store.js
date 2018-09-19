@@ -6,19 +6,6 @@ import mars from '!raw-loader!./mars.raw'
 
 import { TEMPLATE } from './constants'
 
-// account for mars going in front of user code
-// this is done in order to allow for accurate error line numbers
-const MARS_LINES = mars.split('\n').length
-
-// different browserss set colno to be different (for some reason )
-const COLUMN_OFFSET = (() => {
-  if (navigator.userAgent.includes('Chrome')) {
-    return -2
-  } else {
-    return -1
-  }
-})()
-
 function lowerLimit (n) {
   return n < 0 ? 0 : n
 }
@@ -26,25 +13,17 @@ function lowerLimit (n) {
 function convertError (error) {
   const { lineno: lineNumber, colno: columnNumber } = error
 
-  console.log(lineNumber, columnNumber, error)
-
-  // error came from the mars part of the code
-  // this means that it was raised intentionally
-  if (lineNumber - 1 - MARS_LINES < 0) {
-    return Object.freeze(error.error)
-  }
-
   return Object.freeze({
     ...error,
     isSyntax: true,
 
     from: {
-      line: lineNumber - 1 - MARS_LINES,
-      ch: lowerLimit(columnNumber + COLUMN_OFFSET - 1),
+      line: lineNumber - 1,
+      ch: lowerLimit(columnNumber - 1),
     },
     to: {
-      line: lineNumber - 1 - MARS_LINES,
-      ch: lowerLimit(columnNumber + COLUMN_OFFSET),
+      line: lineNumber - 1,
+      ch: lowerLimit(columnNumber),
     },
   })
 }
@@ -74,13 +53,12 @@ export default {
     prepareCode: (state) => async (apolloClient) => {
       if (state.language === 'javascript') {
         // this code uses var instead of const because that's the only way to rewrite the value of the variables
-        return `
-        ${mars};
+        return `${state.code};
 
         var init = init || (() => {})
         var update = update || (() => {})
 
-        ${state.code}`
+        ${mars}`
       } else {
         const result = await apolloClient.mutate({
           mutation: gql`
@@ -151,10 +129,15 @@ export default {
   },
 
   actions: {
-    async run ({ state, commit, rootGetters, rootState, getters }) {
+    run ({ state, commit, rootGetters, rootState, getters }) {
       commit('setView', 'game')
       commit('setRunning', false)
       commit('setError', null)
+
+      window.onerror = (message, source, lineno, colno, error) => {
+        commit('setError', { message, source, lineno, colno, error })
+        commit('setRunning', false)
+      }
 
       // TODO: lint code and set error state variable
 
@@ -163,7 +146,8 @@ export default {
       // state variable, even if it's going from true -> true
       // 2) to give the currently running game one frame to not trigger the
       // requestAnimationFrame, thereby terminating it
-      setTimeout(async () => {
+
+      setTimeout(() => {
         commit('setRunning', true)
         commit('setPaused', false)
 
@@ -171,19 +155,13 @@ export default {
         const _state = state // eslint-disable-line no-unused-vars
         const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
 
-        window.onerror = (message, source, lineno, colno, error) => {
-          commit('setError', { message, source, lineno, colno, error })
-          commit('setRunning', false)
-        }
-
-        const code = await getters.prepareCode(this.apolloClient)
-
-        // eslint-disable-next-line
-        eval(code)
-
-        // error handling done in window event listener because that's the only way to
-        // get an error from an eval statement
-        // https://stackoverflow.com/a/26929319
+        getters.prepareCode(this.apolloClient).then((code) => {
+          // eslint-disable-next-line
+          // this timeout makes the error throw on the window level
+          // 'escaping' this promise
+          // eslint-disable-next-line no-eval
+          setTimeout(() => eval(code))
+        })
       })
     },
   },
