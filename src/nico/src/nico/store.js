@@ -40,6 +40,8 @@ export default {
     mainCtx: null,
     hasBeenRun: false,
     language: null,
+    loading: false,
+    loadingTime: null,
   },
 
   getters: {
@@ -101,7 +103,6 @@ export default {
             code: state.code,
           },
         })
-        console.log(compileCode)
 
         if (compileCode.success) {
           // the var is required because `require` is defined without a declaration
@@ -164,6 +165,12 @@ export default {
     setError (state, error) {
       state.error = error
     },
+    setLoading (state, loading) {
+      state.loading = loading
+    },
+    setLoadingTime (state, loadingTime) {
+      state.loadingTime = loadingTime
+    },
     initMainCtx (state, ctx) {
       state.mainCtx = ctx
     },
@@ -174,22 +181,36 @@ export default {
       commit('setView', 'game')
       commit('setRunning', false)
       commit('setError', null)
+      commit('setLoading', false)
 
       window.onerror = (message, source, lineno, colno, error) => {
         commit('setError', convertError({ message, source, lineno, colno, error }))
         commit('setRunning', false)
       }
 
-      // TODO: lint code and set error state variable
-
-      // this hacky timeout serves two purposes:
-      // 1) to make sure that vue registers the change to the running
-      // state variable, even if it's going from true -> true
-      // 2) to give the currently running game one frame to not trigger the
-      // requestAnimationFrame, thereby terminating it
-
       setTimeout(() => {
+        if (state.language !== 'javascript') {
+          commit('setLoading', true)
+          this.apolloClient
+            .query({
+              query: gql`
+                query compilationTime($language: Language!) {
+                  compilationTime(language: $language)
+                }
+              `,
+              variables: {
+                language: state.language.toUpperCase(),
+              },
+              fetchPolicy: 'network-only',
+            })
+            .then(({ data: { compilationTime } }) => {
+              console.log('set', compilationTime)
+              commit('setLoadingTime', compilationTime)
+            })
+        }
         getters.prepareCode(this.apolloClient).then(({ success, code, errors }) => {
+          commit('setLoading', false)
+
           if (success) {
             commit('setRunning', true)
             commit('setPaused', false)
@@ -204,7 +225,6 @@ export default {
             // eslint-disable-next-line no-eval
             setTimeout(() => eval(code))
           } else {
-            console.log(errors)
             commit('setError', errors[0])
           }
         })

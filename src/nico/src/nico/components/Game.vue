@@ -1,6 +1,7 @@
 <template lang="pug">
 .game
   p.error(v-if='error') {{ error.message }}
+  loading-bar(v-else-if='loading')
   p(v-else-if='!hasBeenRun && !showGreeting') Press 'run code' to run your game for the first time
   greeting(v-else-if='!hasBeenRun')
   // v-show has to be used because the ref needs to be initiated
@@ -13,11 +14,12 @@ import { mapMutations, mapState } from 'vuex'
 import { initCtx, initCanvas } from '../../sprite/helpers'
 
 import Greeting from './Greeting'
+import LoadingBar from './LoadingBar'
 
 export default {
   name: 'Game',
 
-  components: { Greeting },
+  components: { Greeting, LoadingBar },
 
   props: {
     showGreeting: {
@@ -28,7 +30,7 @@ export default {
   },
 
   computed: {
-    ...mapState('nico', ['error', 'hasBeenRun', 'running']),
+    ...mapState('nico', ['error', 'hasBeenRun', 'running', 'loading', 'loadingTime']),
   },
 
   mounted () {
