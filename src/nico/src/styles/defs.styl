@@ -31,7 +31,7 @@ borders = {
     color: palette.black,
   },
   light: {
-    radius: 0,
+    radius: 10px,
     width: 2px,
     color: palette.gray-2,
   }
@@ -54,7 +54,7 @@ light-margin-left() {
   margin-left: -1 * borders.light.width;
 }
 
-font-sizes = 60px 40px 30px 20px
+font-sizes = 50px 30px 25px 20px
 fonts = {
   heading: Comfortaa,
   body: Karla,
@@ -82,21 +82,27 @@ psuedo-element() {
 
 shadow-offsets = {
   tile: 10px,
-  button: 20px,
+  button: 15px,
 }
 
 tile(shadow-offset, background-color) {
   shadow-offset = shadow-offsets[shadow-offset]
   transition-duration = .1s
   position: relative;
-  display: inline-block;
+
+  // padding makes sure that the shadow always has the same amount of room
+  padding-bottom: (shadow-offset / 2);
+  // margin makes sure that the browser registers the button click by moving the physical element up
+  margin-top: (-1 * shadow-offset);
+
+  cursor: pointer;
 
   div {
     standard-border()
     transition-duration: transition-duration;
     background-color: background-color;
-
-    transform: translateY(-1 * shadow-offset / 2);
+    // this line makes this animation way smoother on firefox
+    transform: translateY(0);
 
     {block}
   }
@@ -104,8 +110,11 @@ tile(shadow-offset, background-color) {
   // the tile shadow
   &::after {
     psuedo-element()
+    // shadow height can't be full 100% because then it will show through the top
+    height: 80%;
+    top: unset;
+
     standard-border()
-    bottom: -1 * shadow-offset / 2;
     z-index: -1;
     background: colors.shadow;
     transition-duration: transition-duration;
@@ -115,13 +124,9 @@ tile(shadow-offset, background-color) {
     box-sizing: border-box;
   }
 
-  &:active:enabled {
+  &:active:not(:disabled) {
     div {
-      transform: translateY(0)
-    }
-
-    &::after {
-      bottom: 0;
+      transform: translateY(shadow-offset / 2.0);
     }
   }
 
@@ -131,9 +136,5 @@ tile(shadow-offset, background-color) {
       color: black;
     }
   }
-
-  // 1: this makes it so that the psuedo element appears behind the parent
-  // event when the parent's transform causes it to shift to a new stacking context
-  // https://katydecorah.com/code/z-index-and-transform/
 }
 

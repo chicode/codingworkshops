@@ -30,8 +30,8 @@ p, h3, .h3 {
 
 button-properties() {
   padding: 3px 10px;
-  cursor: pointer;
   font-family: fonts.heading;
+  font-weight: bold;
 }
 
 .button {
@@ -41,7 +41,7 @@ button-properties() {
 }
 
 .tile {
-  +tile('tile', white) {
+  +tile('tile', palette.light-green) {
     padding: 20px;
   }
 }
@@ -51,6 +51,7 @@ button-properties() {
 }
 
 .button-2 {
+  cursor: pointer;
   button-properties()
   font-weight: bold;
 
