@@ -11,6 +11,7 @@ import App from './codingworkshops/App.vue'
 import './registerServiceWorker'
 
 import './styles/index.styl'
+import './filters.js'
 
 Vue.config.productionTip = false
 

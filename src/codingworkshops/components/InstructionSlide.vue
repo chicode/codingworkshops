@@ -1,8 +1,8 @@
 <template lang="pug">
 div.root
   div.instructions
-    h1.name {{ slide.name }}
-    p.description {{ slide.description }}
+    h1.name(v-html="$options.filters.marked(slide.name)")
+    p.description(v-html="$options.filters.marked(slide.description)")
     ul.directions
       h2 Directions
       li.direction(
