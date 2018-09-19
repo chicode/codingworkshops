@@ -82,21 +82,22 @@ psuedo-element() {
 
 shadow-offsets = {
   tile: 10px,
-  button: 20px,
+  button: 15px,
 }
 
 tile(shadow-offset, background-color) {
   shadow-offset = shadow-offsets[shadow-offset]
   transition-duration = .1s
   position: relative;
-  display: inline-block;
+
+  margin-top: -1 * shadow-offset;
+  cursor: pointer;
 
   div {
     standard-border()
     transition-duration: transition-duration;
     background-color: background-color;
-
-    transform: translateY(-1 * shadow-offset / 2);
+    margin-top: -1 * (shadow-offset / 2);
 
     {block}
   }
@@ -104,6 +105,8 @@ tile(shadow-offset, background-color) {
   // the tile shadow
   &::after {
     psuedo-element()
+    height: 50%;
+    top: unset;
     standard-border()
     z-index: -1;
     background: colors.shadow;
@@ -115,12 +118,9 @@ tile(shadow-offset, background-color) {
   }
 
   &:active:not(:disabled) {
-    div {
-      transform: translateY(0)
-    }
 
-    &::after {
-      bottom: 0;
+    div {
+      transform: translateY(shadow-offset / 2.0);
     }
   }
 
