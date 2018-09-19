@@ -9,7 +9,7 @@ div.root
         v-for="({ description }, index) in slide.directionSet"
         :key="description"
       )
-        p.text(:style="directionStyle(index)") {{ description }}
+        p.text.marked(:style="directionStyle(index)" v-html="$options.filters.marked(description)")
         div.buttons(v-if="index === directionIndex")
           button.button(@click="nextDirection")
             div done!
