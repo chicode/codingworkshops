@@ -8,7 +8,6 @@ import { sync } from 'vuex-router-sync'
 import routerConfig from './codingworkshops/router'
 import storeConfig from './store'
 import App from './codingworkshops/App.vue'
-import './registerServiceWorker'
 
 import './styles/index.styl'
 import './filters.js'
