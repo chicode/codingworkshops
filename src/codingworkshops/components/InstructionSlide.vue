@@ -1,7 +1,7 @@
 <template lang="pug">
 div.root
   div.instructions
-    h1.name(v-html="$options.filters.marked(slide.name)")
+    h1.name {{ slide.name }}
     p.description(v-html="$options.filters.marked(slide.description)")
     ul.directions(v-if="slide.directionSet.length")
       h2 Directions
@@ -57,9 +57,13 @@ export default {
 
 .instructions {
   overflow-y: auto;
-  flex: 1 0 20%;
-  padding: 50px;
+  flex: 1 0 30%;
+  padding: 30px;
   light-border()
+
+  h2 {
+    font-weight: bold;
+  }
 
   .name {
     margin-bottom: 20px;
@@ -91,7 +95,7 @@ export default {
 
 .nico {
   overflow-y: auto;
-  flex: 1 0 60%;
+  flex: 1 0 70%;
   padding: 50px;
   light-border()
   light-margin-left()
