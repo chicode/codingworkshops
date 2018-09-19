@@ -3,7 +3,7 @@ div.root
   div.instructions
     h1.name(v-html="$options.filters.marked(slide.name)")
     p.description(v-html="$options.filters.marked(slide.description)")
-    ul.directions
+    ul.directions(v-if="slide.directionSet.length")
       h2 Directions
       li.direction(
         v-for="({ description }, index) in slide.directionSet"
