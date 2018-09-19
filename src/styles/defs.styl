@@ -90,14 +90,17 @@ tile(shadow-offset, background-color) {
   transition-duration = .1s
   position: relative;
 
-  margin-top: -1 * shadow-offset;
+  // padding makes sure that the shadow always has the same amount of room
+  padding-bottom: (shadow-offset / 2);
+  // margin makes sure that the browser registers the button click by moving the physical element up
+  margin-top: (-1 * shadow-offset);
+
   cursor: pointer;
 
   div {
     standard-border()
     transition-duration: transition-duration;
     background-color: background-color;
-    margin-top: -1 * (shadow-offset / 2);
 
     {block}
   }
@@ -105,8 +108,10 @@ tile(shadow-offset, background-color) {
   // the tile shadow
   &::after {
     psuedo-element()
-    height: 50%;
+    // shadow height can't be full 100% because then it will show through the top
+    height: 80%;
     top: unset;
+
     standard-border()
     z-index: -1;
     background: colors.shadow;
@@ -118,7 +123,6 @@ tile(shadow-offset, background-color) {
   }
 
   &:active:not(:disabled) {
-
     div {
       transform: translateY(shadow-offset / 2.0);
     }
@@ -130,9 +134,5 @@ tile(shadow-offset, background-color) {
       color: black;
     }
   }
-
-  // 1: this makes it so that the psuedo element appears behind the parent
-  // event when the parent's transform causes it to shift to a new stacking context
-  // https://katydecorah.com/code/z-index-and-transform/
 }
 
