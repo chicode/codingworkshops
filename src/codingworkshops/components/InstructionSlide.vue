@@ -15,7 +15,7 @@ div.root
             div done!
           // TODO: implement help
 
-  Nico(:show-greeting="false", language="fsharp").nico
+  Nico(:show-greeting="false", language="javascript").nico
 </template>
 
 <script>

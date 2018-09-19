@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 import Game from './components/Game'
 import Editor from './components/Editor'
@@ -39,6 +39,12 @@ export default {
   },
   computed: {
     ...mapState('nico', ['view']),
+  },
+  mounted () {
+    this.setLanguage(this.language)
+  },
+  methods: {
+    ...mapMutations('nico', ['setLanguage']),
   },
 }
 </script>

@@ -20,9 +20,11 @@ const COLUMN_OFFSET = (() => {
 // combines user code with the mars library to make a runnable program
 // mars goes in front so that a user syntax error does not accidentally
 // propogate to the mars code
-function prepareCode (code) {
-  return `${mars}
-  ${code}`
+function prepareCode (code, language) {
+  if (language === 'javascript') {
+    return Promise.resolve(`${mars}\n${code}`)
+  } else {
+  }
 }
 
 function lowerLimit (n) {
@@ -66,6 +68,7 @@ export default {
     running: false,
     mainCtx: null,
     hasBeenRun: false,
+    language: null,
   },
 
   getters: {
@@ -99,6 +102,9 @@ export default {
     setPaused (state, pause) {
       state.paused = pause
     },
+    setLanguage (state, language) {
+      state.language = language
+    },
     setError (state, error) {
       state.error = error ? convertError(error) : null
     },
@@ -108,7 +114,7 @@ export default {
   },
 
   actions: {
-    run ({ state, commit, rootGetters, rootState }) {
+    async run ({ state, commit, rootGetters, rootState }) {
       commit('setView', 'game')
       commit('setRunning', false)
       commit('setError', null)
@@ -120,7 +126,7 @@ export default {
       // state variable, even if it's going from true -> true
       // 2) to give the currently running game one frame to not trigger the
       // requestAnimationFrame, thereby terminating it
-      setTimeout(() => {
+      setTimeout(async () => {
         commit('setRunning', true)
         commit('setPaused', false)
 
@@ -136,8 +142,10 @@ export default {
           commit('setRunning', false)
         }
 
+        const code = await prepareCode(state.code, state.language)
+
         // eslint-disable-next-line
-        eval(prepareCode(state.code))
+        eval(code)
 
         // error handling done in window event listener because that's the only way to
         // get an error from an eval statement
