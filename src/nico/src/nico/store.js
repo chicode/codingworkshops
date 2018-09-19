@@ -1,3 +1,5 @@
+import gql from 'graphql-tag'
+
 // inline loader syntax used because otherwise this loader doesn't work
 // eslint-disable-next-line
 import mars from '!raw-loader!./mars.raw'
@@ -16,16 +18,6 @@ const COLUMN_OFFSET = (() => {
     return -1
   }
 })()
-
-// combines user code with the mars library to make a runnable program
-// mars goes in front so that a user syntax error does not accidentally
-// propogate to the mars code
-function prepareCode (code, language) {
-  if (language === 'javascript') {
-    return Promise.resolve(`${mars}\n${code}`)
-  } else {
-  }
-}
 
 function lowerLimit (n) {
   return n < 0 ? 0 : n
@@ -75,6 +67,39 @@ export default {
     pauseDisabled (state) {
       return !state.running
     },
+
+    // combines user code with the mars library to make a runnable program
+    // mars goes in front so that a user syntax error does not accidentally
+    // propogate to the mars code
+    prepareCode: (state) => async (apolloClient) => {
+      if (state.language === 'javascript') {
+        return `${mars}\n${state.code}`
+      } else {
+        const result = await apolloClient.mutate({
+          mutation: gql`
+            mutation($language: Language!, $code: String!) {
+              compileCode(language: $language, code: $code) {
+                success
+                code
+                error
+                warning
+              }
+            }
+          `,
+          variables: {
+            language: state.language.toUpperCase(),
+            code: state.code,
+          },
+        })
+
+        const code = result.data.compileCode.code
+        return `var ${code}
+        const _module = require('4')
+
+        ${mars}
+        `
+      }
+    },
   },
 
   mutations: {
@@ -114,7 +139,7 @@ export default {
   },
 
   actions: {
-    async run ({ state, commit, rootGetters, rootState }) {
+    async run ({ state, commit, rootGetters, rootState, getters }) {
       commit('setView', 'game')
       commit('setRunning', false)
       commit('setError', null)
@@ -142,7 +167,7 @@ export default {
           commit('setRunning', false)
         }
 
-        const code = await prepareCode(state.code, state.language)
+        const code = await getters.prepareCode(this.apolloClient)
 
         // eslint-disable-next-line
         eval(code)
