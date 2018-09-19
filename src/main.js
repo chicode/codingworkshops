@@ -20,6 +20,9 @@ Vue.use(VueApollo)
 
 export const store = new Vuex.Store(storeConfig)
 export const router = new Router(routerConfig)
+// use router/client from within vuex with this.router
+// this is better than importing because it is more general ie nico can use the same implementation both as a component and separate app
+Vuex.Store.prototype.router = router
 
 sync(store, router, { moduleName: 'router' })
 
@@ -35,6 +38,7 @@ export const apolloClient = new ApolloClient({
     credentials: 'include',
   },
 })
+Vuex.Store.prototype.apolloClient = apolloClient
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,

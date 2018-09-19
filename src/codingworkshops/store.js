@@ -1,5 +1,3 @@
-import { apolloClient, router } from '../main'
-
 function setNamespacedVar (variable, value, { workshop, lesson, slide }) {
   window.localStorage.setItem([variable, workshop, lesson || '', slide || ''].join('~'), value)
 }
@@ -52,7 +50,10 @@ export default {
   actions: {
     setSlideIndex ({ getters, commit }, slideIndex) {
       commit('setSlideIndex', slideIndex)
-      router.replace({ name: 'slide', params: { ...getters.routeContext(), slide: slideIndex } })
+      this.router.replace({
+        name: 'slide',
+        params: { ...getters.routeContext(), slide: slideIndex },
+      })
       if (
         slideIndex >
         (parseInt(getNamespacedVar('slideIndex', getters.routeContext(['slide']))) || 0)
@@ -85,7 +86,7 @@ export default {
 
     nextSlide ({ dispatch, getters, state, rootActions }) {
       if (getters.isLastSlide) {
-        router.push({ name: 'workshop', params: getters.routeContext() })
+        this.router.push({ name: 'workshop', params: getters.routeContext() })
       } else {
         dispatch('setSlideIndex', state.slideIndex + 1)
         dispatch('setDirectionIndexFromStorage')
@@ -101,7 +102,7 @@ export default {
     async fetchLesson ({ commit, rootState, getters }) {
       commit('setLoading', true)
       const { lesson, workshop } = getters.routeContext()
-      const response = await apolloClient.query({
+      const response = await this.apolloClient.query({
         query: require('@/graphql/q/Lesson_slides.gql'),
         variables: {
           lesson,
