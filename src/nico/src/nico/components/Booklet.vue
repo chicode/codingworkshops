@@ -11,23 +11,30 @@
       h2.title {{ section.title }}
       p {{ section.description }}
       ul
-        li.function(v-for='function_ in section.functions', :key='function_.code')
-          h3.code {{ function_.code }}
-          p {{ function_.description }}
+        li.function(v-for='(function_, i) in section.functions', :key='i')
+          h3.code {{ checkLanguage(function_.code) }}
+          p {{ checkLanguage(function_.description) }}
 </template>
 
 <script>
-import { BOOKLET_SECTIONS } from '../constants'
+import { mapState } from 'vuex'
+import { BOOKLET_SECTIONS, LANGUAGES } from '../constants'
 
 export default {
   name: 'Booklet',
 
   BOOKLET_SECTIONS,
 
-  data: () => ({
-    expanded: false,
-    section: BOOKLET_SECTIONS[window.localStorage.getItem('booklet-section') || 0],
-  }),
+  data: function () {
+    return {
+      expanded: false,
+      section: BOOKLET_SECTIONS[window.localStorage.getItem('booklet-section') || 0],
+    }
+  },
+
+  computed: {
+    ...mapState('nico', ['language']),
+  },
 
   mounted () {
     this.correctWidth()
@@ -50,6 +57,13 @@ export default {
         // sets the sections buffer to the right width, so that enough space is given
         // for the position: absolute sections
         this.$refs.sectionsBuffer.style.flex = `1 0 ${this.$refs.sections.offsetHeight}px`
+      }
+    },
+    checkLanguage (data) {
+      if (typeof data === 'object') {
+        return data[LANGUAGES[this.language]]
+      } else {
+        return data
       }
     },
   },

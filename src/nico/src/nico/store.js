@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 // eslint-disable-next-line
 import mars from '!raw-loader!./mars.raw'
 
-import { TEMPLATE } from './constants'
+import { TEMPLATES, LANGUAGES } from './constants'
 
 function lowerLimit (n) {
   return n < 0 ? 0 : n
@@ -32,7 +32,7 @@ export default {
   namespaced: true,
 
   state: {
-    code: window.localStorage.getItem('code') || TEMPLATE,
+    code: window.localStorage.getItem('code') || '',
     error: null,
     view: window.localStorage.getItem('view') || 'game',
     paused: false,
@@ -161,6 +161,9 @@ export default {
     },
     setLanguage (state, language) {
       state.language = language
+    },
+    loadBoilerplate (state) {
+      state.code = TEMPLATES[LANGUAGES[state.language]]
     },
     setError (state, error) {
       state.error = error

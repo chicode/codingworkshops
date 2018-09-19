@@ -36,15 +36,21 @@ export default {
       type: String,
       required: true,
     },
+    scriptBoilerplate: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   computed: {
     ...mapState('nico', ['view']),
   },
   mounted () {
     this.setLanguage(this.language)
+    if (this.scriptBoilerplate) this.loadBoilerplate()
   },
   methods: {
-    ...mapMutations('nico', ['setLanguage']),
+    ...mapMutations('nico', ['setLanguage', 'loadBoilerplate']),
   },
 }
 </script>
