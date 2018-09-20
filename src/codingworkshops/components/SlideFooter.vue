@@ -51,6 +51,8 @@ export default {
 
 .buttons {
   display: flex;
+  // move them down a little
+  margin-top: 5px;
   .button {
     margin-right: 20px;
   }
