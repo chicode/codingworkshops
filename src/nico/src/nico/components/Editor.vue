@@ -50,6 +50,11 @@ export default {
         lineNumbers: true,
         matchBrackets: true,
         autoRefresh: true,
+        extraKeys: {
+          Tab: (cm) => cm.execCommand('indentMore'),
+          'Shift-Tab': (cm) => cm.execCommand('indentLess'),
+        },
+
       },
     }
   },
