@@ -15,7 +15,6 @@ function convertError (error) {
 
   return Object.freeze({
     ...error,
-    isSyntax: true,
 
     from: {
       line: lineNumber - 1,
@@ -34,6 +33,7 @@ export default {
   state: {
     code: window.localStorage.getItem('code') || '',
     errors: [],
+    warnings: [],
     view: window.localStorage.getItem('view') || 'game',
     paused: false,
     running: false,
@@ -104,10 +104,14 @@ export default {
           },
         })
 
+        // rename from_ to from
+        const rename = (object) => ({ ...object, from: object.from_, from_: undefined })
+
         if (compileCode.success) {
           // the var is required because `require` is defined without a declaration
           return {
             success: true,
+            warnings: compileCode.warnings.map(rename),
             code: `
             var ${compileCode.code};
             const module = require('4')
@@ -121,13 +125,8 @@ export default {
         } else {
           return {
             success: false,
-            // rename from_ to from
-            errors: compileCode.errors.map((error) => ({
-              ...error,
-              from: error.from_,
-              from_: undefined,
-              isSyntax: true,
-            })),
+            errors: compileCode.errors.map(rename),
+            warnings: compileCode.warnings.map(rename),
           }
         }
       }
@@ -167,6 +166,9 @@ export default {
     },
     setErrors (state, errors) {
       state.errors = errors
+    },
+    setWarnings (state, warnings) {
+      state.warnings = warnings
     },
     setLoading (state, loading) {
       state.loading = loading
@@ -211,8 +213,9 @@ export default {
               commit('setLoadingTime', compilationTime)
             })
         }
-        getters.prepareCode(this.apolloClient).then(({ success, code, errors }) => {
+        getters.prepareCode(this.apolloClient).then(({ success, code, errors, warnings }) => {
           commit('setLoading', false)
+          commit('setWarnings', warnings)
 
           if (success) {
             commit('setRunning', true)

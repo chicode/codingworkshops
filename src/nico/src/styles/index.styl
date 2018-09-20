@@ -82,8 +82,7 @@ button-properties() {
   height: 0;
 }
 
-.error {
-  color: colors.warning !important;
+error () {
   position: relative;
   &::after {
     content: "";
@@ -95,6 +94,16 @@ button-properties() {
     position: absolute;
     background: colors.warning;
   }
+}
+
+.error {
+  error()
+  color: colors.warning !important;
+}
+
+.warning {
+  error()
+  color: colors.blue !important;
 }
 
 /* Slider resets https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */

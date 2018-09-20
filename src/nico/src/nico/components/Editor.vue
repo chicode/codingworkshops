@@ -72,7 +72,8 @@ export default {
         if (this.marks) this.marks.forEach(mark => mark.clear())
         this.marks = []
         for (let error of errors) {
-          this.marks.push(this.cm.markText(error.from, error.to, { className: 'error', atomic: true }))
+          console.log(error)
+          this.marks.push(this.cm.markText(error.from, error.to, { className: 'inline-error', atomic: true }))
         }
       }
     },
