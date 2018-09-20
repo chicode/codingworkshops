@@ -111,7 +111,7 @@ export default {
           // the var is required because `require` is defined without a declaration
           return {
             success: true,
-            warnings: compileCode.warnings.map(rename),
+            warnings: compileCode.warnings ? compileCode.warnings.map(rename) : [],
             code: `
             var ${compileCode.code};
             const module = require('4')
