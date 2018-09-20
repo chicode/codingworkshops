@@ -191,6 +191,7 @@ export default {
         commit('setRunning', false)
       }
 
+      // this timeout is necessary for vuex to register the change in `loading`
       setTimeout(() => {
         if (state.language !== 'javascript') {
           commit('setLoading', true)
@@ -207,7 +208,6 @@ export default {
               fetchPolicy: 'network-only',
             })
             .then(({ data: { compilationTime } }) => {
-              console.log('set', compilationTime)
               commit('setLoadingTime', compilationTime)
             })
         }
@@ -231,7 +231,7 @@ export default {
             commit('setError', errors[0])
           }
         })
-      })
+      }, 0)
     },
   },
 }

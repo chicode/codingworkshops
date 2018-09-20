@@ -16,18 +16,18 @@ export default {
   },
   watch: {
     loading (loading) {
+      console.log(loading)
       if (loading && this.loadingTime) this.init()
     },
     loadingTime (_, old) {
-      if (!old) this.init()
+      this.init()
     },
   },
   methods: {
     init () {
       this.start = Date.now()
       const main = () => {
-        // TODO calculate the `- 1` automatically
-        this.progress = ((Date.now() - this.start) / 1000) / (this.loadingTime - 1)
+        this.progress = ((Date.now() - this.start) / 1000) / this.loadingTime
         if (this.progress < 1) window.requestAnimationFrame(main)
       }
       window.requestAnimationFrame(main)
