@@ -6,8 +6,8 @@
 [subrepo]
 	remote = https://github.com/chicode/nico
 	branch = master
-	commit = 9bb995e21ceb9c155476b995b8051c55b14ce49d
-	parent = bd415b724b0be006945cc5067e224f79efab134d
+	commit = 6ea68d25b53681dfdcd15db524ca478aa4a0fcf5
+	parent = 197ad4ff5ddfeab457354e7e3e14da3f39ec0367
 	method = merge
 	update = auto
 	cmdver = 0.4.1
