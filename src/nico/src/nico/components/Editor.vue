@@ -60,17 +60,20 @@ export default {
   },
 
   computed: {
-    ...mapState('nico', ['code', 'view', 'error']),
+    ...mapState('nico', ['code', 'view', 'errors']),
     cm () {
       return this.$refs.cm ? this.$refs.cm.codemirror : null
     },
   },
 
   watch: {
-    error (error) {
-      if (error && error.isSyntax) {
-        if (this.mark) this.mark.clear()
-        this.mark = this.cm.markText(error.from, error.to, { className: 'error', atomic: true })
+    errors (errors) {
+      if (errors.length) {
+        if (this.marks) this.marks.forEach(mark => mark.clear())
+        this.marks = []
+        for (let error of errors) {
+          this.marks.push(this.cm.markText(error.from, error.to, { className: 'error', atomic: true }))
+        }
       }
     },
 

@@ -33,7 +33,7 @@ export default {
 
   state: {
     code: window.localStorage.getItem('code') || '',
-    error: null,
+    errors: [],
     view: window.localStorage.getItem('view') || 'game',
     paused: false,
     running: false,
@@ -165,8 +165,8 @@ export default {
     loadBoilerplate (state) {
       state.code = TEMPLATES[LANGUAGES[state.language]]
     },
-    setError (state, error) {
-      state.error = error
+    setErrors (state, errors) {
+      state.errors = errors
     },
     setLoading (state, loading) {
       state.loading = loading
@@ -183,11 +183,11 @@ export default {
     run ({ state, commit, rootGetters, rootState, getters }) {
       commit('setView', 'game')
       commit('setRunning', false)
-      commit('setError', null)
+      commit('setErrors', [])
       commit('setLoading', false)
 
       window.onerror = (message, source, lineno, colno, error) => {
-        commit('setError', convertError({ message, source, lineno, colno, error }))
+        commit('setErrors', [convertError({ message, source, lineno, colno, error })])
         commit('setRunning', false)
       }
 
@@ -228,7 +228,7 @@ export default {
             // eslint-disable-next-line no-eval
             setTimeout(() => eval(code))
           } else {
-            commit('setError', errors[0])
+            commit('setErrors', errors)
           }
         })
       }, 0)

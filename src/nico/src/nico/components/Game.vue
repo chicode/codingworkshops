@@ -1,6 +1,7 @@
 <template lang="pug">
 .game
-  p.error(v-if='error') {{ error.message }}
+  div.errors(v-if='errors.length')
+    p.error(v-for='error in errors') {{ error.message }}
   loading-bar(v-else-if='loading')
   p(v-else-if='!hasBeenRun && !showGreeting') Press 'run code' to run your game for the first time
   greeting(v-else-if='!hasBeenRun')
@@ -30,7 +31,7 @@ export default {
   },
 
   computed: {
-    ...mapState('nico', ['error', 'hasBeenRun', 'running', 'loading', 'loadingTime']),
+    ...mapState('nico', ['errors', 'hasBeenRun', 'running', 'loading', 'loadingTime']),
   },
 
   mounted () {
@@ -53,6 +54,9 @@ export default {
 .game {
   .main-canvas {
     standard-border()
+  }
+  .error {
+    margin-bottom: 20px;
   }
 }
 </style>
