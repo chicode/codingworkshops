@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 import mars from '!raw-loader!./mars.raw'
 
 import { TEMPLATES, LANGUAGES } from './constants'
+import { generateSet } from '../store.js'
 
 function lowerLimit (n) {
   return n < 0 ? 0 : n
@@ -134,6 +135,16 @@ export default {
   },
 
   mutations: {
+    ...generateSet([
+      'errors',
+      'warnings',
+      'loading',
+      'loadingTime',
+      'mainCtx',
+      'language',
+      'paused',
+    ]),
+
     setView (state, view) {
       state.view = view
       if (state.running) {
@@ -155,29 +166,8 @@ export default {
       state.running = running
       state.hasBeenRun = true
     },
-    setPaused (state, pause) {
-      state.paused = pause
-    },
-    setLanguage (state, language) {
-      state.language = language
-    },
     loadBoilerplate (state) {
       state.code = TEMPLATES[LANGUAGES[state.language]]
-    },
-    setErrors (state, errors) {
-      state.errors = errors
-    },
-    setWarnings (state, warnings) {
-      state.warnings = warnings
-    },
-    setLoading (state, loading) {
-      state.loading = loading
-    },
-    setLoadingTime (state, loadingTime) {
-      state.loadingTime = loadingTime
-    },
-    initMainCtx (state, ctx) {
-      state.mainCtx = ctx
     },
   },
 

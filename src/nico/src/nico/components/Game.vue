@@ -40,11 +40,11 @@ export default {
     initCanvas(canvas)
     const mainCtx = canvas.getContext('2d')
     initCtx(mainCtx)
-    this.initMainCtx(mainCtx)
+    this.setMainCtx(mainCtx)
   },
 
   methods: {
-    ...mapMutations('nico', ['initMainCtx']),
+    ...mapMutations('nico', ['setMainCtx']),
   },
 }
 </script>

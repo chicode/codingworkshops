@@ -1,3 +1,5 @@
+import { generateSet } from '../store'
+
 function setNamespacedVar (variable, value, { workshop, lesson, slide }) {
   window.localStorage.setItem([variable, workshop, lesson || '', slide || ''].join('~'), value)
 }
@@ -34,18 +36,7 @@ export default {
     },
   },
   mutations: {
-    setSlides (state, slides) {
-      state.slides = slides
-    },
-    setDirectionIndex (state, directionIndex) {
-      state.directionIndex = directionIndex
-    },
-    setSlideIndex (state, slideIndex) {
-      state.slideIndex = slideIndex
-    },
-    setLoading (state, loading) {
-      state.loading = loading
-    },
+    ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading']),
   },
   actions: {
     setSlideIndex ({ getters, commit }, slideIndex) {
