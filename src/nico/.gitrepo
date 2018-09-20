@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = git@gitlab.com:chicode/nico
+	remote = https://github.com/chicode/nico
 	branch = master
 	commit = e112eb5ad28ee50627e929347385da4de4bd5ad4
 	parent = bd415b724b0be006945cc5067e224f79efab134d
