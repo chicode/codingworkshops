@@ -3,8 +3,10 @@
 
 if (!draw) throw new Error('You must define a "draw" function.')
 
+const SCALE = 10
+
 window.rect = (x, y, width, height, outline = false, color = null) => {
-  _ctx.rect(x, y, width, height)
+  _ctx.rect(x * SCALE, y * SCALE, width * SCALE, height * SCALE)
   if (outline) {
     _ctx.stroke()
   } else {
@@ -13,7 +15,7 @@ window.rect = (x, y, width, height, outline = false, color = null) => {
 }
 
 window.sprite = (i, x, y) => {
-  _ctx.putImageData(_sprites[i], x, y)
+  _ctx.putImageData(_sprites[i], x * SCALE, y * SCALE)
 }
 
 init()
