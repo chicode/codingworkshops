@@ -77,6 +77,7 @@ export default {
             ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
           } else if (payload.type === 'selection') {
             if (rootState.sprite.select.selectTool === 'rectangle-select') {
+              ctx.fillStyle = rootState.sprite.color
               ctx.fillRect(...rootGetters['sprite/select/getRectParams'])
             } else if (rootState.sprite.select.selectTool === 'circle-select') {
               ctx.drawImage(ellipse, 0, 0)
