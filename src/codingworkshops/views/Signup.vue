@@ -33,7 +33,7 @@
     p.error(v-if="errors.bio") {{ errors.bio[0] }}
     input.input(
       v-model="data.location"
-      placeholder="where you reside, like a city"
+      placeholder="where you reside"
       @keyup.enter="signup"
     )
 
