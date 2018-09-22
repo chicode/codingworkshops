@@ -8,7 +8,7 @@
       span.accent-2 to&nbsp;
       span.accent-3 code!
   h2.explainer
-    span coding workshops is a set of interactive coding tutorials, for all skill levels!
+    span a set of interactive coding tutorials, for all skill levels!
   query(:query="require('@/graphql/q/AllWorkshops.gql')")
     template(slot-scope='{ data: { allWorkshops } }')
       WorkshopTiles.tiles(:workshops='allWorkshops')
