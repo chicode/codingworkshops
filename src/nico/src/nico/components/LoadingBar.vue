@@ -1,5 +1,5 @@
 <template lang="pug">
-div.root
+div.loading-bar
   div.bar(:style="{ width: this.progress * 100 + '%' }")
 </template>
 
@@ -39,7 +39,7 @@ export default {
 <style scoped lang="stylus">
 @import '~@/styles/defs'
 
-.root {
+.loading-bar {
   standard-border()
   background: palette.light-green;
   position: relative;

@@ -1,5 +1,5 @@
 <template lang="pug">
-div.root
+div.instruction-slide
   div.instructions
     h1.name {{ slide.name }}
     p.description.marked(v-html="$options.filters.marked(slide.description)")
@@ -50,7 +50,7 @@ export default {
 <style scoped lang="stylus">
 @import '~@/styles/defs'
 
-.root {
+.instruction-slide {
   display: flex;
   height: 100%;
 }

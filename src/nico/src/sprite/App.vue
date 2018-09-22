@@ -1,12 +1,12 @@
 <template lang="pug">
-  .root
-    .controls.no-interaction
-      ToolBar
-      OptionBar
-    .canvas
-      MainCanvas
-      GridCanvas
-      OverlayCanvas(ref='canvas')
+.sprite
+  .controls.no-interaction
+    ToolBar
+    OptionBar
+  .canvas
+    MainCanvas
+    GridCanvas
+    OverlayCanvas(ref='canvas')
 </template>
 
 <script>
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.root {
+.sprite {
   canvas {
     // TODO: compute this number automatically
     margin-top: -824px;

@@ -1,5 +1,5 @@
 <template  lang="pug">
-div
+.signup
   div
     p(v-if="errors.email") {{ errors.email[0] }}
     input(
@@ -90,3 +90,11 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="stylus">
+@import '~@/styles/defs'
+
+.signup {
+  standard-layout()
+}
+</style>

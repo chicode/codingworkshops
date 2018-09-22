@@ -1,11 +1,11 @@
 <template lang="pug">
-.root
+.status-bar
   router-link(:to="{ name: 'home' }")
     span.accent-2 coding
     span.accent-1 workshops
   query(:query="require('@/graphql/q/CurrentUser_minimal.gql')", fetch-policy='network-only')
     template(slot-scope='{ data: { currentUser } }')
-      div(v-if='currentUser')
+      div.profile(v-if='currentUser')
         router-link(:to="{ name: 'human', params: { username: currentUser.username } }") {{ currentUser.username }}
         button(@click='logout') logout
       div(v-else='')
@@ -32,9 +32,15 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.root {
+.status-bar {
   display: flex;
   justify-content: space-between;
   padding: 40px;
+}
+.profile {
+  display: flex;
+  > * {
+    margin-right: 10px;
+  }
 }
 </style>

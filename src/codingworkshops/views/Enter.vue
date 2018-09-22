@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.enter
   p.error(v-if='error') {{ error }}
   input(v-model='data.username', placeholder='username')
   input(v-model='data.password', placeholder='password', type='password', @keyup.enter='login')
@@ -42,3 +42,11 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="stylus">
+@import '~@/styles/defs'
+
+.enter {
+  standard-layout()
+}
+</style>

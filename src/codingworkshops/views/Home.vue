@@ -1,16 +1,17 @@
 <template lang="pug">
-query(:query="require('@/graphql/q/AllWorkshops.gql')")
-  template(slot-scope='{ data: { allWorkshops } }')
-    .welcome
-      img(src='img/landing-welcome.svg')
-      h1 Anyone can&nbsp;
-        // &nbsp; creates spaces between span tags
-        span.accent-1 learn&nbsp;
-        span.accent-2 to&nbsp;
-        span.accent-3 code!
-    h2.explainer
-      span coding workshops is a set of interactive coding tutorials, for all skill levels!
-    WorkshopTiles.tiles(:workshops='allWorkshops')
+.home
+  .welcome
+    img(src='img/landing-welcome.svg')
+    h1 Anyone can&nbsp;
+      // &nbsp; creates spaces between span tags
+      span.accent-1 learn&nbsp;
+      span.accent-2 to&nbsp;
+      span.accent-3 code!
+  h2.explainer
+    span coding workshops is a set of interactive coding tutorials, for all skill levels!
+  query(:query="require('@/graphql/q/AllWorkshops.gql')")
+    template(slot-scope='{ data: { allWorkshops } }')
+      WorkshopTiles.tiles(:workshops='allWorkshops')
 </template>
 
 <script>
@@ -26,8 +27,8 @@ export default {
 <style scoped lang="stylus">
 import '~@/styles/defs.styl'
 
-.root {
-  margin-top: 100px;
+.home {
+  standard-layout()
 }
 
 .welcome {

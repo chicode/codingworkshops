@@ -1,13 +1,13 @@
 <template lang="pug">
-Query(
-  :query="require('@/graphql/q/Workshop.gql')"
-  :variables="{ workshop: $route.params.workshop }"
-  class="root"
-)
-  template(slot-scope="{ data: { workshop: { name, description, lessonSet } } }")
-    h1.name {{ name }}
-    p.description {{ description }}
-    LessonTiles.tiles(:lessons="lessonSet")
+.workshop
+  query(
+    :query="require('@/graphql/q/Workshop.gql')"
+    :variables="{ workshop: $route.params.workshop }"
+  )
+    template(slot-scope="{ data: { workshop: { name, description, lessonSet } } }")
+      h1.name {{ name }}
+      p.description {{ description }}
+      LessonTiles.tiles(:lessons="lessonSet")
 </template>
 
 <script>
@@ -21,8 +21,10 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.root {
-  margin: 100px 100px;
+@import '~@/styles/defs'
+
+.workshop {
+  standard-layout()
 }
 
 .description {

@@ -55,6 +55,16 @@ light-margin-left() {
   margin-left: -1 * borders.light.width;
 }
 
+standard-layout() {
+  margin: 100px;
+  width = 1000px
+  @media only screen and (min-width: width) {
+    width: width;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 font-sizes = 50px 30px 25px 20px
 fonts = {
   heading: Comfortaa,
