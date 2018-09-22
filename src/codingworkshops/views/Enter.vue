@@ -1,10 +1,11 @@
 <template lang="pug">
 .enter
   p.error(v-if='error') {{ error }}
-  input(v-model='data.username', placeholder='username')
-  input(v-model='data.password', placeholder='password', type='password', @keyup.enter='login')
-  button(@click='login') login
-  router-link(:to="{ name: 'signup' }") sign up
+  input.input(v-model='data.username', placeholder='username')
+  input.input(v-model='data.password', placeholder='password', type='password', @keyup.enter='login')
+  .buttons
+    button.button(@click='login'): div login
+    router-link.link(:to="{ name: 'signup' }"): div sign up
 </template>
 
 <script>
@@ -47,6 +48,20 @@ export default {
 @import '~@/styles/defs'
 
 .enter {
-  standard-layout()
+  width: 300px;
+  margin: auto;
+  margin-top: 200px;
+}
+
+.input {
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 30px;
+  > * {
+    margin-right: 10px;
+  }
 }
 </style>

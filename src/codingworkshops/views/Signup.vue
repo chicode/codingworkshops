@@ -1,65 +1,64 @@
 <template  lang="pug">
 .signup
   div
-    p(v-if="errors.email") {{ errors.email[0] }}
-    input(
+    p.error(v-if="errors.email") {{ errors.email[0] }}
+    input.input(
       v-model="data.email"
       placeholder="email"
       type="email"
     )
   div
-    p(v-if="errors.username") {{ errors.username[0] }}
-    input(
+    p.error(v-if="errors.username") {{ errors.username[0] }}
+    input.input(
       v-model="data.username"
       placeholder="username"
     )
   div
-    p(v-if="errors.password")   {{ errors.password[0] }}
-    input(
+    p.error(v-if="errors.password") {{ errors.password[0] }}
+    input.input(
       v-model="data.password"
       placeholder="password"
       type="password"
     )
   div
-    input(
+    input.input(
       v-model="data.password2"
       placeholder="repeat password"
       type="password"
     )
   div
-    p(v-if="errors.bio") {{ errors.bio[0] }}
-    textarea(
-      v-model="data.bio"
-      placeholder="write a little bit about yourself!"
-    )
+    p.error(v-if="errors.bio") {{ errors.bio[0] }}
+    markdown-editor(v-model="data.bio" placeholder="write a little bit about yourself! (markdown supported)")
   div
-    p(v-if="errors.bio") {{ errors.bio[0] }}
-    input(
+    p.error(v-if="errors.bio") {{ errors.bio[0] }}
+    input.input(
       v-model="data.location"
       placeholder="where you reside, like a city"
       @keyup.enter="signup"
     )
 
-  button(@click="signup") signup!
+  button.button(@click="signup"): div signup!
 </template>
 
 <script>
+import MarkdownEditor from '@/components/MarkdownEditor'
+
 export default {
   name: 'Signup',
 
-  data () {
-    return {
-      data: {
-        email: '',
-        username: '',
-        password: '',
-        password2: '',
-        bio: '',
-        location: '',
-      },
-      errors: {},
-    }
-  },
+  components: { MarkdownEditor },
+
+  data: () => ({
+    data: {
+      email: '',
+      username: '',
+      password: '',
+      password2: '',
+      bio: '',
+      location: '',
+    },
+    errors: {},
+  }),
 
   methods: {
     async signup () {
@@ -95,6 +94,17 @@ export default {
 @import '~@/styles/defs'
 
 .signup {
-  standard-layout()
+  width: 300px;
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.input {
+  margin-bottom: 10px;
+}
+
+.button {
+  margin-top: 30px;
 }
 </style>

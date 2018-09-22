@@ -52,10 +52,22 @@ button-properties() {
   font-weight: bold;
 }
 
+.input {
+  standard-border()
+  padding: 5px;
+  width: 300px;
+  display: block;
+}
+
 .button {
   +tile('button', palette.light-green) {
     button-properties()
   }
+}
+
+.link {
+  color: palette.purple;
+  text-decoration: underline;
 }
 
 .tile {
@@ -98,6 +110,10 @@ button-properties() {
 
 .empty {
   height: 0;
+}
+
+.error {
+  color: colors.warning !important;
 }
 
 .inline-error {

@@ -15,6 +15,8 @@
     "vue-apollo": "^3.0.0-beta.19",
     "vue-codemirror": "^4.0.5",
     "vue-router": "^3.0.1",
+    "vue-simplemde": "^0.4.8",
+    "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"
   },
