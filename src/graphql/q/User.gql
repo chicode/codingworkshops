@@ -1,0 +1,9 @@
+query($username: String!) {
+  user(username: $username) {
+    username
+    bio
+    workshopSet {
+      name
+    }
+  }
+}

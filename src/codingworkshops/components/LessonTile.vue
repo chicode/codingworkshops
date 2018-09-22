@@ -10,7 +10,7 @@ router-link.lesson.tile(
   tag="li"
 )
   div
-    h2 {{ lesson.name }}
+    h2.no-margin {{ lesson.name }}
     p {{ lesson.description }}
 </template>
 

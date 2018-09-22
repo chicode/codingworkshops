@@ -1,5 +1,5 @@
 <template lang="pug">
-.workshop
+.workshop.standard-layout
   query(
     :query="require('@/graphql/q/Workshop.gql')"
     :variables="{ workshop: $route.params.workshop }"
@@ -19,20 +19,3 @@ export default {
   components: { Query, LessonTiles },
 }
 </script>
-
-<style scoped lang="stylus">
-@import '~@/styles/defs'
-
-.workshop {
-  standard-layout()
-}
-
-.description {
-  margin-top: 10px;
-}
-
-.tiles {
-  margin-top: 50px;
-}
-
-</style>

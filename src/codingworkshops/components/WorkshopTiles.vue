@@ -25,6 +25,8 @@ export default {
 @import '~@/styles/defs'
 
 .workshops {
+  margin-top: 50px;
+
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;

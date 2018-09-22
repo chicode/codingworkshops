@@ -24,7 +24,10 @@ export default {
 
 <style scoped lang="stylus">
 @import '~@/styles/defs'
+
 .lessons {
+  margin-top: 50px;
+
   .lesson {
      width: 100%;
      margin-bottom: 20px;
