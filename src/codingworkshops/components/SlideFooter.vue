@@ -37,6 +37,7 @@ export default {
   padding-bottom: 0;
   display: flex;
   justify-content: space-between;
+  height: 75px;
 }
 
 .breadcrumbs {
@@ -51,6 +52,8 @@ export default {
 
 .buttons {
   display: flex;
+  // prevent buttons from taking up 100% of the space
+  align-items: flex-start;
   // move them down a little
   margin-top: 5px;
   .button {

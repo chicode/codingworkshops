@@ -57,7 +57,7 @@ export default {
 
 .instructions {
   overflow-y: auto;
-  flex: 1 0 30%;
+  flex: 1 0 40%;
   padding: 30px;
   light-border()
 
@@ -95,7 +95,7 @@ export default {
 
 .nico {
   overflow-y: auto;
-  flex: 1 0 70%;
+  flex: 1 0 60%;
   padding: 50px;
   light-border()
   light-margin-left()

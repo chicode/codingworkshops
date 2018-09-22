@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.full
   status-bar(v-if="!$router.currentRoute.meta.noStatusBar")
   router-view
 </template>

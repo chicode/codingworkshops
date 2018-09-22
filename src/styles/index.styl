@@ -5,6 +5,10 @@
 // not sure why the .. is needed but otherwise it doesn't work
 @import '../styles/fantasque/stylesheet.css'
 
+body, html {
+  height: 100%;
+}
+
 body, button, input {
   font-family: fonts.body;
   font-size: font-sizes[2];
@@ -31,6 +35,7 @@ p, h3, .h3 {
 code {
   font-family: fonts.code;
   background: palette.gray-2;
+  border-radius: 5px;
 }
 
 .marked {
@@ -171,4 +176,8 @@ input[type=range] {
   &::-ms-track {
     track()
   }
+}
+
+.full {
+  height: 100%;
 }

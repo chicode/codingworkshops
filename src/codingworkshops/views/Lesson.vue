@@ -1,7 +1,7 @@
 <template lang="pug">
-div(v-if="!loading")
-  div.root(v-if="slides.length")
-    InstructionSlide.content
+div.full(v-if="!loading")
+  div.lesson.full(v-if="slides.length")
+    InstructionSlide.content.full
     SlideFooter.footer
   div(v-else) no slides!
 
@@ -32,7 +32,8 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.content {
-  height: 92vh;
+.lesson {
+  display: flex;
+  flex-direction: column;
 }
 </style>
