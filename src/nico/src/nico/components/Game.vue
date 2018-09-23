@@ -55,6 +55,7 @@ export default {
 .game {
   .main-canvas {
     standard-border()
+    border-radius: 0;
   }
   .error, .warning {
     margin-bottom: 20px;
