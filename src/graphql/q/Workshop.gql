@@ -8,6 +8,9 @@ query($workshop: String!) {
       id
       workshop {
         name
+        author {
+          username
+        }
       }
     }
   }

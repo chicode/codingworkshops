@@ -1,6 +1,12 @@
 <template lang="pug">
 router-link.workshop.tile(
-  :to=`{ name: 'workshop', params: { workshop: workshop.name } }`
+  :to=`{
+    name: 'workshop',
+    params: {
+      workshop: workshop.name,
+      human: workshop.author.username
+    } }
+  `
   tag="li"
 )
   div

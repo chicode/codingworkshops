@@ -4,7 +4,13 @@ div.footer
     router-link(:to="{ name: 'home' }")
       span.accent-2 coding
       span.accent-1 workshops
-    router-link.workshop(:to="{ name: 'workshop', params: { workshop: $route.params.workshop } }") {{ $route.params.workshop }}
+    router-link.workshop(:to=`{
+      name: 'workshop',
+      params: {
+        human: $route.params.human,
+        workshop: $route.params.workshop ,
+      }
+    }`) {{ $route.params.workshop }}
   div.buttons
     button.button(
       :disabled="isFirstSlide"

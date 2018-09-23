@@ -1,6 +1,6 @@
 <template lang="pug">
 .human
-  query(:query="require('@/graphql/q/User.gql')" :variables="{ username: $route.params.username }")
+  query(:query="require('@/graphql/q/User.gql')" :variables="{ username: $route.params.human }")
     template(slot-scope='{ data: { user: { username, bio, workshopSet } } }')
       h1 {{ username }}
       p {{ bio }}

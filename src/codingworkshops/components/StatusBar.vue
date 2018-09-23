@@ -6,7 +6,7 @@
   query(:query="require('@/graphql/q/CurrentUser_minimal.gql')", fetch-policy='network-only')
     template(slot-scope='{ data: { currentUser } }')
       div.profile(v-if='currentUser')
-        router-link(:to="{ name: 'human', params: { username: currentUser.username } }") {{ currentUser.username }}
+        router-link(:to="{ name: 'human', params: { human: currentUser.username } }") {{ currentUser.username }}
         button(@click='logout') logout
       div(v-else='')
         router-link(:to="{ name: 'enter' }") login

@@ -3,6 +3,7 @@ router-link.lesson.tile(
   :to=`{
     name: 'lesson',
     params: {
+      human: lesson.workshop.author.username,
       workshop: lesson.workshop.name,
       lesson: lesson.id
     }
