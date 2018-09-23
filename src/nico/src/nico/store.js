@@ -73,6 +73,7 @@ export default {
             mutation($language: Language!, $code: String!) {
               compileCode(language: $language, code: $code) {
                 success
+                blocked
                 code
                 errors {
                   message
@@ -126,8 +127,9 @@ export default {
         } else {
           return {
             success: false,
-            errors: compileCode.errors.map(rename),
-            warnings: compileCode.warnings.map(rename),
+            blocked: compileCode.blocked,
+            errors: compileCode.errors ? compileCode.map(rename) : [],
+            warnings: compileCode.warnings ? compileCode.warnings.map(rename) : [],
           }
         }
       }
@@ -173,6 +175,8 @@ export default {
 
   actions: {
     run ({ state, commit, rootGetters, rootState, getters }) {
+      if (state.loading) return
+
       commit('setView', 'game')
       commit('setRunning', false)
       commit('setErrors', [])
@@ -203,27 +207,29 @@ export default {
               commit('setLoadingTime', compilationTime)
             })
         }
-        getters.prepareCode(this.apolloClient).then(({ success, code, errors, warnings }) => {
-          commit('setLoading', false)
-          commit('setWarnings', warnings)
+        getters
+          .prepareCode(this.apolloClient)
+          .then(({ success, code, errors, warnings, blocked }) => {
+            commit('setLoading', false)
+            commit('setWarnings', warnings)
 
-          if (success) {
-            commit('setRunning', true)
-            commit('setPaused', false)
+            if (success) {
+              commit('setRunning', true)
+              commit('setPaused', false)
 
-            const _ctx = state.mainCtx // eslint-disable-line no-unused-vars
-            const _state = state // eslint-disable-line no-unused-vars
-            const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
+              const _ctx = state.mainCtx // eslint-disable-line no-unused-vars
+              const _state = state // eslint-disable-line no-unused-vars
+              const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
 
-            // eslint-disable-next-line
-            // this timeout makes the error throw on the window level
-            // 'escaping' this promise
-            // eslint-disable-next-line no-eval
-            setTimeout(() => eval(code))
-          } else {
-            commit('setErrors', errors)
-          }
-        })
+              // eslint-disable-next-line
+              // this timeout makes the error throw on the window level
+              // 'escaping' this promise
+              // eslint-disable-next-line no-eval
+              setTimeout(() => eval(code))
+            } else if (!blocked) {
+              commit('setErrors', errors)
+            }
+          })
       }, 0)
     },
   },
