@@ -11,7 +11,7 @@ router-link.workshop.tile(
 )
   div
     h2.bold.no-margin {{ workshop.name }}
-    p.no-margin {{ workshop.description }}
+    p {{ workshop.description }}
 </template>
 
 <script>
