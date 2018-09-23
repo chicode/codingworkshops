@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import mars from '!raw-loader!./mars.raw'
 
 import { TEMPLATES, LANGUAGES } from './constants'
-import { generateSet } from '../store.js'
+import generateSet from '@/generateSet'
 
 function lowerLimit (n) {
   return n < 0 ? 0 : n

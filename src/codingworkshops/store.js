@@ -1,4 +1,4 @@
-import { generateSet } from '../store'
+import generateSet from '@/generateSet'
 
 function setNamespacedVar (variable, value, { workshop, lesson, slide }) {
   window.localStorage.setItem([variable, workshop, lesson || '', slide || ''].join('~'), value)
