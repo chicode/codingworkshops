@@ -43,11 +43,16 @@ export default {
     language: null,
     loading: false,
     loadingTime: null,
+    clicks: 0,
   },
 
   getters: {
     pauseDisabled (state) {
       return !state.running
+    },
+
+    hasClickedTooMuch (state) {
+      return state.clicks > 20
     },
 
     // combines user code with the mars library to make a runnable program
@@ -145,6 +150,7 @@ export default {
       'mainCtx',
       'language',
       'paused',
+      'clicks',
     ]),
 
     setView (state, view) {
@@ -175,6 +181,7 @@ export default {
 
   actions: {
     run ({ state, commit, rootGetters, rootState, getters }) {
+      commit('setClicks', state.clicks + 1)
       if (state.loading) return
 
       commit('setView', 'game')
@@ -212,6 +219,7 @@ export default {
           .then(({ success, code, errors, warnings, blocked }) => {
             commit('setLoading', false)
             commit('setWarnings', warnings)
+            commit('setClicks', 0)
 
             if (success) {
               commit('setRunning', true)

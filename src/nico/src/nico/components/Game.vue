@@ -2,7 +2,10 @@
 .game
   div.errors(v-if='errors.length')
     p.error(v-for='error in errors') {{ error.message }}
-  loading-bar(v-else-if='loading')
+  div(v-else-if='loading')
+    loading-bar
+    img.egg(v-if='hasClickedTooMuch' src='../assets/too-many-clicks.jpeg')
+
   p(v-else-if='!hasBeenRun && !showGreeting') Press 'run code' to run your game for the first time
   greeting(v-else-if='!hasBeenRun') // v-show has to be used because the ref needs to be initiated
   canvas.main-canvas(v-show='running', ref='mainCanvas')
@@ -11,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState, mapGetters } from 'vuex'
 
 import { initCtx, initCanvas } from '../../sprite/helpers'
 
@@ -33,6 +36,7 @@ export default {
 
   computed: {
     ...mapState('nico', ['errors', 'warnings', 'hasBeenRun', 'running', 'loading', 'loadingTime']),
+    ...mapGetters('nico', ['hasClickedTooMuch']),
   },
 
   mounted () {
@@ -65,6 +69,9 @@ export default {
   }
   .warning {
     color: palette.blue;
+  }
+  .egg {
+    margin: auto;
   }
 }
 </style>
