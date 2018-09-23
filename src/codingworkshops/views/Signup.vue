@@ -37,7 +37,7 @@
       @keyup.enter="signup"
     )
 
-  button.button(@click="signup"): div signup!
+  button.button(@click="signup"): div sign up!
 </template>
 
 <script>
