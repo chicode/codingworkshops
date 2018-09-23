@@ -29,10 +29,13 @@ export default {
     sprites: (state) => {
       const canvas = getCanvasFromData(state.spritesheet)
       const ctx = scaleCanvas(canvas)
+
       let sprites = []
-      for (let x = 0; x < GRID_NUMBER; x++) {
-        for (let y = 0; y < GRID_NUMBER; y++) {
-          sprites.push(ctx.getImageData(...scale(x, y, GRID_SIZE, GRID_SIZE)))
+      for (let y = 0; y < GRID_NUMBER; y++) {
+        for (let x = 0; x < GRID_NUMBER; x++) {
+          sprites.push(
+            ctx.getImageData(...scale(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE)),
+          )
         }
       }
       return sprites

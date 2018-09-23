@@ -43,6 +43,7 @@ const scaledCtx = scaledCanvas.getContext('2d')
 initCtx(scaledCtx)
 
 export function scaleCanvas (canvas) {
+  scaledCtx.clearRect(0, 0, CANVAS_SIZE * SCALE, CANVAS_SIZE * SCALE)
   scaledCtx.drawImage(canvas, 0, 0)
   return scaledCtx
 }
