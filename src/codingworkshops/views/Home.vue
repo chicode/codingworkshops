@@ -9,9 +9,15 @@
       span.accent-3 code!
   h2.explainer
     span a set of interactive coding tutorials, for all skill levels!
-  p.h2.login
-    router-link.button(:to="{ name: 'enter' }"): div login
-    | to save progress
+  query(:query="require('@/graphql/q/CurrentUser_minimal.gql')", fetch-policy='network-only')
+    template(slot-scope='{ data: { currentUser } }')
+      p.h2.login(v-if="!currentUser")
+        router-link.button(:to="{ name: 'enter' }"): div login
+        | to save progress
+      p.h2.login(v-else) welcome,&nbsp;
+        router-link.accent-1(:to="{ name: 'human', params: { human: currentUser.username } }")
+          | {{ currentUser.username }}
+        |!
   query(:query="require('@/graphql/q/AllWorkshops.gql')")
     template(slot-scope='{ data: { allWorkshops } }')
       WorkshopTiles.tiles(:workshops='allWorkshops')
