@@ -9,6 +9,9 @@
       span.accent-3 code!
   h2.explainer
     span a set of interactive coding tutorials, for all skill levels!
+  p.h2.login
+    router-link.button(:to="{ name: 'enter' }"): div login
+    | to save progress
   query(:query="require('@/graphql/q/AllWorkshops.gql')")
     template(slot-scope='{ data: { allWorkshops } }')
       WorkshopTiles.tiles(:workshops='allWorkshops')
@@ -25,10 +28,11 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-import '~@/styles/defs.styl'
+@import '~@/styles/defs.styl'
 
 .home {
   standard-layout()
+  text-align: center;
 }
 
 .welcome {
@@ -60,5 +64,13 @@ import '~@/styles/defs.styl'
 
 .tiles {
   margin-top: 50px;
+}
+
+.login {
+  margin-top: 70px;
+  .button {
+    display: inline-block;
+    margin-right: 20px;
+  }
 }
 </style>
