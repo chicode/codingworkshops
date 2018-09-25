@@ -1,9 +1,10 @@
-query($lesson: ID!, $workshop: String!) {
-  lesson(lesson: $lesson, workshop: $workshop) {
+query($lesson: ID!, $workshop: String!, $human: String!) {
+  lesson(lesson: $lesson, workshop: $workshop, human: $human) {
     slideSet {
       name
       description
       startingCode
+      index
       directionSet {
         description
         hint

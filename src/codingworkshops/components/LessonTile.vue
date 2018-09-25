@@ -5,7 +5,7 @@ router-link.lesson.tile(
     params: {
       human: lesson.workshop.author.username,
       workshop: lesson.workshop.name,
-      lesson: lesson.id
+      lesson: lesson.index,
     }
   }`
   tag="li"

@@ -2,7 +2,10 @@
 .workshop.standard-layout
   query(
     :query="require('@/graphql/q/Workshop.gql')"
-    :variables="{ workshop: $route.params.workshop }"
+    :variables=`{
+      workshop: $route.params.workshop,
+      human: $route.params.human,
+    }`
   )
     template(slot-scope="{ data: { workshop: { name, description, lessonSet } } }")
       h1.name {{ name }}

@@ -1,11 +1,11 @@
-query($workshop: String!) {
-  workshop(workshop: $workshop) {
+query($workshop: String!, $human: String!) {
+  workshop(workshop: $workshop, human: $human) {
     name
     description
     lessonSet {
       name
       description
-      id
+      index
       workshop {
         name
         author {

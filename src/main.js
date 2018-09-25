@@ -11,6 +11,7 @@ import App from './codingworkshops/App.vue'
 
 import './styles/index.styl'
 import './filters.js'
+import './directives.js'
 
 Vue.config.productionTip = false
 

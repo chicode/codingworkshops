@@ -1,4 +1,5 @@
 import generateSet from '@/generateSet'
+import { router } from '@/main'
 
 function setNamespacedVar (variable, value, { workshop, lesson, slide }) {
   window.localStorage.setItem([variable, workshop, lesson || '', slide || ''].join('~'), value)
@@ -15,6 +16,7 @@ export default {
     slideIndex: 0,
     directionIndex: 0,
     loading: false,
+    editing: false,
   },
   getters: {
     slide (state) {
@@ -30,13 +32,13 @@ export default {
       return getters.slide && state.directionIndex === getters.slide.directionSet.length
     },
     routeContext: (_state, _getters, rootState) => (excludes = []) => {
-      return ['workshop', 'lesson', 'slide']
+      return ['human', 'workshop', 'lesson', 'slide']
         .filter((item) => !excludes.includes(item))
         .reduce((acc, val) => ({ ...acc, [val]: rootState.router.params[val] }), {})
     },
   },
   mutations: {
-    ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading']),
+    ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading', 'editing']),
   },
   actions: {
     setSlideIndex ({ getters, commit }, slideIndex) {
@@ -92,16 +94,22 @@ export default {
     },
     async fetchLesson ({ commit, rootState, getters }) {
       commit('setLoading', true)
-      const { lesson, workshop } = getters.routeContext()
+      const { lesson, workshop, human } = getters.routeContext()
       const response = await this.apolloClient.query({
         query: require('@/graphql/q/Lesson_slides.gql'),
         variables: {
           lesson,
           workshop,
+          human,
         },
       })
       commit('setLoading', false)
       commit('setSlides', response.data.lesson.slideSet)
+    },
+    async enterEditMode ({ commit, getters }, workshop) {
+      commit('setEditing', true)
+      const { human } = getters.routeContext()
+      router.push({ name: 'edit-workshop', params: { human, workshop } })
     },
   },
 }

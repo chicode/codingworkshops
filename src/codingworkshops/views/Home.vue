@@ -38,7 +38,6 @@ export default {
 
 .home {
   standard-layout()
-  text-align: center;
 }
 
 .welcome {
@@ -46,6 +45,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin-top: 100px;
+  text-align: center;
 
   img {
     width: 500px;
@@ -64,8 +64,8 @@ export default {
 .explainer {
   margin: auto;
   margin-top: 80px;
-  text-align: center;
   max-width: 1000px;
+  text-align: center;
 }
 
 .tiles {
@@ -73,6 +73,7 @@ export default {
 }
 
 .login {
+  text-align: center;
   margin-top: 70px;
   .button {
     display: inline-block;

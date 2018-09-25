@@ -2,11 +2,8 @@ mutation($username: String!, $email: String!, $password: String!, $bio: String, 
   createUser(username: $username, email: $email, password: $password, bio: $bio, location: $location) {
     ok
     errors {
-      username
-      password
-      email
-      bio
-      location
+      field
+      message
     }
   }
 }

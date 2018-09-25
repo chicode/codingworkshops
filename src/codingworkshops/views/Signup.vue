@@ -1,20 +1,20 @@
 <template  lang="pug">
 .signup
   div
-    p.error(v-if="errors.email") {{ errors.email[0] }}
+    p.error(v-if="errors.email") {{ errors.email }}
     input.input(
       v-model="data.email"
       placeholder="email"
       type="email"
     )
   div
-    p.error(v-if="errors.username") {{ errors.username[0] }}
+    p.error(v-if="errors.username") {{ errors.username }}
     input.input(
       v-model="data.username"
       placeholder="username"
     )
   div
-    p.error(v-if="errors.password") {{ errors.password[0] }}
+    p.error(v-if="errors.password") {{ errors.password }}
     input.input(
       v-model="data.password"
       placeholder="password"
@@ -27,10 +27,10 @@
       type="password"
     )
   div
-    p.error(v-if="errors.bio") {{ errors.bio[0] }}
+    p.error(v-if="errors.bio") {{ errors.bio }}
     markdown-editor(v-model="data.bio" placeholder="write a little bit about yourself! (markdown supported)")
   div
-    p.error(v-if="errors.bio") {{ errors.bio[0] }}
+    p.error(v-if="errors.location") {{ errors.location }}
     input.input(
       v-model="data.location"
       placeholder="where you reside"
@@ -42,6 +42,7 @@
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
+import { convertErrors } from '@/helpers.js'
 
 export default {
   name: 'Signup',
@@ -83,7 +84,7 @@ export default {
       if (ok) {
         this.$router.push({ name: 'home' })
       } else {
-        this.errors = errors
+        this.errors = convertErrors(errors)
       }
     },
   },

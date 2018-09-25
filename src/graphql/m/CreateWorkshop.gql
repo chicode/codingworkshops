@@ -1,0 +1,9 @@
+mutation($name: String!) {
+  createWorkshop(name: $name) {
+    ok
+    errors {
+      field
+      message
+    }
+  }
+}

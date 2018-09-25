@@ -1,0 +1,9 @@
+mutation($pkName: String!, $name: String, $description: String) {
+  editWorkshop(pkName: $pkName, name: $name, description: $description) {
+    ok
+    errors {
+      field
+      message
+    }
+  }
+}
