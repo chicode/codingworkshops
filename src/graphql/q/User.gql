@@ -5,6 +5,7 @@ query($username: String!) {
     workshopSet {
       name
       slug
+      description
       author {
         username
       }
