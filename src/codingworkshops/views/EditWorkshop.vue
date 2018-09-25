@@ -34,10 +34,10 @@ export default {
   },
   watch: {
     data: {
-      async handler ({ description, name }) {
+      async handler ({ description }) {
         const { data: { editWorkshop: { ok, errors } } } = await this.$apollo.mutate({
           mutation: require('@/graphql/m/EditWorkshop.gql'),
-          variables: { description, name, pkName: this.$route.params.workshop },
+          variables: { description, pk: this.data.id },
           fetchPolicy: 'no-cache',
         })
 

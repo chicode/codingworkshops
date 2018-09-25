@@ -1,5 +1,5 @@
-mutation($pkName: String!, $name: String, $description: String) {
-  editWorkshop(pkName: $pkName, name: $name, description: $description) {
+mutation($pk: ID!, $description: String) {
+  editWorkshop(pk: $pk, description: $description) {
     ok
     errors {
       field

@@ -8,7 +8,7 @@ div.footer
       name: 'workshop',
       params: {
         human: $route.params.human,
-        workshop: $route.params.workshop ,
+        workshop: $route.params.workshop,
       }
     }`) {{ $route.params.workshop }}
   div.buttons

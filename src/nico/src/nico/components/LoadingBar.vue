@@ -16,7 +16,6 @@ export default {
   },
   watch: {
     loading (loading) {
-      console.log(loading)
       if (loading && this.loadingTime) this.init()
     },
     loadingTime (_, old) {

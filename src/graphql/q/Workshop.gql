@@ -2,6 +2,7 @@ query($workshop: String!, $human: String!) {
   workshop(workshop: $workshop, human: $human) {
     name
     description
+    id
     lessonSet {
       name
       description
