@@ -68,6 +68,7 @@ export default {
 .new-workshop {
   display: flex;
   margin-top: 50px;
+  align-items: flex-end;
   .input {
     margin-right: 10px;
   }

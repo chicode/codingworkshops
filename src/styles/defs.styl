@@ -80,7 +80,8 @@ absolute() {
   bottom: 0;
   margin: auto;
 }
-full-size() { width: 100%;
+full-size() {
+  width: 100%;
   height: 100%;
 }
 
@@ -122,7 +123,7 @@ tile(shadow-offset, background-color) {
   &::after {
     psuedo-element()
     // shadow height can't be full 100% because then it will show through the top
-    height: 80%;
+    height: 50%;
     top: unset;
 
     standard-border()
