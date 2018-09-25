@@ -4,6 +4,7 @@ query($username: String!) {
     bio
     workshopSet {
       name
+      slug
       author {
         username
       }

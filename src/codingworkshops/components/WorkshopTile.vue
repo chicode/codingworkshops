@@ -3,7 +3,7 @@ router-link.workshop.tile(
   :to=`{
     name: 'workshop',
     params: {
-      workshop: workshop.name,
+      workshop: workshop.slug,
       human: workshop.author.username
     } }
   `

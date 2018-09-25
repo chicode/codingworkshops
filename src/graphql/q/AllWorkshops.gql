@@ -1,6 +1,7 @@
 query {
   allWorkshops {
     name
+    slug
     description
     author {
       username
