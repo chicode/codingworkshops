@@ -58,11 +58,7 @@ export default {
 .tiles {
   justify-content: flex-start;
   margin-top: 10px;
-  .tile {
-    margin: 0;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
+  margin-left: -10px;
 }
 
 .new-workshop {
