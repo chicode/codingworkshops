@@ -1,6 +1,6 @@
 <template lang='pug'>
 .input-wrapper
-  input.input(v-show='focused' v-click-outside='unfocus' @keydown.enter='unfocus' v-model='value_' ref='input')
+  input.wrapper(v-show='focused' v-click-outside='unfocus' @keydown.enter='unfocus' v-model='value_' ref='input')
   .content(v-show='!focused' @click='focus' ref='content'): slot
 </template>
 
@@ -21,7 +21,15 @@ export default {
   },
   methods: {
     focus (e) {
-      this.$refs.input.style.width = this.$refs.content.clientWidth + 'px'
+      const { input: { style }, content } = this.$refs
+      const child = content.children[0]
+
+      style.width = child.clientWidth + 'px'
+      const computedStyle = window.getComputedStyle(child)
+      style.font = computedStyle.font
+      // the input's padding is set to the margin in order to move the border
+      style.padding = computedStyle.margin
+
       this.focused = true
       // necessary to prevent unfocus event handler from registering this one
       e.stopPropagation()
@@ -46,7 +54,7 @@ export default {
   display: inline-block;
 }
 
-.content:hover {
+.content:hover, .wrapper {
   background: palette.gray-2;
   border-radius: borders.standard.radius;
 }
