@@ -1,7 +1,7 @@
 #import '../f/MutationResultNoErrors.gql'
 
-mutation {
-  logoutUser {
+mutation($pk: ID, $index: Int!) {
+  moveSlide(pk: $pk, index: $index) {
     ...MutationResultNoErrors
   }
 }

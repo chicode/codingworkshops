@@ -1,16 +1,16 @@
 <template lang="pug">
 .human
   query(:query="require('@/graphql/q/User.gql')" :variables="{ username: $route.params.human }")
-    template(slot-scope='{ data: { user: { username, bio, workshopSet } } }')
+    template(slot-scope='{ data: { user: { username, bio }, userWorkshops } }')
       h1.no-margin {{ username }}
       p {{ bio }}
       h2 Workshops
-      WorkshopTiles.tiles(:workshops="workshopSet")
+      WorkshopTiles(:edit='true').tiles(:workshops="userWorkshops")
 
       .new-workshop
         p.error(v-if="errors.name") {{ errors.name }}
         input.input(v-model="workshop" placeholder="name")
-        button.button: div(@click="newWorkshop") new workshop
+        button.button(@click="newWorkshop"): div new workshop
 </template>
 
 <script>
@@ -37,6 +37,12 @@ export default {
         variables: {
           name: this.workshop,
         },
+        refetchQueries: [{
+          query: require('@/graphql/q/UserWorkshops.gql'),
+          variables: {
+            username: this.$route.params.human,
+          },
+        }],
       })
       if (ok) {
         this.enterEditMode(this.workshop)

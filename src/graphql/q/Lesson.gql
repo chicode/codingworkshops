@@ -1,0 +1,12 @@
+#import "../f/Lesson.gql"
+#import "../f/Slide.gql"
+
+query($workshop: String!, $human: String!, $lesson: Int!) {
+  lesson(workshop: $workshop, human: $human, lesson: $lesson) {
+    ...Lesson
+  }
+
+  lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
+    ...Slide
+  }
+}

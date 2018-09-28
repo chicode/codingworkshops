@@ -1,0 +1,11 @@
+fragment Slide on SlideType {
+  id
+  index
+  name
+  description
+  startingCode
+  directionSet {
+    description
+    hint
+  }
+}

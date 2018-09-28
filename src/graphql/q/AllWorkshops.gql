@@ -1,8 +1,8 @@
+#import '../f/Workshop.gql'
+
 query {
   allWorkshops {
-    name
-    slug
-    description
+    ...Workshop
     author {
       username
     }

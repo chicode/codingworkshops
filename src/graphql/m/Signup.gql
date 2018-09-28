@@ -1,9 +1,7 @@
+#import '../f/MutationResult.gql'
+
 mutation($username: String!, $email: String!, $password: String!, $bio: String, $location: String) {
   createUser(username: $username, email: $email, password: $password, bio: $bio, location: $location) {
-    ok
-    errors {
-      field
-      message
-    }
+    ...MutationResult
   }
 }

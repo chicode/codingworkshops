@@ -24,9 +24,6 @@ export default {
       name: 'edit-lesson',
       path: '/:human/edit/:workshop/:lesson',
       component: () => import(/* webpackChunkName: "edit-lesson" */ './views/EditLesson.vue'),
-      meta: {
-        noStatusBar: true,
-      },
     },
     {
       name: 'edit-workshop',

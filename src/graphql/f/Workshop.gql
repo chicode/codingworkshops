@@ -1,0 +1,6 @@
+fragment Workshop on WorkshopType {
+  id
+  name
+  slug
+  description
+}

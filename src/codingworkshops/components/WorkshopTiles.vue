@@ -1,21 +1,56 @@
 <template lang="pug">
 ul.workshops
-  WorkshopTile.workshop(v-for='workshop in workshops', :workshop='workshop', :key='workshop.name')
-    // the empty elements help make the flex grid look
-    // like it's a list despite it actually having justify-content: center
-    .empty(v-for='i in 20', :key='i')
+  router-link(
+    v-for='workshop in workshops',
+    :key='workshop.name'
+    :to=`{
+      name: edit ? 'edit-workshop' : 'workshop',
+      params: {
+        workshop: workshop.slug,
+        human: workshop.author.username
+      }
+    }`
+    tag="li"
+  ): tile(:edit='edit' @del='del(workshop.id)')
+      h2.bold.no-margin {{ workshop.name }}
+      p {{ workshop.description }}
+
+  // the empty elements help make the flex grid look
+  // like it's a list despite it actually having justify-content: center
+  li.empty(v-for='i in 20', :key='i')
 </template>
 
 <script>
-import WorkshopTile from './WorkshopTile'
+import Tile from './Tile'
 
 export default {
   name: 'WorkshopTiles',
-  components: { WorkshopTile },
+  components: { Tile },
   props: {
     workshops: {
       type: Array,
       required: true,
+    },
+    edit: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  methods: {
+    del (pk) {
+      this.$apollo.mutate({
+        mutation: require('@/graphql/m/DeleteWorkshop.gql'),
+        variables: {
+          pk,
+        },
+        refetchQueries: [{
+          query: require('@/graphql/q/UserWorkshops.gql'),
+          variables: {
+            username: this.$route.params.human,
+          },
+        }],
+      })
     },
   },
 }

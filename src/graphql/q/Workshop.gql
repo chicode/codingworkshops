@@ -1,18 +1,11 @@
+#import '../f/Workshop.gql'
+#import '../f/Lesson.gql'
+
 query($workshop: String!, $human: String!) {
   workshop(workshop: $workshop, human: $human) {
-    name
-    description
-    id
+    ...Workshop
     lessonSet {
-      name
-      description
-      index
-      workshop {
-        name
-        author {
-          username
-        }
-      }
+      ...Lesson
     }
   }
 }

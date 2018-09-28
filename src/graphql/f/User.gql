@@ -1,0 +1,4 @@
+fragment User on UserType {
+  username
+  bio
+}

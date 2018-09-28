@@ -96,7 +96,7 @@ export default {
       commit('setLoading', true)
       const { lesson, workshop, human } = getters.routeContext()
       const response = await this.apolloClient.query({
-        query: require('@/graphql/q/Lesson_slides.gql'),
+        query: require('@/graphql/q/LessonSlides.gql'),
         variables: {
           lesson,
           workshop,

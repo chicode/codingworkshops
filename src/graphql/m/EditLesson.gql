@@ -1,0 +1,7 @@
+#import '../f/MutationResult.gql'
+
+mutation($pk: ID!, $description: String, $name: String) {
+  editLesson(pk: $pk, description: $description, name: $name) {
+    ...MutationResult
+  }
+}

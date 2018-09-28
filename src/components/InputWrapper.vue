@@ -1,16 +1,25 @@
 <template lang='pug'>
 .input-wrapper
-  input.wrapper(v-show='focused' v-click-outside='unfocus' @keydown.enter='unfocus' v-model='value_' ref='input')
+  markdown-editor.wrapper(v-if='markdown' v-show='focused' v-click-outside='unfocus' @keydown.enter='unfocus' v-model='value_' ref='input')
+  input.wrapper(v-else v-show='focused' v-click-outside='unfocus' @keydown.enter='unfocus' v-model='value_' ref='input')
   .content(v-show='!focused' @click='focus' ref='content'): slot
 </template>
 
 <script>
+import MarkdownEditor from './MarkdownEditor'
+
 export default {
   name: 'InputWrapper',
+  components: { MarkdownEditor },
   props: {
     value: {
       type: null,
       required: true,
+    },
+    markdown: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data () {
