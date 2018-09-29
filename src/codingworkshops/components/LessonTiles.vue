@@ -1,6 +1,6 @@
 <template lang="pug">
 component(:is='edit ? "vue-draggable" : "div"' @end='drag' class='lessons')
-  tile(v-for='lesson in lessons' :edit='edit' @del='del(lesson.id)' :key='lesson.name')
+  tile(v-for='lesson in lessons' :edit='edit' @del='del(lesson.id)' :key='lesson.index')
     router-link(
       :key='lesson.name'
       :to=`{
