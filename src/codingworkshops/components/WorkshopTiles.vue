@@ -1,31 +1,21 @@
 <template lang="pug">
-ul.workshops
-  router-link(
-    v-for='workshop in workshops',
-    :key='workshop.name'
-    :to=`{
-      name: edit ? 'edit-workshop' : 'workshop',
-      params: {
-        workshop: workshop.slug,
-        human: workshop.author.username
-      }
-    }`
-    tag="li"
-  ): tile(:edit='edit' @del='del(workshop.id)')
-      h2.bold.no-margin {{ workshop.name }}
-      p {{ workshop.description }}
+tiles.workshops(:items='workshops' type='workshop' :edit='edit' :getRouteParams='getRouteParams')
+  template(slot-scope='{ item }')
+    h2.bold.no-margin {{ item.name }}
+    p {{ item.description }}
 
-  // the empty elements help make the flex grid look
-  // like it's a list despite it actually having justify-content: center
-  li.empty(v-for='i in 20', :key='i')
+  template(slot='footer')
+    // the empty elements help make the flex grid look
+    // like it's a list despite it actually having justify-content: center
+    li.empty(v-for='i in 20', :key='i')
 </template>
 
 <script>
-import Tile from './Tile'
+import Tiles from './Tiles'
 
 export default {
   name: 'WorkshopTiles',
-  components: { Tile },
+  components: { Tiles },
   props: {
     workshops: {
       type: Array,
@@ -38,13 +28,11 @@ export default {
     },
   },
   methods: {
-    del (pk) {
-      this.$apollo.mutate(
-        require('@/graphql/m/DeleteWorkshop').default(
-          { pk },
-          this.$route.params
-        )
-      )
+    getRouteParams (workshop) {
+      return {
+        workshop: workshop.slug,
+        human: workshop.author.username,
+      }
     },
   },
 }

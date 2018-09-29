@@ -1,28 +1,16 @@
 <template lang="pug">
-component(:is='edit ? "vue-draggable" : "div"' @end='drag' class='lessons')
-  tile(v-for='lesson in lessons' :edit='edit' @del='del(lesson.id)' :key='lesson.index')
-    router-link(
-      :key='lesson.name'
-      :to=`{
-        name: edit ? 'edit-lesson' : 'lesson',
-        params: {
-          human: $route.params.human,
-          workshop: $route.params.workshop,
-          lesson: lesson.index,
-        }
-      }`
-    )
-      h2.no-margin {{ lesson.name }}
-      p {{ lesson.description }}
+tiles.lessons(:items='lessons' type='lesson' :edit='edit')
+  template(slot-scope='{ item }')
+    h2.no-margin {{ item.name }}
+    p {{ item.description }}
 </template>
 
 <script>
-import VueDraggable from 'vuedraggable'
-import Tile from './Tile'
+import Tiles from './Tiles'
 
 export default {
-  name: 'EditLessonTiles',
-  components: { Tile, VueDraggable },
+  name: 'LessonTiles',
+  components: { Tiles },
   props: {
     lessons: {
       type: Array,
@@ -32,32 +20,6 @@ export default {
       type: Boolean,
       required: false,
       default: false,
-    },
-    draggable: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-  },
-  methods: {
-    del (pk) {
-      this.$apollo.mutate(
-        require('@/graphql/m/DeleteLesson').default(
-          { pk },
-          this.$route.params
-        )
-      )
-    },
-
-    drag ({ oldIndex, newIndex }) {
-      this.$apollo.mutate(
-        require('@/graphql/m/MoveLesson').default(
-          {
-            pk: this.lessons[oldIndex].id, index: newIndex,
-          },
-          this.$route.params
-        )
-      )
     },
   },
 }
