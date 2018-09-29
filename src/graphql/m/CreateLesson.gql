@@ -1,7 +1,7 @@
 #import '../f/MutationResult.gql'
 
-mutation($name: String, $index: Int!, $workshop: ID!) {
-  createLesson(name: $name, index: $index, workshop: $workshop) {
+mutation($name: String, $workshop: ID!) {
+  createLesson(name: $name, workshop: $workshop) {
     ...MutationResult
   }
 }

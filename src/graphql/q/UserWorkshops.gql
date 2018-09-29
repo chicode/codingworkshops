@@ -1,7 +1,7 @@
 #import '../f/Workshop.gql'
 
-query($username: String!) {
-  userWorkshops(human: $username) {
+query($human: String!) {
+  userWorkshops(human: $human) {
     ...Workshop
     author {
       username

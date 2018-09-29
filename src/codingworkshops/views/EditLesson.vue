@@ -1,10 +1,10 @@
 <template lang="pug">
 .edit-lesson.standard-layout
   p.error(v-if='errors.name') {{ errors.name }}
-  InputWrapper(v-model='data.name'): h1 {{ data.name || 'enter a name' }}
+  InputWrapper(v-model='data.lesson.name'): h1 {{ data.lesson.name || 'enter a name' }}
 
   p.error(v-if='errors.description') {{ errors.description }}
-  InputWrapper(v-model='data.description'): p {{ data.description || 'enter a description' }}
+  InputWrapper(v-model='data.lesson.description'): p {{ data.lesson.description || 'enter a description' }}
 </template>
 
 <script>
@@ -17,9 +17,12 @@ export default {
   components: { InstructionSlide, SlideFooter, InputWrapper },
   data: () => ({
     data: {
-      name: '',
-      description: '',
-      slideSet: [],
+      lesson: {
+        name: '',
+        description: '',
+        id: '',
+      },
+      lessonSlides: [],
     },
     errors: {},
   }),
@@ -29,17 +32,17 @@ export default {
       variables () {
         return this.$route.params
       },
-      update: (result) => result.lesson,
+      update: (result) => { console.log(result); return result },
     },
   },
   watch: {
-    data: {
+    'data.lesson': {
       async handler ({ name, description }) {
-        const { data: { editLesson: { ok, errors } } } = await this.$apollo.mutate({
-          mutation: require('@/graphql/m/EditLesson.gql'),
-          variables: { name, description, pk: this.data.id },
-          fetchPolicy: 'no-cache',
-        })
+        const { data: { editLesson: { ok, errors } } } = await this.$apollo.mutate(
+          require('@/graphql/m/EditLesson').default(
+            { name, description, pk: this.data.lesson.id }
+          )
+        )
 
         if (!ok) {
           this.errors = errors

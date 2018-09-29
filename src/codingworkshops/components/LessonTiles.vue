@@ -41,29 +41,23 @@ export default {
   },
   methods: {
     del (pk) {
-      this.$apollo.mutate({
-        mutation: require('@/graphql/m/DeleteLesson.gql'),
-        variables: {
-          pk,
-        },
-        refetchQueries: [{
-          query: require('@/graphql/q/WorkshopLessons.gql'),
-          variables: this.$route.params,
-        }],
-      })
+      this.$apollo.mutate(
+        require('@/graphql/m/DeleteLesson').default(
+          { pk },
+          this.$route.params
+        )
+      )
     },
 
     drag ({ oldIndex, newIndex }) {
-      this.$apollo.mutate({
-        mutation: require('@/graphql/m/MoveLesson.gql'),
-        variables: {
-          pk: this.lessons[oldIndex].id, index: newIndex,
-        },
-        refetchQueries: [{
-          query: require('@/graphql/q/WorkshopLessons.gql'),
-          variables: this.$route.params,
-        }],
-      })
+      this.$apollo.mutate(
+        require('@/graphql/m/MoveLesson').default(
+          {
+            pk: this.lessons[oldIndex].id, index: newIndex,
+          },
+          this.$route.params
+        )
+      )
     },
   },
 }

@@ -39,18 +39,12 @@ export default {
   },
   methods: {
     del (pk) {
-      this.$apollo.mutate({
-        mutation: require('@/graphql/m/DeleteWorkshop.gql'),
-        variables: {
-          pk,
-        },
-        refetchQueries: [{
-          query: require('@/graphql/q/UserWorkshops.gql'),
-          variables: {
-            username: this.$route.params.human,
-          },
-        }],
-      })
+      this.$apollo.mutate(
+        require('@/graphql/m/DeleteWorkshop').default(
+          { pk },
+          this.$route.params
+        )
+      )
     },
   },
 }

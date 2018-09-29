@@ -32,18 +32,12 @@ export default {
   methods: {
     ...mapActions('codingworkshops', ['enterEditMode']),
     async newWorkshop () {
-      const { data: { createWorkshop: { ok, errors } } } = await this.$apollo.mutate({
-        mutation: require('@/graphql/m/CreateWorkshop.gql'),
-        variables: {
-          name: this.workshop,
-        },
-        refetchQueries: [{
-          query: require('@/graphql/q/UserWorkshops.gql'),
-          variables: {
-            username: this.$route.params.human,
-          },
-        }],
-      })
+      const { data: { createWorkshop: { ok, errors } } } = await this.$apollo.mutate(
+        require('@/graphql/m/CreateWorkshop').default(
+          { name: this.workshop },
+          this.$route.params
+        )
+      )
       if (ok) {
         this.enterEditMode(this.workshop)
       } else {

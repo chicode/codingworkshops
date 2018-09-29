@@ -29,10 +29,9 @@ export default {
         return
       }
 
-      const { data: { loginUser: { ok } } } = await this.$apollo.mutate({
-        mutation: require('@/graphql/m/Login.gql'),
-        variables: this.data,
-      })
+      const { data: { loginUser: { ok } } } = await this.$apollo.mutate(
+        require('@/graphql/m/Login').default(this.data)
+      )
 
       if (ok) {
         this.$router.push({ name: 'home' })

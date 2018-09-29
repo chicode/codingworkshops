@@ -22,9 +22,7 @@ export default {
 
   methods: {
     async logout () {
-      await this.$apollo.mutate({
-        mutation: require('@/graphql/m/Logout.gql'),
-      })
+      await this.$apollo.mutate(require('@/graphql/m/Logout').default())
       this.$router.push({ name: 'home' })
     },
   },

@@ -4,4 +4,5 @@ fragment MutationResult on MutationResult {
     field
     message
   }
+  pk
 }
