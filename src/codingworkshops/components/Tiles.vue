@@ -1,16 +1,17 @@
 <template lang="pug">
-component(:is='edit ? "vue-draggable" : "ul"' @end='drag')
-  router-link(
-    v-for='item in items'
-    :key='item.index'
-    :to=`{
-      name: edit ? 'edit-' + type : type,
-      params: getRouteParams(item)
-    }`
-    tag='li'
-  ): tile(:edit='edit' @del='del(item.id)')
-    slot(:item='item')
-  slot(name='footer')
+ul
+  component(:is='edit && draggable ? "vue-draggable" : "div"' @end='drag')
+    router-link(
+      v-for='item in items'
+      :key='item.index'
+      :to=`{
+        name: edit ? 'edit-' + type : type,
+        params: getRouteParams(item)
+      }`
+      tag='li'
+    ): tile(:edit='edit' @del='del(item.id)')
+      slot(:item='item')
+    slot(name='footer')
 </template>
 
 <script>
@@ -30,6 +31,11 @@ export default {
       required: true,
     },
     edit: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    draggable: {
       type: Boolean,
       required: false,
       default: false,

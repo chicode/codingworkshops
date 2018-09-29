@@ -1,5 +1,5 @@
 <template lang="pug">
-tiles.lessons(:items='lessons' type='lesson' :edit='edit')
+tiles.lessons(:items='lessons' type='lesson' :edit='edit' :draggable='edit')
   template(slot-scope='{ item }')
     h2.no-margin {{ item.name }}
     p {{ item.description }}
