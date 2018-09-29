@@ -32,7 +32,7 @@ export default {
       variables () {
         return this.$route.params
       },
-      update: (result) => { console.log(result); return result },
+      update: (result) => result,
     },
   },
   watch: {
