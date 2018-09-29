@@ -47,8 +47,11 @@ export default {
     },
 
     unfocus () {
-      this.focused = false
-      this.$emit('input', this.value_)
+      // prevent activation when not focused
+      if (this.focused) {
+        this.focused = false
+        this.$emit('input', this.value_)
+      }
     },
   },
 }
