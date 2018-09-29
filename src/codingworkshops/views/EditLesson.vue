@@ -14,7 +14,7 @@ import InputWrapper from '@/components/InputWrapper'
 import { convertErrors } from '@/helpers'
 
 export default {
-  name: 'Lesson',
+  name: 'EditLesson',
   components: { InstructionSlide, SlideFooter, InputWrapper },
   data: () => ({
     data: {

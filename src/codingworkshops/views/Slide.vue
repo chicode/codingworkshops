@@ -16,7 +16,7 @@ import InstructionSlide from '../components/InstructionSlide'
 import SlideFooter from '../components/SlideFooter'
 
 export default {
-  name: 'Lesson',
+  name: 'Slide',
   components: { InstructionSlide, SlideFooter },
   computed: {
     ...mapState('codingworkshops', ['slides', 'loading']),

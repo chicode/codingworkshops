@@ -15,7 +15,7 @@ export default {
     {
       name: 'edit-slide',
       path: '/:human/edit/:workshop/:lesson/:slide',
-      component: () => import(/* webpackChunkName: "edit-lesson" */ './views/EditLesson.vue'),
+      component: () => import(/* webpackChunkName: "edit-slide" */ './views/EditSlide.vue'),
       meta: {
         noStatusBar: true,
       },
@@ -33,7 +33,7 @@ export default {
     {
       name: 'slide',
       path: '/:human/:workshop/:lesson/:slide',
-      component: () => import(/* webpackChunkName: "lesson" */ './views/Lesson.vue'),
+      component: () => import(/* webpackChunkName: "slide" */ './views/Slide.vue'),
       meta: {
         noStatusBar: true,
       },
@@ -41,7 +41,7 @@ export default {
     {
       name: 'lesson',
       path: '/:human/:workshop/:lesson',
-      component: () => import(/* webpackChunkName: "lesson" */ './views/Lesson.vue'),
+      component: () => import(/* webpackChunkName: "slide" */ './views/Slide.vue'),
       meta: {
         noStatusBar: true,
       },
