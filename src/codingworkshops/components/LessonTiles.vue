@@ -75,12 +75,3 @@ export default {
   }
 }
 </style>
-
-<style lang="stylus">
-.sortable-drag {
-  background: red;
-}
-.sortable-ghost {
-  background: blue;
-}
-</style>
