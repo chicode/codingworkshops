@@ -19,7 +19,13 @@ export const generateCreate = (type, item, queryKey, query, variables = {}) => (
 }
 
 export const generateEdit = (type, item, fragment) => (proxy) => {
-  proxy.writeFragment({ id: item.id, fragment, data: { ...item, __typename: type } })
+  // Apollo ids are type:id for some reason
+  const id = type + ':' + item.pk
+  proxy.writeFragment({
+    id,
+    fragment,
+    data: { ...proxy.readFragment({ id, fragment }), ...item },
+  })
 }
 
 export const generateDelete = (item, queryKey, query, variables = {}) => (proxy) => {

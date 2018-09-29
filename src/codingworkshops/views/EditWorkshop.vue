@@ -2,7 +2,7 @@
 .edit-workshop.standard-layout
   h1.name {{ data.workshop.name }}
   p.error(v-if='errors.description') {{ errors.description }}
-  InputWrapper(v-model='data.workshop.description'): p.description {{ data.workshop.description || 'enter an eye-catching description!' }}
+  InputWrapper(:value='data.workshop.description' @input='value => onEdit("description", value)'): p.description {{ data.workshop.description || 'enter an eye-catching description!' }}
   LessonTiles(:edit='true' :lessons='data.workshopLessons')
   .button(@click='newLesson'): div new lesson
 </template>
@@ -11,6 +11,7 @@
 import Query from '@/components/Query'
 import InputWrapper from '@/components/InputWrapper'
 import LessonTiles from '../components/LessonTiles'
+import { convertErrors } from '@/helpers'
 
 export default {
   name: 'EditWorkshop',
@@ -26,23 +27,20 @@ export default {
     },
     errors: {},
   }),
-  watch: {
-    'data.workshop': {
-      async handler ({ description }) {
-        const { data: { editWorkshop: { ok, errors } } } = await this.$apollo.mutate(
-          require('@/graphql/m/EditWorkshop').default(
-            { description, pk: this.data.workshop.id }
-          )
-        )
-
-        if (!ok) {
-          this.errors = errors
-        }
-      },
-      deep: true,
-    },
-  },
   methods: {
+    async onEdit (property, value) {
+      const { data: { editWorkshop: { ok, errors } } } = await this.$apollo.mutate(
+        require('@/graphql/m/EditWorkshop').default(
+          { [property]: value, pk: this.data.workshop.id }
+        )
+      )
+
+      if (!ok) {
+        this.errors = convertErrors(errors)
+      } else {
+        this.data.workshop[property] = value
+      }
+    },
     async newLesson () {
       const { data: { createLesson: { ok, errors } } } = await this.$apollo.mutate(
         require('@/graphql/m/CreateLesson.js').default(
