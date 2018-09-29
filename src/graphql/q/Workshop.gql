@@ -4,8 +4,8 @@
 query($workshop: String!, $human: String!) {
   workshop(workshop: $workshop, human: $human) {
     ...Workshop
-    lessonSet {
-      ...Lesson
-    }
+  }
+  workshopLessons(workshop: $workshop, human: $human) {
+    ...Lesson
   }
 }

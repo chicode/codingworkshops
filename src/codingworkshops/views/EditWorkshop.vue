@@ -61,7 +61,7 @@ export default {
   },
   apollo: {
     data: {
-      query: require('@/graphql/q/WorkshopFull.gql'),
+      query: require('@/graphql/q/Workshop.gql'),
       variables () {
         return this.$route.params
       },

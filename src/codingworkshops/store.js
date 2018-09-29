@@ -104,7 +104,7 @@ export default {
         },
       })
       commit('setLoading', false)
-      commit('setSlides', response.data.lesson.slideSet)
+      commit('setSlides', response.data.lessonSlides)
     },
     async enterEditMode ({ commit, getters }, workshop) {
       commit('setEditing', true)

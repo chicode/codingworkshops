@@ -7,10 +7,10 @@
       human: $route.params.human,
     }`
   )
-    template(slot-scope="{ data: { workshop: { name, description, lessonSet } } }")
+    template(slot-scope="{ data: { workshop: { name, description }, workshopLessons } }")
       h1.name {{ name }}
       p.description {{ description }}
-      LessonTiles.tiles(:lessons="lessonSet")
+      LessonTiles.tiles(:lessons="workshopLessons")
 </template>
 
 <script>
