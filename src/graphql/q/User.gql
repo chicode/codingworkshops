@@ -1,12 +1,12 @@
 #import '../f/User.gql'
 #import '../f/Workshop.gql'
 
-query($username: String!) {
-  user(username: $username) {
+query($human: String!) {
+  user(human: $human) {
     ...User
   }
 
-  userWorkshops(human: $username) {
+  userWorkshops(human: $human) {
     ...Workshop
     author {
       username
