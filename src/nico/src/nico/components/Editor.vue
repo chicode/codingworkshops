@@ -61,9 +61,7 @@ export default {
 
   computed: {
     ...mapState('nico', ['code', 'view', 'errors']),
-    cm () {
-      return this.$refs.cm ? this.$refs.cm.codemirror : null
-    },
+    cm () { return this.$refs.cm ? this.$refs.cm.codemirror : null },
   },
 
   watch: {
@@ -106,7 +104,7 @@ export default {
 <style lang="stylus">
 @import '../../styles/defs.styl'
 
-.CodeMirror {
+.editor .CodeMirror {
   height: 100%;
 
   * {
@@ -114,7 +112,7 @@ export default {
   }
 }
 
-.CodeMirror-gutters {
+.editor .CodeMirror-gutters {
   background: white;
   border-right: 0;
   width: 60px;

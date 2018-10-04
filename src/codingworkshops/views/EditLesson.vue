@@ -1,10 +1,8 @@
 <template lang="pug">
-.edit-lesson.standard-layout
-  p.error(v-if='errors.name') {{ errors.name }}
-  InputWrapper(:value='data.lesson.name' @input='value => onEdit("name", value)'): h1 {{ data.lesson.name }}
+.edit-lesson.standard-layout p.error(v-if='errors.name') {{ errors.name }} InputWrapper(:value='data.lesson.name' @input='value => onEdit("name", value)'): h1 {{ data.lesson.name }}
 
   p.error(v-if='errors.description') {{ errors.description }}
-  InputWrapper(:value='data.lesson.description' @input='value => onEdit("description", value)'): p {{ data.lesson.description || 'enter a description' }}
+  InputWrapper(:value='data.lesson.description' @input='value => onEdit("description", value)' :markdown='true'): p {{ data.lesson.description || 'enter a description' }}
 </template>
 
 <script>

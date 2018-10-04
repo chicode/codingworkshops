@@ -1,5 +1,5 @@
 <template lang="pug">
-markdown-editor.markdown(:configs="configs" :value="value")
+markdown-editor.markdown(:configs='configs' :value='value' @input='value => $emit("input", value)')
 </template>
 
 <script>
@@ -9,7 +9,7 @@ import 'simplemde/dist/simplemde.min.css'
 /* eslint-disable vue/require-default-prop */
 
 export default {
-  name: 'MarkedownEditor',
+  name: 'MarkdownEditorWrapper',
   components: {
     MarkdownEditor,
   },
@@ -37,5 +37,4 @@ export default {
   standard-border()
   margin-bottom: 10px;
 }
-
 </style>

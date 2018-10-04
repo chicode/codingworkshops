@@ -1,5 +1,5 @@
 <template lang='pug'>
-.input-wrapper
+.input-wrapper(ref='wrapper')
   markdown-editor.wrapper(v-if='markdown' v-show='focused' v-click-outside='unfocus' @keydown.enter='unfocus' v-model='value_' ref='input')
   input.wrapper(v-else v-show='focused' v-click-outside='unfocus' @keydown.enter='unfocus' v-model='value_' ref='input')
   .content(v-show='!focused' @click='focus' ref='content'): slot
@@ -28,22 +28,40 @@ export default {
       focused: false,
     }
   },
+  mounted () {
+    this.$refs.wrapper.addEventListener('focus', (e) => {
+      if (e.srcElement !== this.$refs.wrapper) {
+        this.focused = true
+        this.unfocus()
+      }
+    })
+  },
   methods: {
     focus (e) {
-      const { input: { style }, content } = this.$refs
-      const child = content.children[0]
+      this.$refs.wrapper.dispatchEvent(new Event('focus'))
 
-      style.width = child.clientWidth + 'px'
-      const computedStyle = window.getComputedStyle(child)
-      style.font = computedStyle.font
-      // the input's padding is set to the margin in order to move the border
-      style.padding = computedStyle.margin
+      if (!this.markdown) {
+        const { input: { style }, content } = this.$refs
+        const child = content.children[0]
+
+        style.width = child.clientWidth + 'px'
+        const computedStyle = window.getComputedStyle(child)
+        style.font = computedStyle.font
+        // the input's padding is set to the margin in order to move the border
+        style.padding = computedStyle.margin
+      }
 
       this.focused = true
       // necessary to prevent unfocus event handler from registering this one
       e.stopPropagation()
       // focus on the next tick
-      setTimeout(() => this.$refs.input.focus(), 0)
+      setTimeout(() => {
+        if (this.markdown) {
+          this.$refs.input.$children[0].simplemde.codemirror.focus()
+        } else {
+          this.$refs.input.focus()
+        }
+      }, 0)
     },
 
     unfocus () {
@@ -66,8 +84,20 @@ export default {
   display: inline-block;
 }
 
-.content:hover, .wrapper {
-  background: palette.gray-2;
+.content:hover {
+  background: palette.gray-3;
   border-radius: borders.standard.radius;
+}
+
+input.wrapper {
+  border: 1px solid palette.gray-2;
+  border-radius: borders.standard.radius;
+}
+</style>
+
+<style lang="stylus">
+@import '~@/styles/defs'
+.wrapper .CodeMirror {
+  border: 1px solid palette.gray-2;
 }
 </style>
