@@ -16,6 +16,7 @@ import { mapState, mapMutations } from 'vuex'
 import { codemirror } from 'vue-codemirror'
 
 import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/python/python.js'
 import 'codemirror/mode/mllike/mllike.js'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/addon/display/autorefresh.js'
@@ -27,6 +28,7 @@ function getModeFromLanguage (language) {
   switch (language) {
     case 'javascript': return 'text/javascript'
     case 'fsharp': return 'text/x-fsharp'
+    case 'python': return 'python'
   }
 }
 
