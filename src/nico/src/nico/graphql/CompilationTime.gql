@@ -1,0 +1,4 @@
+query compilationTime($language: Language!) {
+  compilationTime(language: $language)
+}
+

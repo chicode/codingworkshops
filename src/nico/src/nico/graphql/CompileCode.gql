@@ -1,0 +1,25 @@
+fragment Error on Error {
+    message
+    from_ {
+      line
+      ch
+    }
+    to {
+      line
+      ch
+    }
+}
+
+mutation($language: String!, $code: String!) {
+  compileCode(language: $language, code: $code) {
+    success
+    blocked
+    code
+    errors {
+      ...Error
+    }
+    warnings {
+      ...Error
+    }
+  }
+}

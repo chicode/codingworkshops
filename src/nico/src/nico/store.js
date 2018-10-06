@@ -1,5 +1,3 @@
-import gql from 'graphql-tag'
-
 // inline loader syntax used because otherwise this loader doesn't work
 // eslint-disable-next-line
 import mars from '!raw-loader!./mars.raw'
@@ -26,6 +24,48 @@ function convertError (error) {
       ch: lowerLimit(columnNumber),
     },
   })
+}
+
+function loadScript (source, isSource = true) {
+  const script = document.createElement('script')
+
+  if (isSource) {
+    script.src = source
+  } else {
+    script.text = source
+  }
+  script.type = 'text/javascript'
+  document.querySelector('head').appendChild(script)
+}
+
+function runBrython (code, transformCode, transformResult, args) {
+  const $B = window.__BRYTHON__
+  const metaPath = $B.meta_path
+  const scriptId = '__main__'
+
+  const js = window.__BRYTHON__.py2js(transformCode(code), scriptId, scriptId).to_js()
+
+  if ($B.use_VFS) {
+    $B.meta_path.push($B.$meta_path[0])
+  }
+  $B.meta_path = $B.meta_path.concat($B.$meta_path.slice(1))
+
+  try {
+    console.log(js)
+    // eslint-disable-next-line no-new-func
+    Function(
+      '_state',
+      '_ctx',
+      '_sprites',
+      `
+    var $locals___main__ = {}
+
+    ${transformResult(js)}
+    `,
+    )(...args)
+  } finally {
+    $B.meta_path = metaPath
+  }
 }
 
 export default {
@@ -56,55 +96,22 @@ export default {
     },
 
     // combines user code with the mars library to make a runnable program
-    // mars goes in front so that a user syntax error does not accidentally
-    // propogate to the mars code
     prepareCode: (state) => async (apolloClient) => {
       if (state.language === 'javascript') {
-        // this code uses var instead of const because that's the only way to rewrite the value of the variables
         return {
           success: true,
           code: `${state.code};
 
-          var init = init || (() => {})
-          var update = update || (() => {})
+          const init = init || (() => {})
+          const update = update || (() => {})
 
           ${mars}`,
         }
-      } else {
+      } else if (state.language === 'fsharp') {
         const {
           data: { compileCode },
         } = await apolloClient.mutate({
-          mutation: gql`
-            mutation($language: Language!, $code: String!) {
-              compileCode(language: $language, code: $code) {
-                success
-                blocked
-                code
-                errors {
-                  message
-                  from_ {
-                    line
-                    ch
-                  }
-                  to {
-                    line
-                    ch
-                  }
-                }
-                warnings {
-                  message
-                  from_ {
-                    line
-                    ch
-                  }
-                  to {
-                    line
-                    ch
-                  }
-                }
-              }
-            }
-          `,
+          mutation: require('./graphql/CompileCode.gql'),
           variables: {
             language: state.language.toUpperCase(),
             code: state.code,
@@ -137,21 +144,25 @@ export default {
             warnings: compileCode.warnings ? compileCode.warnings.map(rename) : [],
           }
         }
+      } else {
+        return {
+          success: true,
+          code: state.code,
+        }
       }
     },
   },
 
   mutations: {
-    ...generateSet([
-      'errors',
-      'warnings',
-      'loading',
-      'loadingTime',
-      'mainCtx',
-      'language',
-      'paused',
-      'clicks',
-    ]),
+    ...generateSet(['errors', 'warnings', 'loading', 'loadingTime', 'mainCtx', 'paused', 'clicks']),
+
+    setLanguage (state, language) {
+      state.language = language
+      if (language === 'python') {
+        // loadScript('https://cdnjs.cloudflare.com/ajax/libs/brython/3.6.2/brython.min.js')
+        loadScript('https://rawgit.com/brython-dev/brython/master/www/src/brython_dist.js')
+      }
+    },
 
     setView (state, view) {
       state.view = view
@@ -188,7 +199,6 @@ export default {
       commit('setRunning', false)
       commit('setErrors', [])
       commit('setLoading', false)
-
       window.onerror = (message, source, lineno, colno, error) => {
         commit('setErrors', [convertError({ message, source, lineno, colno, error })])
         commit('setRunning', false)
@@ -196,15 +206,11 @@ export default {
 
       // this timeout is necessary for vuex to register the change in `loading`
       setTimeout(() => {
-        if (state.language !== 'javascript') {
+        if (state.language === 'fsharp') {
           commit('setLoading', true)
           this.apolloClient
             .query({
-              query: gql`
-                query compilationTime($language: Language!) {
-                  compilationTime(language: $language)
-                }
-              `,
+              query: require('./graphql/CompilationTime.gql'),
               variables: {
                 language: state.language.toUpperCase(),
               },
@@ -218,7 +224,7 @@ export default {
           .prepareCode(this.apolloClient)
           .then(({ success, code, errors, warnings, blocked }) => {
             commit('setLoading', false)
-            commit('setWarnings', warnings)
+            commit('setWarnings', warnings || [])
             commit('setClicks', 0)
 
             if (success) {
@@ -229,13 +235,39 @@ export default {
               const _state = state // eslint-disable-line no-unused-vars
               const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
 
-              // eslint-disable-next-line
-              // this timeout makes the error throw on the window level
-              // 'escaping' this promise
-              // eslint-disable-next-line no-eval
-              setTimeout(() => eval(code))
+              if (state.language === 'python') {
+                /* eslint-disable indent */
+                // prettier-ignore
+                runBrython(
+                  state.code,
+                  (code) => `
+from browser import window
+
+def sprite(*args):
+  window.sprite(*args)
+
+${code}
+                  `,
+                  (compiledCode) => `
+${compiledCode}
+const init = $locals___main__.init || (() => {})
+const update = $locals___main__.update || (() => {})
+const draw = $locals___main__.draw
+
+${mars}
+                  `,
+                  [_state, _ctx, _sprites]
+                )
+                /* eslint-enable */
+              } else {
+                // eslint-disable-next-line
+                // this timeout makes the error throw on the window level
+                // 'escaping' this promise
+                // eslint-disable-next-line no-eval
+                setTimeout(() => eval(code))
+              }
             } else if (!blocked) {
-              commit('setErrors', errors)
+              commit('setErrors', errors || [])
             }
           })
       }, 0)
