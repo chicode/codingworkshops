@@ -36,9 +36,9 @@ ${code}
     `
   }
 
-  transformJS (code) {
+  transformJS (code, scriptId) {
     return `
-var $locals___main__ = {}
+var $locals_${scriptId} = {}
 ${code};
 
 const init = $locals___main__.init || (() => {})
@@ -66,7 +66,7 @@ ${this.mars}
 
     return {
       success: true,
-      code: this.transformJS(js),
+      code: this.transformJS(js, scriptId),
     }
   }
 
