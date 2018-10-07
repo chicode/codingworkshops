@@ -15,7 +15,7 @@ div.instruction-slide
             div done!
           // TODO: implement help
 
-  Nico(:show-greeting="false" language="python" :script-boilerplate="false").nico
+  Nico(:show-greeting="false" language="Python" :script-boilerplate="false").nico
 </template>
 
 <script>

@@ -14,8 +14,6 @@ function loadScript (id, source) {
 }
 
 export default class Python extends Lang {
-  language = 'python'
-
   constructor (...args) {
     super(...args)
 

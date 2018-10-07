@@ -26,9 +26,9 @@ import Booklet from './Booklet'
 
 function getModeFromLanguage (language) {
   switch (language) {
-    case 'javascript': return 'text/javascript'
-    case 'fsharp': return 'text/x-fsharp'
-    case 'python': return 'python'
+    case 'Javascript': return 'text/javascript'
+    case 'Fsharp': return 'text/x-fsharp'
+    case 'Python': return 'python'
   }
 }
 
@@ -43,7 +43,7 @@ export default {
     cmOptions () {
       return {
         tabSize: 2,
-        mode: getModeFromLanguage(this.language.language),
+        mode: getModeFromLanguage(this.language.constructor.name),
         lineNumbers: true,
         matchBrackets: true,
         autoRefresh: true,

@@ -39,7 +39,7 @@ export default {
     running: false,
     mainCtx: null,
     hasBeenRun: false,
-    language: languages.python,
+    language: languages.Python,
     loading: false,
     loadingTime: null,
     clicks: 0,
@@ -84,7 +84,7 @@ export default {
       state.hasBeenRun = true
     },
     loadBoilerplate (state) {
-      state.code = TEMPLATES[LANGUAGES[state.language.language]]
+      state.code = TEMPLATES[LANGUAGES[state.language.constructor.name]]
     },
   },
 

@@ -1,8 +1,6 @@
 import ServerLang from './ServerLang'
 
-export default class Python extends ServerLang {
-  language = 'fsharp'
-
+export default class Fsharp extends ServerLang {
   transformCode (code) {
     // the var is required because `require` is defined without a declaration
     return `

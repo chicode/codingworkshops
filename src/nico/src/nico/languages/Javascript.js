@@ -1,8 +1,6 @@
 import Lang from './Lang'
 
 export default class Javascript extends Lang {
-  language = 'javascript'
-
   async prepareCode (code) {
     return {
       success: true,

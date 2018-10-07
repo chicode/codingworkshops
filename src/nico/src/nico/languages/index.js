@@ -1,3 +1,3 @@
-export { default as javascript } from './Javascript'
-export { default as fsharp } from './Fsharp'
-export { default as python } from './Python'
+export { default as Javascript } from './Javascript'
+export { default as Fsharp } from './Fsharp'
+export { default as Python } from './Python'
