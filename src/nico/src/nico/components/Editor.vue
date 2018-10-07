@@ -62,8 +62,13 @@ export default {
         if (this.marks) this.marks.forEach(mark => mark.clear())
         this.marks = []
         for (let error of errors) {
-          console.log(error)
-          this.marks.push(this.cm.markText(error.from, error.to, { className: 'inline-error', atomic: true }))
+          let mark = this.cm.markText(error.from, error.to, { className: 'inline-error', atomic: true })
+          // error is in area that doesn't have a character, eg no colon in python function definition
+          if (!mark.lines.length) {
+            this.cm.replaceRange(' ', error.from, error.to)
+            mark = this.cm.markText(error.from, error.to, { className: 'inline-error', atomic: true })
+          }
+          this.marks.push(mark)
         }
       }
     },
