@@ -3,7 +3,7 @@ import ServerLang from './ServerLang'
 export default class Python extends ServerLang {
   language = 'fsharp'
 
-  static transformCode (code) {
+  transformCode (code) {
     // the var is required because `require` is defined without a declaration
     return `
 var ${code};

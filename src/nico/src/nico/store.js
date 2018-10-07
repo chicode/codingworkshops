@@ -126,7 +126,6 @@ export default {
               const _ctx = state.mainCtx
               const _sprites = rootGetters['sprite/sprite/sprites']
               /* eslint-enable no-unused-vars */
-              console.log(code)
 
               try {
                 // eslint-disable-next-line no-new-func

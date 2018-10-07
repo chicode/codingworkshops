@@ -1,4 +1,6 @@
-export default class ServerLang {
+import Lang from './Lang'
+
+export default class ServerLang extends Lang {
   needsLoading = true
 
   async getLoadingTime (apolloClient) {
@@ -25,7 +27,8 @@ export default class ServerLang {
       },
     })
     // rename from_ to from
-    const rename = (object) => ({ ...object, from: object.from_, from_: undefined })
+    const rename = (objects) =>
+      objects.map((object) => ({ ...object, from: object.from_, from_: undefined }))
 
     if (compileCode.warnings) compileCode.warnings = rename(compileCode.warnings)
     if (compileCode.errors) compileCode.errors = rename(compileCode.errors)
@@ -34,7 +37,7 @@ export default class ServerLang {
       return {
         success: true,
         warnings: compileCode.warnings,
-        code: this.transformCode(code),
+        code: this.transformCode(compileCode.code),
       }
     } else {
       return {
