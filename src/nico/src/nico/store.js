@@ -12,7 +12,6 @@ function lowerLimit (n) {
 
 function convertError (error) {
   const { lineno: lineNumber, colno: columnNumber } = error
-
   return Object.freeze({
     ...error,
 
@@ -98,6 +97,8 @@ export default {
       commit('setErrors', [])
       commit('setLoading', false)
       window.onerror = (message, source, lineno, colno, error) => {
+        console.log(1)
+        console.log(error)
         commit('setErrors', [convertError({ message, source, lineno, colno, error })])
         commit('setRunning', false)
       }

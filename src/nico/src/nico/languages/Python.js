@@ -14,6 +14,14 @@ function loadScript (id, source) {
 }
 
 export default class Python extends Lang {
+  PYTHON_TEMPLATE = `
+from browser import window
+
+def sprite(*args):
+  window.sprite(*args)
+`
+  PYTHON_TEMPLATE_LENGTH = this.PYTHON_TEMPLATE.split('\n').length
+
   constructor (...args) {
     super(...args)
 
@@ -24,14 +32,7 @@ export default class Python extends Lang {
   }
 
   transformPython (code) {
-    return `
-from browser import window
-
-def sprite(*args):
-  window.sprite(*args)
-
-${code}
-    `
+    return this.PYTHON_TEMPLATE + code
   }
 
   transformJS (code, scriptId) {
@@ -47,15 +48,49 @@ ${this.mars}
     `
   }
 
+  convertError ({ lineno, offset, msg, text }) {
+    return {
+      message: `${msg}: ${text.trim()}`,
+      from: {
+        line: lineno - this.PYTHON_TEMPLATE_LENGTH,
+        ch: offset - 1,
+      },
+      to: {
+        line: lineno - this.PYTHON_TEMPLATE_LENGTH,
+        ch: offset,
+      },
+    }
+  }
+
   async prepareCode (code) {
     // https://github.com/brython-dev/brython/issues/937
 
     const $B = window.__BRYTHON__
+    if (!$B) {
+      throw new Error('Brython is not loaded!')
+    }
+
     // for later cleanup
     this.metaPath = $B.meta_path
+
     const scriptId = '__main__'
 
-    const js = $B.py2js(this.transformPython(code), scriptId, scriptId).to_js()
+    let py = this.transformPython(code)
+    console.log('PYTHON CODE:\n', py)
+
+    let js
+    try {
+      js = $B.py2js(py, scriptId, scriptId).to_js()
+    } catch (e) {
+      console.dir(e)
+      return {
+        success: false,
+        errors: [this.convertError(e)],
+      }
+    }
+
+    js = this.transformJS(js, scriptId)
+    console.log('JS CODE:\n', js)
 
     if ($B.use_VFS) {
       $B.meta_path.push($B.$meta_path[0])
@@ -64,7 +99,7 @@ ${this.mars}
 
     return {
       success: true,
-      code: this.transformJS(js, scriptId),
+      code: js,
     }
   }
 
