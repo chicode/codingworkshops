@@ -60,7 +60,6 @@ export default {
 
     setLanguage (state, language) {
       state.language = new languages[language](mars)
-      window.language = state.language
     },
 
     setView (state, view) {
