@@ -1,9 +1,10 @@
-// inline loader syntax used because otherwise this loader doesn't work
-// eslint-disable-next-line
-import mars from '!raw-loader!./mars.raw'
-
 import { TEMPLATES, LANGUAGES } from './constants'
 import generateSet from '@/generateSet'
+import * as languages from './languages'
+
+// inline loader syntax used because otherwise this loader doesn't work
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mars from '!raw-loader!./mars.raw'
 
 function lowerLimit (n) {
   return n < 0 ? 0 : n
@@ -24,48 +25,6 @@ function convertError (error) {
       ch: lowerLimit(columnNumber),
     },
   })
-}
-
-function loadScript (source, isSource = true) {
-  const script = document.createElement('script')
-
-  if (isSource) {
-    script.src = source
-  } else {
-    script.text = source
-  }
-  script.type = 'text/javascript'
-  document.querySelector('head').appendChild(script)
-}
-
-function runBrython (code, transformCode, transformResult, args) {
-  const $B = window.__BRYTHON__
-  const metaPath = $B.meta_path
-  const scriptId = '__main__'
-
-  const js = window.__BRYTHON__.py2js(transformCode(code), scriptId, scriptId).to_js()
-
-  if ($B.use_VFS) {
-    $B.meta_path.push($B.$meta_path[0])
-  }
-  $B.meta_path = $B.meta_path.concat($B.$meta_path.slice(1))
-
-  try {
-    console.log(js)
-    // eslint-disable-next-line no-new-func
-    Function(
-      '_state',
-      '_ctx',
-      '_sprites',
-      `
-    var $locals___main__ = {}
-
-    ${transformResult(js)}
-    `,
-    )(...args)
-  } finally {
-    $B.meta_path = metaPath
-  }
 }
 
 export default {
@@ -94,74 +53,13 @@ export default {
     hasClickedTooMuch (state) {
       return state.clicks > 20
     },
-
-    // combines user code with the mars library to make a runnable program
-    prepareCode: (state) => async (apolloClient) => {
-      if (state.language === 'javascript') {
-        return {
-          success: true,
-          code: `${state.code};
-
-          const init = init || (() => {})
-          const update = update || (() => {})
-
-          ${mars}`,
-        }
-      } else if (state.language === 'fsharp') {
-        const {
-          data: { compileCode },
-        } = await apolloClient.mutate({
-          mutation: require('./graphql/CompileCode.gql'),
-          variables: {
-            language: state.language.toUpperCase(),
-            code: state.code,
-          },
-        })
-
-        // rename from_ to from
-        const rename = (object) => ({ ...object, from: object.from_, from_: undefined })
-
-        if (compileCode.success) {
-          // the var is required because `require` is defined without a declaration
-          return {
-            success: true,
-            warnings: compileCode.warnings ? compileCode.warnings.map(rename) : [],
-            code: `
-            var ${compileCode.code};
-            const module = require('4')
-
-            const init = module.init || (() => {})
-            const update = module.update || (() => {})
-            const draw = module.draw
-
-            ${mars}`,
-          }
-        } else {
-          return {
-            success: false,
-            blocked: compileCode.blocked,
-            errors: compileCode.errors ? compileCode.map(rename) : [],
-            warnings: compileCode.warnings ? compileCode.warnings.map(rename) : [],
-          }
-        }
-      } else {
-        return {
-          success: true,
-          code: state.code,
-        }
-      }
-    },
   },
 
   mutations: {
     ...generateSet(['errors', 'warnings', 'loading', 'loadingTime', 'mainCtx', 'paused', 'clicks']),
 
     setLanguage (state, language) {
-      state.language = language
-      if (language === 'python') {
-        // loadScript('https://cdnjs.cloudflare.com/ajax/libs/brython/3.6.2/brython.min.js')
-        loadScript('https://rawgit.com/brython-dev/brython/master/www/src/brython_dist.js')
-      }
+      state.language = new languages[language](mars)
     },
 
     setView (state, view) {
@@ -186,7 +84,7 @@ export default {
       state.hasBeenRun = true
     },
     loadBoilerplate (state) {
-      state.code = TEMPLATES[LANGUAGES[state.language]]
+      state.code = TEMPLATES[LANGUAGES[state.language.language]]
     },
   },
 
@@ -206,22 +104,14 @@ export default {
 
       // this timeout is necessary for vuex to register the change in `loading`
       setTimeout(() => {
-        if (state.language === 'fsharp') {
+        if (state.language.needsLoading) {
           commit('setLoading', true)
-          this.apolloClient
-            .query({
-              query: require('./graphql/CompilationTime.gql'),
-              variables: {
-                language: state.language.toUpperCase(),
-              },
-              fetchPolicy: 'network-only',
-            })
-            .then(({ data: { compilationTime } }) => {
-              commit('setLoadingTime', compilationTime)
-            })
+          state.language
+            .getLoadingTime(this.apolloClient)
+            .then((time) => commit('setLoadingTime', time))
         }
-        getters
-          .prepareCode(this.apolloClient)
+        state.language
+          .prepareCode(state.code, this.apolloClient)
           .then(({ success, code, errors, warnings, blocked }) => {
             commit('setLoading', false)
             commit('setWarnings', warnings || [])
@@ -231,43 +121,20 @@ export default {
               commit('setRunning', true)
               commit('setPaused', false)
 
-              const _ctx = state.mainCtx // eslint-disable-line no-unused-vars
-              const _state = state // eslint-disable-line no-unused-vars
-              const _sprites = rootGetters['sprite/sprite/sprites'] // eslint-disable-line no-unused-vars
+              /* eslint-disable no-unused-vars */
+              const _state = state
+              const _ctx = state.mainCtx
+              const _sprites = rootGetters['sprite/sprite/sprites']
+              /* eslint-enable no-unused-vars */
 
-              if (state.language === 'python') {
-                /* eslint-disable indent */
-                // prettier-ignore
-                runBrython(
-                  state.code,
-                  (code) => `
-from browser import window
-
-def sprite(*args):
-  window.sprite(*args)
-
-${code}
-                  `,
-                  (compiledCode) => `
-${compiledCode}
-const init = $locals___main__.init || (() => {})
-const update = $locals___main__.update || (() => {})
-const draw = $locals___main__.draw
-
-${mars}
-                  `,
-                  [_state, _ctx, _sprites]
-                )
-                /* eslint-enable */
-              } else {
-                // eslint-disable-next-line
-                // this timeout makes the error throw on the window level
-                // 'escaping' this promise
-                // eslint-disable-next-line no-eval
-                setTimeout(() => eval(code))
+              try {
+                // eslint-disable-next-line no-new-func
+                Function('_state', '_ctx', '_sprites', code)(_state, _ctx, _sprites)
+              } finally {
+                state.language.cleanup()
               }
             } else if (!blocked) {
-              commit('setErrors', errors || [])
+              commit('setErrors', errors)
             }
           })
       }, 0)
