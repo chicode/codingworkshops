@@ -39,7 +39,7 @@ export default {
     running: false,
     mainCtx: null,
     hasBeenRun: false,
-    language: null,
+    language: languages.python,
     loading: false,
     loadingTime: null,
     clicks: 0,
@@ -60,6 +60,7 @@ export default {
 
     setLanguage (state, language) {
       state.language = new languages[language](mars)
+      window.language = state.language
     },
 
     setView (state, view) {
@@ -126,6 +127,7 @@ export default {
               const _ctx = state.mainCtx
               const _sprites = rootGetters['sprite/sprite/sprites']
               /* eslint-enable no-unused-vars */
+              console.log(code)
 
               try {
                 // eslint-disable-next-line no-new-func

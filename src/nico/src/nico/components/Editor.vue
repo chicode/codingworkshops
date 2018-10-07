@@ -37,18 +37,13 @@ export default {
 
   components: { codemirror, Booklet },
 
-  props: {
-    language: {
-      type: String,
-      required: true,
-    },
-  },
-
-  data: function () {
-    return {
-      cmOptions: {
+  computed: {
+    ...mapState('nico', ['code', 'view', 'errors', 'language']),
+    cm () { return this.$refs.cm ? this.$refs.cm.codemirror : null },
+    cmOptions () {
+      return {
         tabSize: 2,
-        mode: getModeFromLanguage(this.language),
+        mode: getModeFromLanguage(this.language.language),
         lineNumbers: true,
         matchBrackets: true,
         autoRefresh: true,
@@ -57,13 +52,8 @@ export default {
           'Shift-Tab': (cm) => cm.execCommand('indentLess'),
         },
 
-      },
-    }
-  },
-
-  computed: {
-    ...mapState('nico', ['code', 'view', 'errors']),
-    cm () { return this.$refs.cm ? this.$refs.cm.codemirror : null },
+      }
+    },
   },
 
   watch: {
