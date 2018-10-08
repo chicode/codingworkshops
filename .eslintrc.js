@@ -10,6 +10,7 @@ module.exports = {
 
     'comma-dangle': ['error', 'always-multiline'],
     'object-curly-spacing': ['error', 'always'],
+    camelcase: 'off',
 
     'vue/html-closing-bracket-newline': [
       'error',

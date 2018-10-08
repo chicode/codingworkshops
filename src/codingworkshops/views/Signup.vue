@@ -42,7 +42,7 @@
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
-import { convertErrors } from '@/helpers.js'
+import { convertErrors } from '@/edit-abstractions'
 
 export default {
   name: 'Signup',

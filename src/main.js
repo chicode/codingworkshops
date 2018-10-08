@@ -10,7 +10,6 @@ import storeConfig from './store'
 import App from './codingworkshops/App.vue'
 
 import './styles/index.styl'
-import './filters.js'
 import './directives.js'
 
 // eslint-disable-next-line no-extend-native

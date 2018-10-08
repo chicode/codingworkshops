@@ -2,14 +2,14 @@
 div.instruction-slide
   div.instructions
     h1.name {{ slide.name }}
-    p.description.marked(v-html="$options.filters.marked(slide.description)")
+    p.description.marked(v-marked="slide.description")
     ul.directions(v-if="slide.directionSet.length")
       h2 Directions
       li.direction(
         v-for="({ description }, index) in slide.directionSet"
         :key="description"
       )
-        p.text.marked(:style="directionStyle(index)" v-html="$options.filters.marked(description)")
+        p.text.marked(:style="directionStyle(index)" v-marked="description")
         div.buttons(v-if="index === directionIndex")
           button.button(@click="nextDirection")
             div done!
@@ -48,56 +48,5 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-@import '~@/styles/defs'
-
-.instruction-slide {
-  display: flex;
-  height: 100%;
-}
-
-.instructions {
-  overflow-y: auto;
-  flex: 1 0 40%;
-  padding: 30px;
-  light-border()
-
-  h2 {
-    font-weight: bold;
-  }
-
-  .name {
-    margin-bottom: 20px;
-  }
-
-  .directions {
-    margin-top: 40px;
-
-    .direction {
-      margin-top: 20px;
-
-      .text {
-        transition-duration: .2s;
-      }
-
-      .buttons {
-        margin-top: 20px;
-        display: flex;
-        height: 30px;
-
-        div {
-          padding: 0 5px;
-          font-size: 25px;
-        }
-      }
-    }
-  }
-}
-
-.nico {
-  overflow-y: auto;
-  flex: 1 0 60%;
-  padding: 50px;
-  light-border()
-  light-margin-left()
-}
+@import './InstructionSlide.styl'
 </style>

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import marked from 'marked'
 
 Vue.directive('click-outside', {
   bind (el, binding, vnode) {
@@ -14,4 +15,8 @@ Vue.directive('click-outside', {
   unbind (el) {
     document.body.removeEventListener('click', el.clickOutsideEvent)
   },
+})
+
+Vue.directive('marked', (el, binding) => {
+  el.innerHTML = marked(binding.value, { sanitize: true })
 })

@@ -1,11 +1,14 @@
 <template lang="pug">
-p hi
+EditInstructionSlide.content.full()
 </template>
 
 <script>
-import { convertErrors } from '@/helpers'
+import EditInstructionSlide from '../components/EditInstructionSlide'
 
 export default {
   name: 'EditSlide',
+  components: {
+    EditInstructionSlide,
+  },
 }
 </script>

@@ -18,7 +18,7 @@ import { mapActions } from 'vuex'
 
 import Query from '@/components/Query'
 import WorkshopTiles from '../components/WorkshopTiles.vue'
-import { convertErrors } from '@/helpers'
+import { convertErrors } from '@/edit-abstractions'
 
 export default {
   name: 'Human',
