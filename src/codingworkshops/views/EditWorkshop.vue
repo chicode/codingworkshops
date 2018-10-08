@@ -27,6 +27,7 @@ export default {
       },
       workshopLessons: [],
     },
+    loading: 0,
     errors: {},
   }),
   methods: {
