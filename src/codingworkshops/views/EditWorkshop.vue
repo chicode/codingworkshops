@@ -1,10 +1,12 @@
 <template lang='pug'>
 .edit-workshop.standard-layout
-  h1.name {{ data.workshop.name }}
-  p.error(v-if='errors.description') {{ errors.description }}
-  InputWrapper(:value='data.workshop.description' @input='value => onEdit("description", value)'): p.description {{ data.workshop.description || 'enter an eye-catching description!' }}
-  LessonTiles(:edit='true' :lessons='data.workshopLessons')
-  .button(@click='newLesson'): div new lesson
+  div(v-if='!loading')
+    h1.name {{ data.workshop.name }}
+    p.error(v-if='errors.description') {{ errors.description }}
+    InputWrapper(:value='data.workshop.description' @input='value => onEdit("description", value)'): p.description {{ data.workshop.description || 'enter an eye-catching description!' }}
+    LessonTiles(:edit='true' :lessons='data.workshopLessons')
+    .button(@click='newLesson'): div new lesson
+  p(v-else) loading...
 </template>
 
 <script>
@@ -61,6 +63,7 @@ export default {
   },
   apollo: {
     data: {
+      loadingKey: 'loading',
       query: require('@/graphql/q/Workshop.gql'),
       variables () {
         return this.$route.params
