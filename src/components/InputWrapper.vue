@@ -28,13 +28,8 @@ export default {
       focused: false,
     }
   },
-  mounted () {
-    this.value_ = ''
-  },
   methods: {
     focus (e) {
-      this.$refs.wrapper.dispatchEvent(new Event('focus'))
-
       if (!this.markdown) {
         const { input: { style }, content } = this.$refs
         const child = content.children[0]
@@ -52,7 +47,9 @@ export default {
       // focus on the next tick
       setTimeout(() => {
         if (this.markdown) {
-          this.$refs.input.$children[0].simplemde.codemirror.focus()
+          const cm = this.$refs.input.$children[0].simplemde.codemirror
+          cm.refresh()
+          cm.focus()
         } else {
           this.$refs.input.focus()
         }
