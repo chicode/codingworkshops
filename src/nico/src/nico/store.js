@@ -98,7 +98,7 @@ export default {
       commit('setLoading', false)
       window.onerror = (message, source, lineno, colno, error) => {
         console.log(1)
-        console.log(error)
+        console.dir(error)
         commit('setErrors', [convertError({ message, source, lineno, colno, error })])
         commit('setRunning', false)
       }
@@ -128,11 +128,16 @@ export default {
               const _sprites = rootGetters['sprite/sprite/sprites']
               /* eslint-enable no-unused-vars */
 
-              try {
-                // eslint-disable-next-line no-new-func
-                Function('_state', '_ctx', '_sprites', code)(_state, _ctx, _sprites)
-              } finally {
-                state.language.cleanup()
+              if (state.language.useEval) {
+                // eslint-disable-next-line no-eval
+                setTimeout(() => eval(code))
+              } else {
+                try {
+                  // eslint-disable-next-line no-new-func
+                  Function('_state', '_ctx', '_sprites', code)(_state, _ctx, _sprites)
+                } finally {
+                  state.language.cleanup()
+                }
               }
             } else if (!blocked) {
               commit('setErrors', errors)

@@ -14,6 +14,8 @@ function loadScript (id, source) {
 }
 
 export default class Python extends Lang {
+  useEval = false
+
   PYTHON_TEMPLATE = `
 from browser import window
 
