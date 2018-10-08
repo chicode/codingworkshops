@@ -1,0 +1,7 @@
+#import '../f/MutationResult.gql'
+
+mutation($pk: ID!, $startingCode: String, $description: String, $name: String) {
+  editSlide(pk: $pk, startingCode: $startingCode description: $description, name: $name) {
+    ...MutationResult
+  }
+}

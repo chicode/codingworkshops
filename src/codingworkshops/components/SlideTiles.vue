@@ -25,7 +25,7 @@ export default {
   name: 'SlideTiles',
   components: { Tile, VueDraggable },
   props: {
-    lessons: {
+    slides: {
       type: Array,
       required: true,
     },

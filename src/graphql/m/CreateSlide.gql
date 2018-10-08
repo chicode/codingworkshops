@@ -1,0 +1,7 @@
+#import '../f/MutationResult.gql'
+
+mutation($name: String, $lesson: ID!) {
+  createSlide(name: $name, lesson: $lesson) {
+    ...MutationResult
+  }
+}
