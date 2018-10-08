@@ -54,7 +54,7 @@ export default {
   methods: {
     del (pk) {
       this.$apollo.mutate(
-        require(`@/graphql/m/Delete${this.type}`).default(
+        require(`@/graphql/m/Delete${this.type.capitalize()}`).default(
           { pk },
           this.$route.params
         )
@@ -63,7 +63,7 @@ export default {
 
     drag ({ oldIndex, newIndex }) {
       this.$apollo.mutate(
-        require(`@/graphql/m/Move${this.type}`).default(
+        require(`@/graphql/m/Move${this.type.capitalize()}`).default(
           {
             pk: this.items[oldIndex].id, index: newIndex,
           },
