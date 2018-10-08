@@ -1,7 +1,7 @@
 /* global _state, _ctx, _sprites, draw, init, update */
 /* eslint-disable no-unused-vars */
 
-if (!draw) throw new Error('You must define a "draw" function.')
+if (typeof draw === 'undefined' || !draw) throw new Error('You must define a "draw" function.')
 
 const SCALE = 10
 
