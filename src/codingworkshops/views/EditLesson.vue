@@ -5,7 +5,7 @@
     InputWrapper(:value='data.lesson.name' @input='value => onEdit("name", value)'): h1 {{ data.lesson.name }}
 
     p.error(v-if='errors.description') {{ errors.description }}
-    InputWrapper(:value='data.lesson.description' @input='value => onEdit("description", value)' :markdown='true'): p {{ data.lesson.description || 'enter a description' }}
+    InputWrapper(:value='data.lesson.description' @input='value => onEdit("description", value)' :markdown='true'): p(v-html="data.lesson.description ? $options.filters.marked(data.lesson.description) : 'enter a description'")
 
     SlideTiles(:edit='true' :slides='data.lessonSlides')
     .button(@click='newSlide'): div new slide
