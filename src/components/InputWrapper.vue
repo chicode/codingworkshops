@@ -29,12 +29,7 @@ export default {
     }
   },
   mounted () {
-    this.$refs.wrapper.addEventListener('focus', (e) => {
-      if (e.srcElement !== this.$refs.wrapper) {
-        this.focused = true
-        this.unfocus()
-      }
-    })
+    this.value_ = ''
   },
   methods: {
     focus (e) {
