@@ -52,6 +52,7 @@ export default {
         this.errors = convertErrors(errors)
       } else {
         this.data.lesson[property] = value
+        this.errors = []
       }
     },
   },

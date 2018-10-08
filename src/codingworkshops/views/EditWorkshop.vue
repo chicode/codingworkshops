@@ -41,6 +41,7 @@ export default {
         this.errors = convertErrors(errors)
       } else {
         this.data.workshop[property] = value
+        this.errors = []
       }
     },
     async newLesson () {
