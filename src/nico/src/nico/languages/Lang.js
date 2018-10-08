@@ -1,7 +1,3 @@
-function lowerLimit (n) {
-  return n < 0 ? 0 : n
-}
-
 export default class Lang {
   needsLoading = false
 
