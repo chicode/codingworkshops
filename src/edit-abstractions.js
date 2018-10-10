@@ -4,8 +4,8 @@ export function convertErrors (errors) {
   return errors.reduce((acc, val) => ({ ...acc, [val.field]: val.message }), {})
 }
 
-export const edit = (type) => ({
-  edit (property) {
+export const edit = (type, namespaced = false) => ({
+  [namespaced ? `edit${type.capitalize()}` : 'edit'] (property) {
     return async (value) => {
       const {
         data: {
@@ -28,20 +28,20 @@ export const edit = (type) => ({
   },
 })
 
-export const create = (type, parentType, onSuccess) => ({
-  create: async function () {
+export const create = (type, parentType, onSuccess, getVars = () => ({}), namespaced = false) => ({
+  async [namespaced ? `create{type.capitalize()}` : 'create'] () {
     const {
       data: {
         [`create${type.capitalize()}`]: { ok, errors },
       },
     } = await this.$apollo.mutate(
-      require(`@/graphql/m/Create${type.capitalize()}`).default(
-        { [parentType]: this.data[parentType].id },
-        this.$route.params,
-      ),
+      require(`@/graphql/m/Create${type.capitalize()}`).default({
+        [parentType]: this.data[parentType].id,
+        ...getVars.call(this),
+      }),
     )
     if (!ok) console.error(errors)
-    else {
+    else if (onSuccess) {
       onSuccess.call(this)
     }
   },

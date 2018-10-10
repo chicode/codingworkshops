@@ -11,8 +11,11 @@ div.instruction-slide(v-if="!loading")
         v-for="{ description } in data.slide.directionSet"
         :key="description"
       )
-        InputWrapper(:value='description' @input='edit("name")($event)')
-          p.text.marked(:style="directionStyle(index)" v-marked="description")
+        InputWrapper(:value='description' @input='editDirection("description")($event)')
+          p.text.marked(v-marked="description")
+
+      input(placeholder='new direction' v-model='newDirectionDescription')
+      button.button(@click='create'): div create
 
   Nico(:show-greeting="false" language="Python" :script-boilerplate="false").nico
 p(v-else) loading...
@@ -28,11 +31,15 @@ export default {
   components: { Nico, InputWrapper },
   data: () => ({
     ...data(),
+    newDirectionDescription: '',
   }),
   ...apollo('slide'),
   methods: {
     ...edit('slide'),
-    ...create('direction', 'slide', () => {}),
+    ...edit('direction', true),
+    ...create('direction', 'slide', null, function () {
+      return { description: this.newDirectionDescription }
+    }),
   },
 }
 </script>

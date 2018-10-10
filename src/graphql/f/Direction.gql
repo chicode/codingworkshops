@@ -1,0 +1,6 @@
+fragment Direction on DirectionType {
+  id
+  index
+  description
+  hint
+}

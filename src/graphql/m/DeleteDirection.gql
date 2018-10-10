@@ -1,0 +1,7 @@
+#import '../f/MutationResultNoErrors.gql'
+
+mutation($pk: ID!) {
+  deleteDirection(pk: $pk) {
+    ...MutationResultNoErrors
+  }
+}
