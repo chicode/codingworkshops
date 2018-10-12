@@ -34,13 +34,15 @@ export default {
   ...apollo('workshop'),
   methods: {
     ...edit('workshop'),
-    ...create('lesson', 'workshop', function () {
-      this.$router.push({ name: 'edit-lesson',
-        params: {
-          ...this.$route.params,
-          lesson: this.data.workshopLessons.length + 1,
-        },
-      })
+    ...create('lesson', 'workshop', {
+      onSuccess: function () {
+        this.$router.push({ name: 'edit-lesson',
+          params: {
+            ...this.$route.params,
+            lesson: this.data.workshopLessons.length + 1,
+          },
+        })
+      },
     }),
   },
 }

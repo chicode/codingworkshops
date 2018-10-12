@@ -1,7 +1,8 @@
 <template lang="pug">
 ul
   component(:is='edit && draggable ? "vue-draggable" : "div"' @end='drag')
-    router-link(
+    component(
+      :is='router ? "router-link" : "div"'
       v-for='item in items'
       :key='item.index'
       :to=`{
@@ -17,6 +18,7 @@ ul
 <script>
 import VueDraggable from 'vuedraggable'
 import Tile from './Tile'
+import { del, drag } from '@/edit-abstractions'
 
 export default {
   name: 'Tiles',
@@ -40,6 +42,11 @@ export default {
       required: false,
       default: false,
     },
+    router: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     getRouteParams: {
       type: Function,
       required: false,
@@ -52,25 +59,8 @@ export default {
     },
   },
   methods: {
-    del (pk) {
-      this.$apollo.mutate(
-        require(`@/graphql/m/Delete${this.type.capitalize()}`).default(
-          { pk },
-          this.$route.params
-        )
-      )
-    },
-
-    drag ({ oldIndex, newIndex }) {
-      this.$apollo.mutate(
-        require(`@/graphql/m/Move${this.type.capitalize()}`).default(
-          {
-            pk: this.items[oldIndex].id, index: newIndex,
-          },
-          this.$route.params
-        )
-      )
-    },
+    del (...args) { del(this.type).del.call(this, ...args) },
+    drag (...args) { drag(this.type).drag.call(this, ...args) },
   },
 }
 </script>

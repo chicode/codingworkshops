@@ -7,12 +7,10 @@ div.instruction-slide(v-if="!loading")
       p.description.marked(v-marked='data.slide.description || "enter a description"')
     ul.directions
       h2 Directions
-      li.direction(
-        v-for="{ description } in data.slide.directionSet"
-        :key="description"
-      )
-        InputWrapper(:value='description' @input='editDirection("description")($event)')
-          p.text.marked(v-marked="description")
+      Tiles(:items='data.slide.directionSet' type='direction' :edit='true' :draggable='true' :router='false')
+        template(slot-scope='{ item }')
+          InputWrapper(:value='item.description' @input='editDirection("description")($event)')
+            p.text.marked(v-marked="item.description")
 
       input(placeholder='new direction' v-model='newDirectionDescription')
       button.button(@click='create'): div create
@@ -24,11 +22,12 @@ p(v-else) loading...
 <script>
 import Nico from '@/nico/src/nico/App'
 import InputWrapper from '@/components/InputWrapper'
+import Tiles from './Tiles'
 import { edit, create, apollo, data } from '@/edit-abstractions'
 
 export default {
-  name: 'InstructionSlide',
-  components: { Nico, InputWrapper },
+  name: 'EditInstructionSlide',
+  components: { Nico, InputWrapper, Tiles },
   data: () => ({
     ...data(),
     newDirectionDescription: '',
@@ -36,9 +35,11 @@ export default {
   ...apollo('slide'),
   methods: {
     ...edit('slide'),
-    ...edit('direction', true),
-    ...create('direction', 'slide', null, function () {
-      return { description: this.newDirectionDescription }
+    ...edit('direction', { namespaced: true }),
+    ...create('direction', 'slide', {
+      getVars: function () {
+        return { description: this.newDirectionDescription, hint: '', index: this.data.slide.directionSet.length + 1 }
+      },
     }),
   },
 }

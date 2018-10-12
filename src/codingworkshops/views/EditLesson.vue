@@ -36,13 +36,15 @@ export default {
   ...apollo('lesson'),
   methods: {
     ...edit('lesson'),
-    ...create('slide', 'lesson', function () {
-      this.$router.push({ name: 'edit-slide',
-        params: {
-          ...this.$route.params,
-          slide: this.data.lessonSlides.length + 1,
-        },
-      })
+    ...create('slide', 'lesson', {
+      onSuccess: function () {
+        this.$router.push({ name: 'edit-slide',
+          params: {
+            ...this.$route.params,
+            slide: this.data.lessonSlides.length + 1,
+          },
+        })
+      },
     }),
   },
 }

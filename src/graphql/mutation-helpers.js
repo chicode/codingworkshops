@@ -5,16 +5,22 @@ export const generateCreate = (
   item,
   queryKey,
   query,
-  variables = {},
+  queryVariables = {},
   nestedProperty = null,
 ) => (proxy, { data }) => {
   if (!firstValue(data).ok) return
+  console.log(type, item, queryKey, query)
 
-  const newData = proxy.readQuery({ query, variables })[queryKey]
-  ;(nestedProperty ? newData[nestedProperty] : newData).push({ ...item, __typename: type })
+  const newData = proxy.readQuery({ query, variables: queryVariables })[queryKey]
+  const newItem = { ...item, __typename: type, id: firstValue(data).pk }
+  if (nestedProperty) {
+    newData[nestedProperty].push(newItem)
+  } else {
+    newData.push(newItem)
+  }
   proxy.writeQuery({
     query,
-    variables,
+    variables: queryVariables,
     data: {
       [queryKey]: newData,
     },
@@ -33,10 +39,14 @@ export const generateEdit = (type, item, fragment) => (proxy, { data }) => {
   }
 }
 
-export const generateDelete = (item, queryKey, query, variables = {}, nestedProperty = null) => (
-  proxy,
-) => {
-  let newData = proxy.readQuery({ query, variables })[queryKey]
+export const generateDelete = (
+  item,
+  queryKey,
+  query,
+  queryVariables = {},
+  nestedProperty = null,
+) => (proxy) => {
+  let newData = proxy.readQuery({ query, variables: queryVariables })[queryKey]
   if (nestedProperty) {
     newData[nestedProperty] = newData[nestedProperty].filter((value) => value.id !== item.pk)
   } else {
@@ -44,7 +54,7 @@ export const generateDelete = (item, queryKey, query, variables = {}, nestedProp
   }
   proxy.writeQuery({
     query,
-    variables,
+    variables: queryVariables,
     data: {
       [queryKey]: newData,
     },

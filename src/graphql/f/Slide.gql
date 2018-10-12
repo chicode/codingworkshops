@@ -1,3 +1,5 @@
+#import './Direction.gql'
+
 fragment Slide on SlideType {
   id
   index
@@ -5,7 +7,6 @@ fragment Slide on SlideType {
   description
   startingCode
   directionSet {
-    description
-    hint
+    ...Direction
   }
 }

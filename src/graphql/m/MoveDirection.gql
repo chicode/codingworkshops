@@ -1,0 +1,7 @@
+#import '../f/MutationResultNoErrors.gql'
+
+mutation($pk: ID!, $index: Int!) {
+  moveDirection(pk: $pk, index: $index) {
+    ...MutationResultNoErrors
+  }
+}
