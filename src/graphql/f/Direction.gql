@@ -1,4 +1,4 @@
-fragment Direction on DirectionType {
+fragment DirectionType on DirectionType {
   id
   index
   description

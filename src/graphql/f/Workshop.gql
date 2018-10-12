@@ -1,4 +1,4 @@
-fragment Workshop on WorkshopType {
+fragment WorkshopType on WorkshopType {
   id
   name
   slug

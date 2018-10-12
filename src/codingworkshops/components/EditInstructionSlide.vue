@@ -9,7 +9,7 @@ div.instruction-slide(v-if="!loading")
       h2 Directions
       Tiles(:items='data.slide.directionSet' type='direction' :edit='true' :draggable='true' :router='false')
         template(slot-scope='{ item }')
-          InputWrapper(:value='item.description' @input='editDirection("description")($event)')
+          InputWrapper(:value='item.description' @input='editDirection(item)("description")($event)')
             p.text.marked(v-marked="item.description")
 
       input(placeholder='new direction' v-model='newDirectionDescription')
@@ -35,7 +35,13 @@ export default {
   ...apollo('slide'),
   methods: {
     ...edit('slide'),
-    ...edit('direction', { namespaced: true }),
+    editDirection (item) {
+      return edit('direction', {
+        getPk () {
+          return item.id
+        },
+      }).edit.bind(this)
+    },
     ...create('direction', 'slide', {
       getVars: function () {
         return { description: this.newDirectionDescription, hint: '', index: this.data.slide.directionSet.length + 1 }

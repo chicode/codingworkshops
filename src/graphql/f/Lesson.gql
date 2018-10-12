@@ -1,4 +1,4 @@
-fragment Lesson on LessonType {
+fragment LessonType on LessonType {
   id
   index
   name

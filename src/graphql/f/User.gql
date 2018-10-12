@@ -1,4 +1,4 @@
-fragment User on UserType {
+fragment UserType on UserType {
   username
   bio
 }

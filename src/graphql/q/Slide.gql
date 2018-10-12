@@ -2,6 +2,6 @@
 
 query($workshop: String!, $human: String!, $lesson: Int!, $slide: Int!) {
   slide(workshop: $workshop, human: $human, lesson: $lesson, slide: $slide) {
-    ...Slide
+    ...SlideType
   }
 }

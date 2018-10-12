@@ -3,7 +3,7 @@
 
 query($human: String!) {
   user(human: $human) {
-    ...User
+    ...UserType
   }
 
   userWorkshops(human: $human) {

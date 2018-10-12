@@ -34,7 +34,8 @@ export const generateEdit = (type, item, fragment) => (proxy, { data }) => {
     proxy.writeFragment({
       id,
       fragment,
-      data: { ...proxy.readFragment({ id, fragment }), ...item },
+      fragmentName: type,
+      data: { ...proxy.readFragment({ id, fragment, fragmentName: type }), ...item },
     })
   }
 }

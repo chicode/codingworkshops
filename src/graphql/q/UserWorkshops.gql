@@ -2,7 +2,7 @@
 
 query($human: String!) {
   userWorkshops(human: $human) {
-    ...Workshop
+    ...WorkshopType
     author {
       username
     }

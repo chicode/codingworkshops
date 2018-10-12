@@ -30,7 +30,6 @@ export const edit = (
         if (!ok) {
           this.errors = convertErrors(errors)
         } else {
-          this.data[type][property] = value
           this.errors = []
         }
       }

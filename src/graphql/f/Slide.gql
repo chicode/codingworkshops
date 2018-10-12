@@ -1,12 +1,12 @@
 #import './Direction.gql'
 
-fragment Slide on SlideType {
+fragment SlideType on SlideType {
   id
   index
   name
   description
   startingCode
   directionSet {
-    ...Direction
+    ...DirectionType
   }
 }
