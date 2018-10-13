@@ -63,18 +63,20 @@ export default {
 
   methods: {
     async signup () {
-      let haserrored = false
+      let hasErrored = false
       for (let field of ['email', 'username', 'password', 'password2']) {
         // immutable assignment here is necessary for vue to update
         // the value is held in a list because that's how object errors in django are stored
-        if (!this.data[field]) this.errors = { ...this.errors, [field]: ['this is required'] }
-        haserrored = true
+        if (!this.data[field]) {
+          this.errors = { ...this.errors, [field]: 'this is required' }
+          hasErrored = true
+        }
       }
       if (this.data.password !== this.data.password2) {
-        this.errors.password = ['passwords don\'t match']
-        haserrored = true
+        this.errors.password = 'passwords don\'t match'
+        hasErrored = true
       }
-      if (haserrored) return
+      if (hasErrored) return
 
       const { data: { createUser: { ok, errors } } } = await this.$apollo.mutate(
         require('@/graphql/m/Signup').default(this.data)
