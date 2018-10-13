@@ -52,11 +52,6 @@ export default {
       component: () => import(/* webpackChunkName: "workshop" */ './views/Workshop.vue'),
     },
     {
-      name: 'human',
-      path: '/:human',
-      component: () => import(/* webpackChunkName: "human" */ './views/Human.vue'),
-    },
-    {
       name: 'enter',
       path: '/enter',
       component: () => import(/* webpackChunkName: "enter" */ './views/Enter.vue'),
@@ -65,6 +60,11 @@ export default {
       name: 'signup',
       path: '/signup',
       component: () => import(/* webpackChunkName: "signup" */ './views/Signup.vue'),
+    },
+    {
+      name: 'human',
+      path: '/:human',
+      component: () => import(/* webpackChunkName: "human" */ './views/Human.vue'),
     },
   ],
 }
