@@ -46,6 +46,9 @@ export default {
       getVars: function () {
         return { description: this.newDirectionDescription, hint: '', index: this.data.slide.directionSet.length + 1 }
       },
+      onSuccess: function () {
+        this.newDirectionDescription = ''
+      },
     }),
   },
 }
