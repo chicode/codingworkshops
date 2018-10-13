@@ -9,7 +9,6 @@ export const generateCreate = (
   nestedProperty = null,
 ) => (proxy, { data }) => {
   if (!firstValue(data).ok) return
-  console.log(type, item, queryKey, query)
 
   const newData = proxy.readQuery({ query, variables: queryVariables })[queryKey]
   const newItem = { ...item, __typename: type, id: firstValue(data).pk }

@@ -1,7 +1,5 @@
-#import '../f/MutationResultNoErrors.gql'
-
 mutation {
   logoutUser {
-    ...MutationResultNoErrors
+    ok
   }
 }
