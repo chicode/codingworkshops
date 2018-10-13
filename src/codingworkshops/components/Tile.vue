@@ -34,9 +34,6 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.root {
-  margin-bottom: 40px;
-}
 .controls {
   position: absolute;
   right: 10px;

@@ -1,6 +1,6 @@
 <template lang="pug">
-ul
-  component(:is='edit && draggable ? "vue-draggable" : "div"' @end='drag')
+component(:is='edit && draggable ? "vue-draggable" : "div"' @end='drag')
+  ul
     component(
       :is='router ? "router-link" : "div"'
       v-for='item in items'

@@ -38,10 +38,10 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
 @import '~@/styles/defs'
 
-.workshops {
+.workshops ul {
   margin-top: 50px;
 
   align-items: flex-start;
@@ -49,7 +49,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
 
-  .empty, .workshop {
+  > * {
     width: 300px;
     margin: 10px;
   }

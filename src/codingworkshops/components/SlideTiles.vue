@@ -2,6 +2,10 @@
 tiles.slides(:items='slides' type='slide' :edit='edit' :draggable='edit')
   template(slot-scope='{ item }')
     h2.no-margin {{ item.name }}
+  template(slot='footer')
+    // the empty elements help make the flex grid look
+    // like it's a list despite it actually having justify-content: center
+    li.empty(v-for='i in 20', :key='i')
 </template>
 
 <script>
@@ -24,6 +28,20 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
 @import '~@/styles/defs'
+
+.slides ul {
+  margin-top: 50px;
+
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  > * {
+    width: 300px;
+    margin: 10px;
+  }
+}
 </style>
