@@ -1,5 +1,5 @@
 <template lang="pug">
-tiles.workshops(:items='workshops' type='workshop' :edit='edit' :getRouteParams='getRouteParams')
+tiles.workshops(:items='workshops' type='workshop' :edit='edit' :getRouteParams='getRouteParams' :class="center && 'center'")
   template(slot-scope='{ item }')
     h2.bold.no-margin {{ item.name }}
     p {{ item.description }}
@@ -26,6 +26,11 @@ export default {
       required: false,
       default: false,
     },
+    center: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   methods: {
     getRouteParams (workshop) {
@@ -47,7 +52,13 @@ export default {
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+
+  &.center {
+    justify-content: center;
+  }
+  &:not(.center) {
+    margin-left: -10px;
+  }
 
   > * {
     width: 300px;
