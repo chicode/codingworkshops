@@ -1,5 +1,5 @@
 <template lang="pug">
-div.tile.root: div
+div.root-tile(:class="edit ? 'edit' : 'no-edit'"): div
   .controls(v-if='edit')
     p.error(v-if='confirming') you sure?
     button(@click='del'): img(src='../assets/trash.svg')
@@ -34,6 +34,21 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+@import '~@/styles/defs'
+
+.root-tile.no-edit {
+  +tile('tile', palette.light-green) {
+    padding: 20px;
+  }
+}
+.root-tile.edit > div {
+  padding: 20px;
+  standard-border()
+  background: palette.light-blue;
+  position: relative;
+  cursor: pointer;
+}
+
 .controls {
   position: absolute;
   right: 10px;

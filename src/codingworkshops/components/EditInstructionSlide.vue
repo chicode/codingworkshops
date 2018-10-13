@@ -10,7 +10,7 @@ div.instruction-slide(v-if="!loading")
       Tiles.directions(:items='data.slide.directionSet' type='direction' :edit='true' :draggable='true' :router='false')
         template(slot-scope='{ item }')
           InputWrapper(:value='item.description' @input='editDirection(item)("description")($event)')
-            p.text.marked(v-marked="item.description")
+            .text.marked(v-marked="item.description")
 
       input.input.direction-input(placeholder='new direction' v-model='newDirectionDescription')
       button.button.create(@click='create'): div create
