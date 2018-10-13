@@ -1,8 +1,10 @@
 <template lang="pug">
 div.instruction-slide(v-if="!loading")
   div.instructions
+    p.error(v-if='errors.name') {{ errors.name }}
     InputWrapper(:value='data.slide.name' @input='edit("name")($event)')
       h1.name {{ data.slide.name }}
+    p.error(v-if='errors.description') {{ errors.description }}
     InputWrapper(:value='data.slide.description' @input='edit("description")($event)')
       p.description.marked(v-marked='data.slide.description || "enter a description"')
     ul.directions
