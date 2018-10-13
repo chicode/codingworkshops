@@ -77,12 +77,11 @@ export default {
 }
 
 .content:hover {
-  background: palette.gray-3;
+  background: rgba(230, 230, 230, .2);
   border-radius: borders.standard.radius;
 }
 
 input.wrapper {
-  border: 1px solid palette.gray-2;
   border-radius: borders.standard.radius;
 }
 </style>
