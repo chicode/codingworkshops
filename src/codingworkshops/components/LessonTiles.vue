@@ -25,13 +25,11 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
-@import '~@/styles/defs'
-
+<style lang="stylus">
 .lessons {
-  margin-top: 50px;
+  margin: 50px 0;
 
-  .lesson {
+  li {
      width: 100%;
      margin-bottom: 20px;
   }

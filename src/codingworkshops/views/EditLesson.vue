@@ -9,7 +9,7 @@
     p(v-marked="data.lesson.description || 'enter a description'")
 
   SlideTiles(:edit='true' :slides='data.lessonSlides')
-  .button(@click='create'): div new slide
+  button.button(@click='create'): div new slide
 p(v-else) loading...
 </template>
 

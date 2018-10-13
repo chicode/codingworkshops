@@ -7,13 +7,13 @@ div.instruction-slide(v-if="!loading")
       p.description.marked(v-marked='data.slide.description || "enter a description"')
     ul.directions
       h2 Directions
-      Tiles(:items='data.slide.directionSet' type='direction' :edit='true' :draggable='true' :router='false')
+      Tiles.directions(:items='data.slide.directionSet' type='direction' :edit='true' :draggable='true' :router='false')
         template(slot-scope='{ item }')
           InputWrapper(:value='item.description' @input='editDirection(item)("description")($event)')
             p.text.marked(v-marked="item.description")
 
-      input(placeholder='new direction' v-model='newDirectionDescription')
-      button.button(@click='create'): div create
+      input.input.direction-input(placeholder='new direction' v-model='newDirectionDescription')
+      button.button.create(@click='create'): div create
 
   Nico(:show-greeting="false" language="Python" :script-boilerplate="false").nico
 p(v-else) loading...
@@ -53,4 +53,17 @@ export default {
 
 <style scoped lang="stylus">
 @import './InstructionSlide.styl'
+.direction-input {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+</style>
+
+<style lang="stylus">
+.directions {
+  margin-top: 50px;
+  li {
+    margin-bottom: 20px;
+  }
+}
 </style>

@@ -7,7 +7,7 @@
     p.description {{ data.workshop.description || 'enter an eye-catching description!' }}
 
   LessonTiles(:edit='true' :lessons='data.workshopLessons')
-  .button(@click='create'): div new lesson
+  button.button(@click='create'): div new lesson
 p(v-else) loading...
 </template>
 

@@ -31,15 +31,15 @@ export default {
 <style lang="stylus">
 @import '~@/styles/defs'
 
-.slides ul {
-  margin-top: 50px;
+.slides {
+  margin: 50px 0;
 
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 
-  > * {
+  li {
     width: 300px;
     margin: 10px;
   }

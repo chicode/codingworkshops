@@ -20,7 +20,7 @@
         |!
   query(:query="require('@/graphql/q/AllWorkshops.gql')")
     template(slot-scope='{ data: { allWorkshops } }')
-      WorkshopTiles.tiles(:workshops='allWorkshops')
+      WorkshopTiles.workshops(:workshops='allWorkshops')
 </template>
 
 <script>
@@ -68,7 +68,7 @@ export default {
   text-align: center;
 }
 
-.tiles {
+.workshops {
   margin-top: 50px;
 }
 

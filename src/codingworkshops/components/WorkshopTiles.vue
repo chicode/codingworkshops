@@ -41,8 +41,8 @@ export default {
 <style lang="stylus">
 @import '~@/styles/defs'
 
-.workshops ul {
-  margin-top: 50px;
+.workshops {
+  margin-top: 30px;
 
   align-items: flex-start;
   display: flex;

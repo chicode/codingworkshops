@@ -5,7 +5,7 @@
       h1.no-margin {{ username }}
       p {{ bio }}
       h2 Workshops
-      WorkshopTiles(:edit='true').tiles(:workshops="userWorkshops")
+      WorkshopTiles(:edit='true').workshops(:workshops="userWorkshops")
 
       .new-workshop
         p.error(v-if="errors.name") {{ errors.name }}
@@ -53,12 +53,6 @@ export default {
 
 .human {
   standard-layout()
-}
-
-.tiles {
-  justify-content: flex-start;
-  margin-top: 10px;
-  margin-left: -10px;
 }
 
 .new-workshop {
