@@ -7,7 +7,9 @@ tiles.workshops(:items='workshops' type='workshop' :edit='edit' :getRouteParams=
   template(slot='footer')
     // the empty elements help make the flex grid look
     // like it's a list despite it actually having justify-content: center
-    li.empty(v-for='i in 20', :key='i')
+
+    // empty_ + i in order to avoid key duplication
+    li.empty(v-for='i in 20', :key='"empty_" + i')
 </template>
 
 <script>
