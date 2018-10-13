@@ -44,6 +44,7 @@ export default {
 .root-tile.edit > div {
   padding: 20px;
   standard-border()
+  border-radius: 0;
   background: palette.light-blue;
   position: relative;
   cursor: pointer;
