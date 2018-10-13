@@ -35,8 +35,8 @@ export default {
   }),
   ...apollo('lesson'),
   methods: {
-    ...edit('lesson'),
-    ...create('slide', 'lesson', {
+    edit: edit('lesson'),
+    create: create('slide', 'lesson', {
       onSuccess: function () {
         this.$router.push({ name: 'edit-slide',
           params: {

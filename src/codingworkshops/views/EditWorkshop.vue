@@ -33,8 +33,8 @@ export default {
   }),
   ...apollo('workshop'),
   methods: {
-    ...edit('workshop'),
-    ...create('lesson', 'workshop', {
+    edit: edit('workshop'),
+    create: create('lesson', 'workshop', {
       onSuccess: function () {
         this.$router.push({ name: 'edit-lesson',
           params: {

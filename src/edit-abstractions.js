@@ -1,69 +1,74 @@
 // convert from the error list sent from the backend
 // to a more friendly object with fields as keys
-export function convertErrors (errors) {
-  return errors.reduce((acc, val) => ({ ...acc, [val.field]: val.message }), {})
+export function convertErrors (errors, type = null) {
+  return errors.reduce(
+    (acc, val) => ({ ...acc, [type ? type + val.field.capitalize() : val.field]: val.message }),
+    {},
+  )
 }
 
 export const edit = (
   type,
   {
-    namespaced = false,
     getPk = function (type) {
       return this.data[type].id
     },
+    namespacedErrors = false,
   } = {},
-) => {
-  return {
-    [namespaced ? `edit${type.capitalize()}` : 'edit'] (property) {
-      return async (value) => {
-        const {
-          data: {
-            [`edit${type.capitalize()}`]: { ok, errors },
-          },
-        } = await this.$apollo.mutate(
-          require(`@/graphql/m/Edit${type.capitalize()}`).default({
-            [property]: value,
-            pk: getPk.call(this, type),
-          }),
-        )
+) =>
+  function (property) {
+    return async (value) => {
+      const key = `edit${type.capitalize()}`
+      const {
+        data: {
+          [key]: { ok, errors },
+        },
+      } = await this.$apollo.mutate(
+        require(`@/graphql/m/Edit${type.capitalize()}`).default({
+          [property]: value,
+          pk: getPk.call(this, type),
+        }),
+      )
 
-        if (!ok) {
-          this.errors = convertErrors(errors)
-        } else {
-          this.errors = []
-        }
+      if (!ok) {
+        if (namespacedErrors) this.errors[key] = convertErrors(errors)
+        else this.errors = convertErrors(errors)
+      } else {
+        if (namespacedErrors) this.errors[key] = {}
+        else this.errors = {}
       }
-    },
+    }
   }
-}
 
 export const create = (
   type,
   parentType,
-  { namespaced = false, onSuccess = () => {}, getVars = () => ({}) } = {},
-) => {
-  return {
-    async [namespaced ? `create{type.capitalize()}` : 'create'] () {
-      const {
-        data: {
-          [`create${type.capitalize()}`]: { ok, errors },
+  { namespacedErrors = false, onSuccess = () => {}, getVars = () => ({}) } = {},
+) =>
+  async function () {
+    const key = `create${type.capitalize()}`
+    const {
+      data: {
+        [key]: { ok, errors },
+      },
+    } = await this.$apollo.mutate(
+      require(`@/graphql/m/Create${type.capitalize()}`).default(
+        {
+          [parentType]: this.data[parentType].id,
+          ...getVars.call(this),
         },
-      } = await this.$apollo.mutate(
-        require(`@/graphql/m/Create${type.capitalize()}`).default(
-          {
-            [parentType]: this.data[parentType].id,
-            ...getVars.call(this),
-          },
-          this.$route.params,
-        ),
-      )
-      if (!ok) console.error(errors)
-      else {
-        onSuccess.call(this)
-      }
-    },
+        this.$route.params,
+      ),
+    )
+    if (!ok) {
+      if (namespacedErrors) this.errors[key] = convertErrors(errors)
+      else this.errors = convertErrors(errors)
+    } else {
+      if (namespacedErrors) this.errors[key] = {}
+      else this.errors = {}
+      onSuccess.call(this)
+    }
   }
-}
 
 export const apollo = (type) => ({
   apollo: {
@@ -78,21 +83,21 @@ export const apollo = (type) => ({
   },
 })
 
-export const data = () => ({
-  errors: {},
+export const data = (errorKeys = []) => ({
+  // sometimes the errors object needs to be nested
+  errors: errorKeys.reduce((acc, val) => ({ ...acc, [val]: {} }), {}),
   loading: 0,
 })
 
-export const del = (type) => ({
-  del (pk) {
+export const del = (type) =>
+  function (pk) {
     this.$apollo.mutate(
       require(`@/graphql/m/Delete${this.type.capitalize()}`).default({ pk }, this.$route.params),
     )
-  },
-})
+  }
 
-export const drag = () => ({
-  drag ({ oldIndex, newIndex }) {
+export const drag = () =>
+  function ({ oldIndex, newIndex }) {
     this.$apollo.mutate(
       require(`@/graphql/m/Move${this.type.capitalize()}`).default(
         {
@@ -102,5 +107,4 @@ export const drag = () => ({
         this.$route.params,
       ),
     )
-  },
-})
+  }

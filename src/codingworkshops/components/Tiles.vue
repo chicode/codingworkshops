@@ -58,8 +58,8 @@ export default {
     },
   },
   methods: {
-    del (...args) { del(this.type).del.call(this, ...args) },
-    drag (...args) { drag(this.type).drag.call(this, ...args) },
+    del (...args) { del(this.type).call(this, ...args) },
+    drag (...args) { drag(this.type).call(this, ...args) },
   },
 }
 </script>
