@@ -97,7 +97,7 @@ export const drag = () => ({
       require(`@/graphql/m/Move${this.type.capitalize()}`).default(
         {
           pk: this.items[oldIndex].id,
-          index: newIndex,
+          index: newIndex + 1,
         },
         this.$route.params,
       ),
