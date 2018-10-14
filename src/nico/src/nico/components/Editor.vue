@@ -105,6 +105,7 @@ export default {
 
 .editor .CodeMirror {
   height: 100%;
+  border: 0;
 
   * {
     font-family: fonts.code;

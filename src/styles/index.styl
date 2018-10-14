@@ -52,6 +52,10 @@ code {
   background: #EEEEEE;
   border-radius: 5px;
 }
+pre code {
+  display: block;
+  padding: 10px;
+}
 
 .marked {
   > * {
@@ -227,4 +231,11 @@ input[type=range] {
 }
 .sortable-ghost {
   opacity: .5;
+}
+
+.CodeMirror {
+  font-family: fonts.body;
+  .cm-comment {
+    font-family: fonts.code;
+  }
 }

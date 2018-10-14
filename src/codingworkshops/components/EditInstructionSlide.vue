@@ -6,18 +6,18 @@ div.instruction-slide(v-if="!loading")
       h1.name {{ data.slide.name }}
 
     p.error(v-if='errors.editSlide.description') {{ errors.editSlide.description }}
-    InputWrapper(:value='data.slide.description' @input='edit("description")($event)')
+    InputWrapper(:value='data.slide.description' @input='edit("description")($event)' :markdown='true')
       p.description.marked(v-marked='data.slide.description || "enter a description"')
     ul.directions
       h2 Directions
       Tiles.directions(:items='data.slide.directionSet' type='direction' :edit='true' :draggable='true' :router='false')
         template(slot-scope='{ item }')
           p.error(v-if='errors.editDirection.description') {{ errors.editDirection.description }}
-          InputWrapper(:value='item.description' @input='editDirection(item)("description")($event)')
+          InputWrapper(:value='item.description' @input='editDirection(item)("description")($event)' :markdown='true')
             .text.marked(v-marked="item.description")
 
       p.error(v-if='errors.createDirection.description') {{ errors.createDirection.description }}
-      input.input.direction-input(placeholder='new direction' v-model='newDirectionDescription')
+      MarkdownEditor.direction-input(placeholder='new direction' v-model='newDirectionDescription')
       button.button.create(@click='createDirection'): div create
 
   Nico(:show-greeting="false" language="Python" :script-boilerplate="false").nico
@@ -27,12 +27,13 @@ p(v-else) loading...
 <script>
 import Nico from '@/nico/src/nico/App'
 import InputWrapper from '@/components/InputWrapper'
+import MarkdownEditor from '@/components/MarkdownEditor'
 import Tiles from './Tiles'
 import { edit, create, apollo, data } from '@/edit-abstractions'
 
 export default {
   name: 'EditInstructionSlide',
-  components: { Nico, InputWrapper, Tiles },
+  components: { Nico, InputWrapper, Tiles, MarkdownEditor },
   data: () => ({
     ...data(['createDirection', 'editDirection', 'editSlide']),
     newDirectionDescription: '',
@@ -76,6 +77,11 @@ export default {
   margin-top: 50px;
   li {
     margin-bottom: 20px;
+  }
+}
+.direction-input {
+  .CodeMirror, .CodeMirror-scroll {
+    min-height: 100px;
   }
 }
 </style>

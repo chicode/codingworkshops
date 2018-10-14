@@ -23,7 +23,10 @@ export default {
   data () {
     return {
       configs: {
-        toolbar: false, status: false, placeholder: this.placeholder,
+        toolbar: false,
+        status: false,
+        placeholder: this.placeholder,
+        autoDownloadFontAwesome: false,
       },
     }
   },
