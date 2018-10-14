@@ -5,7 +5,7 @@
       h1.no-margin {{ username }}
       p {{ bio }}
       h2 Workshops
-      WorkshopTiles(:edit='true' :center='false').workshops(:workshops="userWorkshops")
+      WorkshopTiles.workshops(:edit='true' :center='false' :workshops="userWorkshops")
 
       .new-workshop
         p.error(v-if="errors.name") {{ errors.name }}
