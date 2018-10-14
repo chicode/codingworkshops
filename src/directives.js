@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import marked from 'marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/atelier-dune-light.css'
 
 Vue.directive('click-outside', {
   bind (el, binding, vnode) {
@@ -18,5 +20,16 @@ Vue.directive('click-outside', {
 })
 
 Vue.directive('marked', (el, binding) => {
-  el.innerHTML = marked(binding.value, { sanitize: true })
+  el.innerHTML = marked(binding.value, {
+    sanitize: true,
+    highlight: (code, lang) => {
+      if (typeof lang === 'undefined') {
+        return hljs.highlightAuto(code).value
+      } else if (lang === 'nohighlight') {
+        return code
+      } else {
+        return hljs.highlight(lang, code).value
+      }
+    },
+  })
 })

@@ -10,6 +10,7 @@
   "dependencies": {
     "apollo-boost": "^0.1.14",
     "graphql": "^0.13.2",
+    "highlight.js": "^9.13.0",
     "marked": "^0.5.0",
     "vue": "^2.5.17",
     "vue-apollo": "^3.0.0-beta.19",
