@@ -54,7 +54,7 @@ export const create = (
     } = await this.$apollo.mutate(
       require(`@/graphql/m/Create${type.capitalize()}`).default(
         {
-          [parentType]: this.data[parentType].id,
+          ...(parentType ? { [parentType]: this.data[parentType].id } : {}),
           ...getVars.call(this),
         },
         this.$route.params,

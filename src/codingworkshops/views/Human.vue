@@ -10,7 +10,7 @@
       .new-workshop
         p.error(v-if="errors.name") {{ errors.name }}
         input.input(v-model="workshop" placeholder="name")
-        button.button(@click="newWorkshop"): div new workshop
+        button.button(@click="create"): div new workshop
 </template>
 
 <script>
@@ -18,7 +18,7 @@ import { mapActions } from 'vuex'
 
 import Query from '@/components/Query'
 import WorkshopTiles from '../components/WorkshopTiles.vue'
-import { convertErrors } from '@/edit-abstractions'
+import { create } from '@/edit-abstractions'
 
 export default {
   name: 'Human',
@@ -31,19 +31,14 @@ export default {
   },
   methods: {
     ...mapActions('codingworkshops', ['enterEditMode']),
-    async newWorkshop () {
-      const { data: { createWorkshop: { ok, errors } } } = await this.$apollo.mutate(
-        require('@/graphql/m/CreateWorkshop').default(
-          { name: this.workshop },
-          this.$route.params
-        )
-      )
-      if (ok) {
+    create: create('workshop', null, {
+      getVars () {
+        return { name: this.workshop }
+      },
+      onSuccess () {
         this.enterEditMode(this.workshop)
-      } else {
-        this.errors = convertErrors(errors)
-      }
-    },
+      },
+    }),
   },
 }
 </script>
