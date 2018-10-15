@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState } from '../dynamic-helpers'
 import { MIN_TOOL_WIDTH, MAX_TOOL_WIDTH } from '../constants'
 
 export default {
@@ -19,12 +19,19 @@ export default {
   MIN_TOOL_WIDTH,
   MAX_TOOL_WIDTH,
 
+  props: {
+    module: {
+      type: String,
+      required: true,
+    },
+  },
+
   computed: {
-    ...mapState('sprite', ['width']),
+    ...mapState('module', ['width']),
   },
 
   methods: {
-    ...mapMutations('sprite', ['setWidth']),
+    ...mapMutations('module', ['setWidth']),
   },
 }
 </script>

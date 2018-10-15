@@ -77,7 +77,6 @@ const _mars = {}
   _mars.buttons = {}
   _mars.buttonsPressed = {}
   document.addEventListener('mousedown', (event) => {
-    console.dir(event)
     _mars.buttons[mouseButtons[event.button]] = true
   })
   document.addEventListener('mouseup', (event) => {

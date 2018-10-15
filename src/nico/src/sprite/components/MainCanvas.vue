@@ -6,7 +6,7 @@ canvas(
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from '../dynamic-helpers'
 import { initCanvas, initCtx, clearCtx, getCanvasFromData } from '../helpers'
 import { CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
@@ -16,8 +16,15 @@ export default {
   CANVAS_PADDING,
   CANVAS_PADDING_OUTER,
 
+  props: {
+    module: {
+      type: String,
+      required: true,
+    },
+  },
+
   computed: {
-    ...mapState('sprite/sprite', ['spritesheet']),
+    ...mapState('module', ['spritesheet'], ['sprite']),
   },
 
   watch: {

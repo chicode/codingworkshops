@@ -1,12 +1,12 @@
 <template lang="pug">
 .sprite
   .controls.no-interaction
-    ToolBar
-    OptionBar
+    ToolBar(:module='module')
+    OptionBar(:module='module')
   .canvas
-    MainCanvas
-    GridCanvas
-    OverlayCanvas(ref='canvas')
+    MainCanvas(:module='module')
+    GridCanvas(:module='module')
+    OverlayCanvas(ref='canvas' :module='module')
 </template>
 
 <script>

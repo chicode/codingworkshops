@@ -1,15 +1,15 @@
 <template lang="pug">
 .option-bar(v-if="tool === 'pencil'")
   ColorPicker
-  SizeSlider
+  SizeSlider(:module='module')
 .option-bar(v-else-if="tool === 'bucket'")
   ColorPicker
 .option-bar(v-else-if="tool === 'eraser'")
-  SizeSlider
+  SizeSlider(:module='module')
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from '../dynamic-helpers'
 
 import ColorPicker from './ColorPicker'
 import SizeSlider from './SizeSlider'
@@ -21,8 +21,15 @@ export default {
     ColorPicker, SizeSlider,
   },
 
+  props: {
+    module: {
+      type: String,
+      required: true,
+    },
+  },
+
   computed: {
-    ...mapState('sprite', ['tool']),
+    ...mapState('module', ['tool']),
   },
 }
 </script>

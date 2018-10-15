@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapState } from 'vuex'
+import { mapMutations, mapActions, mapState } from '../dynamic-helpers'
 import { TOOLS } from '../constants'
 
 export default {
@@ -22,14 +22,23 @@ export default {
 
   TOOLS,
 
+  props: {
+    module: {
+      type: String,
+      required: true,
+    },
+  },
+
   computed: {
-    ...mapState('sprite', ['tool']),
+    ...mapState('module', ['tool']),
   },
 
   methods: {
-    ...mapMutations('sprite', ['setTool']),
-    ...mapActions('history', ['undo', 'redo']),
-    ...mapActions('sprite/sprite', ['clear']),
+    ...mapMutations('module', ['setTool']),
+    ...mapActions(function () {
+      return `${this.module}-history`
+    }, ['undo', 'redo']),
+    ...mapActions('module', ['clear'], ['sprite']),
   },
 }
 </script>

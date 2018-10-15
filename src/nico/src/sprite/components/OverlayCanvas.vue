@@ -6,7 +6,7 @@ canvas(
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState } from '../dynamic-helpers'
 import { initCanvas, clearCtx, scale } from '../helpers'
 import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH, CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
@@ -15,9 +15,16 @@ export default {
 
   CANVAS_PADDING_OUTER,
 
+  props: {
+    module: {
+      type: String,
+      required: true,
+    },
+  },
+
   computed: {
-    ...mapState('sprite/select', ['selectStart', 'selectSize']),
-    ...mapState('sprite', ['tool']),
+    ...mapState('module', ['selectStart', 'selectSize'], ['select']),
+    ...mapState('module', ['tool']),
   },
 
   watch: {
@@ -41,7 +48,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('sprite/select', ['setSelectSize']),
+    ...mapMutations('module', ['setSelectSize'], ['select']),
     drawSelect (x, y) {
       clearCtx(this.overlayCtx)
       if (this.tool === 'rectangle-select') {
