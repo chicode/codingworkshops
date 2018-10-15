@@ -3,11 +3,11 @@ import { lowerBoundary, upperBoundary } from '../helpers'
 export default {
   namespaced: true,
 
-  state: {
+  state: () => ({
     selectStart: [0, 0],
     selectSize: [0, 0],
     selectionTool: null,
-  },
+  }),
 
   getters: {
     getRectParams: (state) => [

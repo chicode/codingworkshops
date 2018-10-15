@@ -4,7 +4,7 @@
 
   Game(v-if="showTabs.game" v-show="view === 'game'" :show-greeting="showGreeting")
   Editor(v-if="showTabs.editor" v-show="view === 'editor'" :language="language")
-  Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'")
+  Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'" module='sprite')
   Settings(v-if="showTabs.sprite" v-show="view === 'settings'")
 </template>
 

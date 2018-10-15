@@ -16,11 +16,11 @@ export default {
 
   modules: { select, sprite },
 
-  state: {
+  state: () => ({
     tool: 'pencil',
     width: 1,
     color: '#000000',
-  },
+  }),
 
   getters: {
     isTool: (state) => (options) => {

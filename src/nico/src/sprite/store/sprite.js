@@ -21,9 +21,9 @@ function getStoredSpritesheet () {
 export default {
   namespaced: true,
 
-  state: {
+  state: () => ({
     spritesheet: getStoredSpritesheet(),
-  },
+  }),
 
   getters: {
     sprites: (state) => {

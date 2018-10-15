@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from './dynamic-helpers'
 import { SCALE, CANVAS_PADDING, CANVAS_PADDING_OUTER } from './constants'
 
 import ToolBar from './components/ToolBar'
@@ -25,6 +25,13 @@ export default {
 
   components: {
     GridCanvas, MainCanvas, OverlayCanvas, ToolBar, OptionBar,
+  },
+
+  props: {
+    module: {
+      type: String,
+      required: true,
+    },
   },
 
   mounted () {
@@ -48,8 +55,10 @@ export default {
   },
 
   methods: {
-    ...mapActions('sprite', ['mouseDown', 'mouseUp', 'mouseMove', 'mouseLeave']),
-    ...mapActions('history', ['undo', 'redo']),
+    ...mapActions('module', ['mouseDown', 'mouseUp', 'mouseMove', 'mouseLeave']),
+    ...mapActions(function () {
+      return `${this.module}-history`
+    }, ['undo', 'redo']),
 
     getCoordsFromEvent (event) {
       return [
