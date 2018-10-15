@@ -106,11 +106,17 @@ export default {
               const _state = state
               const _ctx = state.mainCtx
               const _sprites = rootGetters['sprite/sprite/sprites']
+              const _clear = true
               /* eslint-enable no-unused-vars */
 
               try {
                 // eslint-disable-next-line no-new-func
-                new Function('_state', '_ctx', '_sprites', code)(_state, _ctx, _sprites)
+                new Function('_state', '_ctx', '_sprites', '_clear', code)(
+                  _state,
+                  _ctx,
+                  _sprites,
+                  _clear,
+                )
               } catch (e) {
                 // most errors occur in the window scope and are caught by window.onerror, but a very small amount don't
                 // one example: python runtime error that occurs in the global scope

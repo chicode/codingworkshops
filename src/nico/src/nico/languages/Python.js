@@ -1,4 +1,5 @@
 import Lang from './Lang'
+import { FUNCTIONS } from '../constants.js'
 
 function ifDoesntExist (id, callback) {
   if (!document.querySelector(id)) callback()
@@ -15,12 +16,14 @@ function loadScript (id, source) {
 }
 
 export default class Python extends Lang {
+  // prettier-ignore
   PYTHON_TEMPLATE = `
 from browser import window
+` + FUNCTIONS.map(funcName => `
+def ${funcName.toUnderscore()}(*args):
+  return window.${funcName}(*args)
+`).join('\n')
 
-def sprite(*args):
-  window.sprite(*args)
-`
   PYTHON_TEMPLATE_LENGTH = this.PYTHON_TEMPLATE.split('\n').length
 
   constructor (...args) {

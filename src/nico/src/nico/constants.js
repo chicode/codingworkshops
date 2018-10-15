@@ -1,5 +1,21 @@
 export const LANGUAGES = { javascript: 0, fsharp: 1 }
 
+export const FUNCTIONS = [
+  'rect',
+  'sprite',
+  'point',
+  'line',
+  'text',
+  'getKeys',
+  'keyDown',
+  'keyUp',
+  'keyPressed',
+  'getButtons',
+  'buttonDown',
+  'buttonUp',
+  'buttonPressed',
+]
+
 export const TEMPLATES = [
   `function init () {
   // initialize variables here
