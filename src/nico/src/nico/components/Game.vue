@@ -16,7 +16,7 @@
 <script>
 import { mapMutations, mapState, mapGetters } from 'vuex'
 
-import { initCtx, initCanvas } from '../../sprite/helpers'
+import { initCtx, initCanvas } from '../../image-editor/helpers'
 
 import Greeting from './Greeting'
 import LoadingBar from './LoadingBar'

@@ -1,12 +1,12 @@
 <template lang='pug'>
-ImageEditor(module='sprite')
+ImageEditor(module='tile')
 </template>
 
 <script>
 import ImageEditor from '../image-editor/App'
 
 export default {
-  name: 'Sprite',
+  name: 'Tile',
   components: { ImageEditor },
 }
 </script>

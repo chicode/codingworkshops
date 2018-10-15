@@ -4,7 +4,8 @@
 
   Game(v-if="showTabs.game" v-show="view === 'game'" :show-greeting="showGreeting")
   Editor(v-if="showTabs.editor" v-show="view === 'editor'" :language="language")
-  Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'" module='sprite')
+  Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'")
+  Tile(v-if="showTabs.tile" v-show="view === 'tile'")
   Settings(v-if="showTabs.sprite" v-show="view === 'settings'")
 </template>
 
@@ -13,15 +14,16 @@ import { mapState, mapMutations } from 'vuex'
 
 import Game from './components/Game'
 import Editor from './components/Editor'
-import Sprite from '../sprite/App'
 import Settings from './components/Settings'
+import Sprite from '../sprite/App'
+import Tile from '../tile/App'
 
 import Header from './components/Header'
 
 export default {
   name: 'App',
   components: {
-    Header, Game, Editor, Sprite, Settings,
+    Header, Game, Editor, Sprite, Settings, Tile,
   },
   props: {
     showGreeting: {
@@ -32,7 +34,7 @@ export default {
     showTabs: {
       type: Object,
       required: false,
-      default: () => ({ game: true, sprite: true, editor: true }),
+      default: () => ({ game: true, sprite: true, editor: true, tile: true }),
     },
     language: {
       type: String,

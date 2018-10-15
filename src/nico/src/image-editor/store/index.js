@@ -1,12 +1,5 @@
-import historyPlugin from './history-plugin'
 import select from './select'
 import sprite from './sprite'
-
-export const history = historyPlugin(['sprite', 'sprite'], (store) => {
-  // hacky fix to save spritesheet without mutation
-  window.localStorage.setItem('spritesheet', store.state.sprite.sprite.spritesheet)
-  window.lastCoords = [null, null]
-})
 
 window.mouseDown = false
 window.lastCoords = [null, null]

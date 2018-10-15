@@ -41,7 +41,7 @@ export default (modules, afterRevert = () => {}) => (store) => {
     afterRevert(store)
   }
 
-  store.registerModule('history', {
+  store.registerModule(`${modules[0]}-history`, {
     namespaced: true,
     getters: {
       // getters have to be functions because otherwise vue will cache them

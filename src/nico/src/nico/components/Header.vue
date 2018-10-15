@@ -21,7 +21,7 @@ import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Header',
-  VIEWS: ['game', 'editor', 'sprite', 'settings'],
+  VIEWS: ['game', 'editor', 'sprite', 'tile', 'settings'],
   data: () => ({
     buttonState: false,
   }),
