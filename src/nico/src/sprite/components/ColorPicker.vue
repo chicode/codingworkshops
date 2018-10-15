@@ -10,7 +10,7 @@ div.colorpicker
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState } from '../dynamic-helpers'
 import { COLORS } from '../constants'
 
 export default {
@@ -18,12 +18,19 @@ export default {
 
   COLORS,
 
+  props: {
+    module: {
+      type: String,
+      required: true,
+    },
+  },
+
   computed: {
-    ...mapState('sprite', ['color']),
+    ...mapState('module', ['color']),
   },
 
   methods: {
-    ...mapMutations('sprite', ['setColor']),
+    ...mapMutations('module', ['setColor']),
   },
 }
 </script>

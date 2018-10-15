@@ -1,9 +1,9 @@
 <template lang="pug">
 .option-bar(v-if="tool === 'pencil'")
-  ColorPicker
+  ColorPicker(v-if="showColorPicker" :module='module')
   SizeSlider(:module='module')
 .option-bar(v-else-if="tool === 'bucket'")
-  ColorPicker
+  ColorPicker(v-if="showColorPicker" :module='module')
 .option-bar(v-else-if="tool === 'eraser'")
   SizeSlider(:module='module')
 </template>
@@ -25,6 +25,11 @@ export default {
     module: {
       type: String,
       required: true,
+    },
+    showColorPicker: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
 
