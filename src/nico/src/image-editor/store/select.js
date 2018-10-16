@@ -1,6 +1,6 @@
 import { lowerBoundary, upperBoundary } from '../helpers'
 
-export default {
+export default (rootModule) => ({
   namespaced: true,
 
   state: () => ({
@@ -53,4 +53,4 @@ export default {
       state.selectTool = tool
     },
   },
-}
+})

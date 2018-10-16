@@ -3,10 +3,10 @@ import sprite from '../image-editor/store'
 
 export const history = historyPlugin(['tile', 'sprite'], (store) => {
   // hacky fix to save spritesheet without mutation
-  window.localStorage.setItem('tilemap', store.state.sprite.sprite.spritesheet)
+  window.localStorage.setItem('tilesheet', store.state.sprite.sprite.spritesheet)
   window.lastCoords = [null, null]
 })
 
 export default {
-  ...sprite,
+  ...sprite('tile'),
 }

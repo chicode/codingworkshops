@@ -8,5 +8,5 @@ export const history = historyPlugin(['sprite', 'sprite'], (store) => {
 })
 
 export default {
-  ...sprite,
+  ...sprite('sprite'),
 }

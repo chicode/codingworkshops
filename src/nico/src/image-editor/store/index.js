@@ -4,10 +4,10 @@ import sprite from './sprite'
 window.mouseDown = false
 window.lastCoords = [null, null]
 
-export default {
+export default (rootModule) => ({
   namespaced: true,
 
-  modules: { select, sprite },
+  modules: { select: select(rootModule), sprite: sprite(rootModule) },
 
   state: () => ({
     tool: 'pencil',
@@ -89,4 +89,4 @@ export default {
       }
     },
   },
-}
+})
