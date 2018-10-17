@@ -9,6 +9,7 @@ import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
 import bucketFill, { correctAntialiasing } from '../bucket-fill'
 
 function getStoredSpritesheet (rootModule) {
+  console.log(rootModule + 'sheet')
   const spritesheet = window.localStorage.getItem(rootModule + 'sheet')
   if (spritesheet) {
     try {
@@ -40,6 +41,17 @@ export default (rootModule) => ({
       }
       return sprites
     },
+    rawSprites: (state) => {
+      const ctx = getCanvasFromData(state.spritesheet).getContext('2d')
+      let sprites = []
+      for (let y = 0; y < GRID_NUMBER; y++) {
+        for (let x = 0; x < GRID_NUMBER; x++) {
+          sprites.push(ctx.getImageData(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE))
+        }
+      }
+      return sprites
+    },
+    spritesheetDisplay: (state) => () => state.spritesheet,
   },
 
   mutations: {

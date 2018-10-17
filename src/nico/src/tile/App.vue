@@ -1,12 +1,42 @@
 <template lang='pug'>
-ImageEditor(module='tile')
+div
+  ImageEditor(module='tile')
+  .tile-actions
+    .canvas
+      TileSelect
+      TileSelectOverlay(ref='canvas')
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import ImageEditor from '../image-editor/App'
+import TileSelect from './components/TileSelect'
+import TileSelectOverlay from './components/TileSelectOverlay'
+import FlagPicker from './components/FlagPicker'
 
 export default {
   name: 'Tile',
-  components: { ImageEditor },
+  components: { ImageEditor, TileSelect, TileSelectOverlay, FlagPicker },
+  mounted () {
+    const el = this.$refs.canvas.$el
+    const f = (e) => [e.offsetX, e.offsetY]
+    el.addEventListener('mousedown', (event) => this.mouseDown(f(event)))
+    el.addEventListener('mousemove', (event) => this.mouseMove(f(event)))
+    el.addEventListener('mouseup', this.mouseUp)
+    el.addEventListener('mouseleave', this.mouseLeave)
+  },
+  methods: {
+    ...mapActions('tile/tileSelect', ['mouseDown', 'mouseUp', 'mouseMove', 'mouseLeave']),
+  },
 }
 </script>
+
+<style scoped lang="stylus">
+@import '../image-editor/layered-canvas'
+.canvas {
+  canvas {
+    // TODO: compute this number automatically
+    margin-top: -800px;
+  }
+}
+</style>

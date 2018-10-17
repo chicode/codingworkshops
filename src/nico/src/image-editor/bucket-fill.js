@@ -1,7 +1,11 @@
 import { CANVAS_SIZE } from './constants'
 
-function getIndexFromCoords (coords) {
+export function getIndexFromCoords (coords) {
   return coords[1] * (CANVAS_SIZE * 4) + coords[0] * 4
+}
+
+export function getCoordsFromIndex (index) {
+  return [(index % (CANVAS_SIZE * 4)) / 4, Math.floor(index / (CANVAS_SIZE * 4))]
 }
 
 function inBounds (coords) {

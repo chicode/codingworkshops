@@ -6,7 +6,7 @@ canvas(
 </template>
 
 <script>
-import { mapState } from '../dynamic-helpers'
+import { mapState, mapGetters } from '../dynamic-helpers'
 import { initCanvas, initCtx, clearCtx, getCanvasFromData } from '../helpers'
 import { CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
@@ -25,6 +25,7 @@ export default {
 
   computed: {
     ...mapState('module', ['spritesheet'], ['sprite']),
+    ...mapGetters('module', ['spritesheetDisplay'], ['sprite']),
   },
 
   watch: {
@@ -45,7 +46,7 @@ export default {
 
   methods: {
     updateCanvas () {
-      let canvas = getCanvasFromData(this.spritesheet)
+      let canvas = getCanvasFromData(this.spritesheetDisplay())
       clearCtx(this.mainCtx)
       this.mainCtx.drawImage(canvas, 0, 0)
     },

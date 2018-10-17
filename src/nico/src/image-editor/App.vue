@@ -11,7 +11,7 @@
 
 <script>
 import { mapActions } from './dynamic-helpers'
-import { SCALE, CANVAS_PADDING, CANVAS_PADDING_OUTER } from './constants'
+import { getCoordsFromEvent } from './helpers'
 
 import ToolBar from './components/ToolBar'
 import OptionBar from './components/OptionBar'
@@ -36,9 +36,8 @@ export default {
 
   mounted () {
     const el = this.$refs.canvas.$el
-    const f = this.getCoordsFromEvent
-    el.addEventListener('mousedown', (event) => this.mouseDown(f(event)))
-    el.addEventListener('mousemove', (event) => this.mouseMove(f(event)))
+    el.addEventListener('mousedown', (event) => this.mouseDown(getCoordsFromEvent(event)))
+    el.addEventListener('mousemove', (event) => this.mouseMove(getCoordsFromEvent(event)))
     el.addEventListener('mouseup', this.mouseUp)
     el.addEventListener('mouseleave', this.mouseLeave)
 
@@ -59,50 +58,15 @@ export default {
     ...mapActions(function () {
       return `${this.module}-history`
     }, ['undo', 'redo']),
-
-    getCoordsFromEvent (event) {
-      return [
-        event.offsetX - CANVAS_PADDING_OUTER - CANVAS_PADDING,
-        event.offsetY - CANVAS_PADDING_OUTER - CANVAS_PADDING,
-      ].map(coord => Math.floor(coord / SCALE))
-    },
   },
 }
 </script>
 
 <style scoped lang="stylus">
-.image-editor {
-  canvas {
-    // TODO: compute this number automatically
-    margin-top: -824px;
-
-    position: relative;
-
-    image-rendering: optimizeSpeed; // Older versions of FF
-    image-rendering: -moz-crisp-edges; // FF 6.0+ image-rendering:
-    -webkit-optimize-contrast; // Webkit // (Safari now, Chrome soon)
-    image-rendering: -o-crisp-edges; // OS X & Windows Opera (12.02+)
-    image-rendering: optimize-contrast; // Possible future browsers.
-    -ms-interpolation-mode: nearest-neighbor; // IE
-  }
-  canvas:first-of-type {
-    margin: 0;
-  }
-
-}
+@import './layered-canvas'
 .controls {
   display: flex;
   align-items: center;
   margin: 10px 0;
-}
-.canvas {
-  // the canvases are stracked vertically rather than horizontally so that
-  // aligning them horizontally is possible
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  // fix incorrect mouse detection on firefox
-  box-sizing: content-box;
 }
 </style>

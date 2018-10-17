@@ -6,7 +6,7 @@ canvas(
 </template>
 
 <script>
-import { mapMutations, mapState } from '../dynamic-helpers'
+import { mapState } from '../dynamic-helpers'
 import { initCanvas, clearCtx, scale } from '../helpers'
 import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH, CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
@@ -48,7 +48,6 @@ export default {
   },
 
   methods: {
-    ...mapMutations('module', ['setSelectSize'], ['select']),
     drawSelect (x, y) {
       clearCtx(this.overlayCtx)
       if (this.tool === 'rectangle-select') {
