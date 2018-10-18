@@ -17,6 +17,8 @@ function loadScript (id, source) {
 }
 
 export default class Python extends Lang {
+  name = 'Python'
+
   // prettier-ignore
   PYTHON_TEMPLATE = `
 from browser import window

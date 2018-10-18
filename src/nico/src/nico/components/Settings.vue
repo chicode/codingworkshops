@@ -13,7 +13,7 @@ export default {
   computed: {
     language: {
       get () {
-        return this.$store.state.nico.language.constructor.name
+        return this.$store.state.nico.language.name
       },
       set (value) {
         return this.$store.commit('nico/setLanguage', value)

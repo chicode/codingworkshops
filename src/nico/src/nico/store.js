@@ -64,7 +64,7 @@ export default {
       state.hasBeenRun = true
     },
     loadBoilerplate (state) {
-      state.code = TEMPLATES[LANGUAGES[state.language.constructor.name]]
+      state.code = TEMPLATES[LANGUAGES[state.language.name]]
     },
   },
 

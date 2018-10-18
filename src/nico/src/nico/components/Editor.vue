@@ -43,7 +43,7 @@ export default {
     cmOptions () {
       return {
         tabSize: 2,
-        mode: getModeFromLanguage(this.language.constructor.name),
+        mode: getModeFromLanguage(this.language.name),
         lineNumbers: true,
         matchBrackets: true,
         autoRefresh: true,
