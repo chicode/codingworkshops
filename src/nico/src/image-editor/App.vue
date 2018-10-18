@@ -2,7 +2,7 @@
 .image-editor
   .controls.no-interaction
     ToolBar(:module='module')
-    OptionBar(:module='module')
+    OptionBar(:module='module' :show-color-picker='showColorPicker')
   .canvas
     MainCanvas(:module='module')
     GridCanvas(:show-grid='showGrid' :module='module')
@@ -33,6 +33,11 @@ export default {
       required: true,
     },
     showGrid: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    showColorPicker: {
       type: Boolean,
       required: false,
       default: true,
