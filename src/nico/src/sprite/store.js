@@ -11,24 +11,4 @@ export const history = historyPlugin(['sprite', 'sprite'], (store) => {
   window.lastCoords = [null, null]
 })
 
-export default _.merge(sprite('sprite', CANVAS_SIZE), {
-  modules: {
-    sprite: {
-      actions: {
-        handleAction (context, payload) {
-          sprite('sprite', CANVAS_SIZE).modules.sprite.actions.handleAction(context, payload)
-          // updates the tilesheet component by forcing an update on the watcher
-          // by setting the value to a new list through slice
-          // TODO fix this performance-killing hack
-          context.commit(
-            'tile/sprite/setSpritesheet',
-            context.rootState.tile.sprite.spritesheet.slice(),
-            {
-              root: true,
-            },
-          )
-        },
-      },
-    },
-  },
-})
+export default _.merge(sprite('sprite', CANVAS_SIZE), {})

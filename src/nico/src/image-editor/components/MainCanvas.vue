@@ -7,6 +7,7 @@ canvas(
 
 <script>
 import { mapState, mapGetters } from '../dynamic-helpers'
+import { mapState as mapStateOrig } from 'vuex'
 import { initCanvas, initCtx, clearCtx, getCanvasFromData } from '../helpers'
 import { CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
@@ -25,12 +26,18 @@ export default {
 
   computed: {
     ...mapState('module', ['spritesheet'], ['sprite']),
+    ...mapStateOrig('nico', ['view']),
     ...mapGetters('module', ['spritesheetDisplay'], ['sprite']),
   },
 
   watch: {
     spritesheet () {
       this.updateCanvas()
+    },
+    view () {
+      if (this.module === 'tile' && this.view === 'tile') {
+        this.updateCanvas()
+      }
     },
   },
 
