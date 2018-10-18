@@ -4,8 +4,9 @@ import {
   scaleCanvas,
   scale,
   transformData,
+  createCanvas
 } from '../helpers'
-import { GRID_NUMBER, GRID_SIZE } from '../constants'
+import { GRID_NUMBER, GRID_SIZE, SCALE } from '../constants'
 import bucketFill, { correctAntialiasing } from '../bucket-fill'
 
 export function getStoredSpritesheet (rootModule, CANVAS_SIZE) {
@@ -27,14 +28,13 @@ export default (rootModule, CANVAS_SIZE) => ({
 
   getters: {
     sprites: (state) => {
-      const canvas = getCanvasFromData(state.spritesheet)
-      const ctx = scaleCanvas(canvas)
+      const ctx = getCanvasFromData(state.spritesheet).getContext('2d')
 
       let sprites = []
       for (let y = 0; y < GRID_NUMBER; y++) {
         for (let x = 0; x < GRID_NUMBER; x++) {
           sprites.push(
-            ctx.getImageData(...scale(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE)),
+            createCanvas(ctx.getImageData(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE), GRID_SIZE, GRID_SIZE),
           )
         }
       }

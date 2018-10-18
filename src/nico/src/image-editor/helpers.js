@@ -80,3 +80,11 @@ export function lowerBoundary (coords) {
 export function upperBoundary (coords) {
   return coords.map((i) => (i > CANVAS_SIZE ? CANVAS_SIZE : i))
 }
+
+export function createCanvas (data, width, height) {
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  canvas.getContext('2d').putImageData(data, 0, 0)
+  return canvas
+}

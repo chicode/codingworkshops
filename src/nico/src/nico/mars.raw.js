@@ -18,7 +18,7 @@ const _mars = {}
   }
 
   window.sprite = (i, x, y) => {
-    _ctx.putImageData(_sprites[i], x * SCALE, y * SCALE)
+    _ctx.drawImage(_sprites[i], x * SCALE, y * SCALE)
   }
 
   window.point = (x, y) => {
