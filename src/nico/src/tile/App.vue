@@ -40,5 +40,8 @@ export default {
     // TODO: compute this number automatically
     margin-top: -800px;
   }
+  canvas:last-child {
+    border: 2px solid black;
+  }
 }
 </style>
