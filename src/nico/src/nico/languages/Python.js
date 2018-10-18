@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import Lang from './Lang'
 import { FUNCTIONS } from '../constants.js'
 
@@ -20,7 +21,7 @@ export default class Python extends Lang {
   PYTHON_TEMPLATE = `
 from browser import window
 ` + FUNCTIONS.map(funcName => `
-def ${funcName.toUnderscore()}(*args):
+def ${_.snakeCase(funcName)}(*args):
   return window.${funcName}(*args)
 `).join('\n')
 

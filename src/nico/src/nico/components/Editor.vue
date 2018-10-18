@@ -51,7 +51,6 @@ export default {
           Tab: (cm) => cm.execCommand('indentMore'),
           'Shift-Tab': (cm) => cm.execCommand('indentLess'),
         },
-
       }
     },
   },
@@ -79,6 +78,10 @@ export default {
       if (view === 'editor') {
         this.cm.refresh()
       }
+    },
+
+    language () {
+      this.$forceUpdate()
     },
   },
 

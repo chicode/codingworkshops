@@ -19,7 +19,7 @@ export default {
     running: false,
     mainCtx: null,
     hasBeenRun: false,
-    language: languages.Python,
+    language: new languages.Python(),
     loading: false,
     loadingTime: null,
     clicks: 0,
