@@ -8,7 +8,7 @@ div
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import ImageEditor from '../image-editor/App'
 import TileSelect from './components/TileSelect'
 import TileSelectOverlay from './components/TileSelectOverlay'
@@ -24,9 +24,11 @@ export default {
     el.addEventListener('mousemove', (event) => this.mouseMove(f(event)))
     el.addEventListener('mouseup', this.mouseUp)
     el.addEventListener('mouseleave', this.mouseLeave)
+    this.startSelect([0, 0])
   },
   methods: {
     ...mapActions('tile/tileSelect', ['mouseDown', 'mouseUp', 'mouseMove', 'mouseLeave']),
+    ...mapMutations('tile/tileSelect', ['startSelect']),
   },
 }
 </script>
