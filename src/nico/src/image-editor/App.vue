@@ -11,6 +11,7 @@
 
 <script>
 import { mapActions } from './dynamic-helpers'
+import { mapState } from 'vuex'
 
 import ToolBar from './components/ToolBar'
 import OptionBar from './components/OptionBar'
@@ -33,6 +34,10 @@ export default {
     },
   },
 
+  computed: {
+    ...mapState('nico', ['view']),
+  },
+
   mounted () {
     const el = this.$refs.canvas.$el
     el.addEventListener('mousedown', (event) => this.mouseDown(event))
@@ -43,8 +48,9 @@ export default {
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Control') window.control = true
 
-      else if (event.key === 'Z' && window.control) this.redo()
-      else if (event.key === 'z' && window.control) this.undo()
+      // only undo/redo if the current view is this module
+      else if (event.key === 'Z' && window.control && this.view === this.module) this.redo()
+      else if (event.key === 'z' && window.control && this.view === this.module) this.undo()
     })
 
     document.addEventListener('keyup', (event) => {
