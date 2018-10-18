@@ -104,22 +104,19 @@ export default {
               commit('setPaused', false)
 
               /* eslint-disable no-unused-vars */
-              const _state = state
-              const _ctx = state.mainCtx
-              const _sprites = rootGetters['sprite/sprite/sprites']
-              const _clear = true
-              const _tilemap = getCanvasFromData(rootGetters['tile/sprite/spritesheetDisplay']())
+              const variables = {
+                _state: state,
+                _ctx: state.mainCtx,
+                _sprites: rootGetters['sprite/sprite/sprites'],
+                _clear: true,
+                _tilemap: getCanvasFromData(rootGetters['tile/sprite/spritesheetDisplay']()),
+              }
               /* eslint-enable no-unused-vars */
 
               try {
+                // keys: variable names, values: variable values, this is a way to scope values
                 // eslint-disable-next-line no-new-func
-                new Function('_state', '_ctx', '_sprites', '_clear', '_tilemap', code)(
-                  _state,
-                  _ctx,
-                  _sprites,
-                  _clear,
-                  _tilemap,
-                )
+                new Function(...Object.keys(variables), code)(...Object.values(variables))
               } catch (e) {
                 // most errors occur in the window scope and are caught by window.onerror, but a very small amount don't
                 // one example: python runtime error that occurs in the global scope
