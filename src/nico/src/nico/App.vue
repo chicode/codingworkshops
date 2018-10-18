@@ -1,12 +1,12 @@
 <template lang="pug">
 .app
-  Header
+  Header(:show-tabs='showTabs')
 
   Game(v-if="showTabs.game" v-show="view === 'game'" :show-greeting="showGreeting")
   Editor(v-if="showTabs.editor" v-show="view === 'editor'" :language="language")
   Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'")
   Tile(v-if="showTabs.tile" v-show="view === 'tile'")
-  Settings(v-if="showTabs.sprite" v-show="view === 'settings'")
+  Settings(v-if="showTabs.settings" v-show="view === 'settings'")
 </template>
 
 <script>
@@ -34,7 +34,7 @@ export default {
     showTabs: {
       type: Object,
       required: false,
-      default: () => ({ game: true, sprite: true, editor: true, tile: true }),
+      default: () => ({ game: true, sprite: true, editor: true, tile: true, settings: false }),
     },
     language: {
       type: String,

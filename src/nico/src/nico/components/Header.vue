@@ -1,7 +1,7 @@
 <template lang="pug">
 .header
   .views
-    button(v-for='iview in $options.VIEWS' :key='iview' :class="'button-2' + (view === iview ? ' active' : '')" @click='setView(iview)')
+    button(v-for='(show, iview) in showTabs' v-if='show' :key='iview' :class="'button-2' + (view === iview ? ' active' : '')" @click='setView(iview)')
       p(v-if='iview !== "settings"') {{ iview }}
       img(v-else src='../assets/settings.svg')
   div.buttons
@@ -21,7 +21,12 @@ import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Header',
-  VIEWS: ['game', 'editor', 'sprite', 'tile', 'settings'],
+  props: {
+    showTabs: {
+      type: Object,
+      required: true,
+    },
+  },
   data: () => ({
     buttonState: false,
   }),

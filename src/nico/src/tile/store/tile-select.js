@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 import { lowerBoundary, upperBoundary } from '../../image-editor/helpers'
 import { GRID_SIZE, SCALE } from '../../image-editor/constants'
 

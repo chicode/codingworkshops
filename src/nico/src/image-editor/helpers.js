@@ -1,4 +1,4 @@
-import { SCALE, CANVAS_SIZE, CANVAS_PADDING, CANVAS_PADDING_OUTER } from './constants'
+import { SCALE, CANVAS_SIZE, CANVAS_PADDING } from './constants'
 
 export function scale (...values) {
   return values.map((value) => value * SCALE)
