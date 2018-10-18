@@ -1,4 +1,4 @@
-/* global _state, _ctx, _sprites, _clear, draw, init, update */
+/* global _state, _ctx, _sprites, _clear, _tilemap, draw, init, update */
 /* eslint-disable no-unused-vars */
 
 if (typeof draw === 'undefined' || !draw) throw new Error('You must define a "draw" function.')
@@ -34,7 +34,9 @@ const _mars = {}
 
   window.text = (text, x, y) => _ctx.fillText(text, x, y)
 
-  // TODO window.map = () => {}
+  window.tilemap = () => {
+    _ctx.drawImage(_tilemap, 0, 0)
+  }
 
   // key
 

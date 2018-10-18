@@ -6,6 +6,7 @@ export const FUNCTIONS = [
   'point',
   'line',
   'text',
+  'tilemap',
   'getKeys',
   'keyDown',
   'keyUp',

@@ -1,4 +1,5 @@
 import { TEMPLATES, LANGUAGES } from './constants'
+import { getCanvasFromData } from '../image-editor/helpers.js'
 import generateSet from '@/generateSet'
 import * as languages from './languages'
 
@@ -107,15 +108,17 @@ export default {
               const _ctx = state.mainCtx
               const _sprites = rootGetters['sprite/sprite/sprites']
               const _clear = true
+              const _tilemap = getCanvasFromData(rootGetters['tile/sprite/spritesheetDisplay']())
               /* eslint-enable no-unused-vars */
 
               try {
                 // eslint-disable-next-line no-new-func
-                new Function('_state', '_ctx', '_sprites', '_clear', code)(
+                new Function('_state', '_ctx', '_sprites', '_clear', '_tilemap', code)(
                   _state,
                   _ctx,
                   _sprites,
                   _clear,
+                  _tilemap,
                 )
               } catch (e) {
                 // most errors occur in the window scope and are caught by window.onerror, but a very small amount don't
