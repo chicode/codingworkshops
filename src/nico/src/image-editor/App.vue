@@ -11,7 +11,6 @@
 
 <script>
 import { mapActions } from './dynamic-helpers'
-import { getCoordsFromEvent } from './helpers'
 
 import ToolBar from './components/ToolBar'
 import OptionBar from './components/OptionBar'
@@ -36,8 +35,8 @@ export default {
 
   mounted () {
     const el = this.$refs.canvas.$el
-    el.addEventListener('mousedown', (event) => this.mouseDown(getCoordsFromEvent(event)))
-    el.addEventListener('mousemove', (event) => this.mouseMove(getCoordsFromEvent(event)))
+    el.addEventListener('mousedown', (event) => this.mouseDown(event))
+    el.addEventListener('mousemove', (event) => this.mouseMove(event))
     el.addEventListener('mouseup', this.mouseUp)
     el.addEventListener('mouseleave', this.mouseLeave)
 

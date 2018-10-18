@@ -6,8 +6,8 @@ canvas(
 
 <script>
 import { mapState } from 'vuex'
-import { initCanvas, clearCtx, scale } from '../../image-editor/helpers'
-import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH, CANVAS_PADDING, CANVAS_PADDING_OUTER, GRID_SIZE, SCALE } from '../../image-editor/constants'
+import { initCanvas, clearCtx } from '../../image-editor/helpers'
+import { SELECTION_WIDTH, SELECTION_COLOR, SELECTION_DASH, CANVAS_PADDING_OUTER, GRID_SIZE, SCALE } from '../../image-editor/constants'
 
 export default {
   name: 'TileSelectOverlayCanvas',

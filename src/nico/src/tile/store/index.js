@@ -6,7 +6,7 @@ import tileSelect from './tile-select'
 
 import { transformData } from '../../image-editor/helpers'
 import { getCoordsFromIndex } from '../../image-editor/bucket-fill'
-import { GRID_NUMBER, CANVAS_SIZE, SCALE, GRID_SIZE } from '../../image-editor/constants'
+import { GRID_NUMBER, GRID_SIZE, CANVAS_SIZE, SCALE } from '../../image-editor/constants'
 
 export const history = historyPlugin(['tile', 'sprite'], (store) => {
   // hacky fix to save spritesheet without mutation
@@ -14,7 +14,7 @@ export const history = historyPlugin(['tile', 'sprite'], (store) => {
   window.lastCoords = [null, null]
 })
 
-export default _.merge(sprite('tile'), {
+export default _.merge(sprite('tile', CANVAS_SIZE), {
   modules: {
     sprite: {
       getters: {
@@ -27,12 +27,12 @@ export default _.merge(sprite('tile'), {
                 const spriteX = state.spritesheet[i]
                 const spriteY = state.spritesheet[i + 1]
                 const [x, y] = getCoordsFromIndex(i)
+                // console.log(i, x, y)
                 // make sure that the sprites are drawn in grid increments
-                const transform = (n) => Math.floor(n / GRID_SIZE) * GRID_SIZE
                 ctx.putImageData(
                   sprites[spriteY * GRID_NUMBER + spriteX],
-                  transform(x),
-                  transform(y),
+                  x * GRID_SIZE,
+                  y * GRID_SIZE,
                 )
               }
             })
@@ -41,5 +41,10 @@ export default _.merge(sprite('tile'), {
       },
     },
     tileSelect,
+  },
+  getters: {
+    getCoordsFromEvent: (state) => (event) => {
+      return [event.offsetX, event.offsetY].map((coord) => Math.floor(coord / SCALE / GRID_SIZE))
+    },
   },
 })

@@ -5,25 +5,26 @@ import {
   scale,
   transformData,
 } from '../helpers'
-import { CANVAS_SIZE, GRID_NUMBER, GRID_SIZE } from '../constants'
+import { GRID_NUMBER, GRID_SIZE } from '../constants'
 import bucketFill, { correctAntialiasing } from '../bucket-fill'
 
-function getStoredSpritesheet (rootModule) {
-  console.log(rootModule + 'sheet')
+export function getStoredSpritesheet (rootModule, CANVAS_SIZE) {
+  console.log(CANVAS_SIZE)
   const spritesheet = window.localStorage.getItem(rootModule + 'sheet')
   if (spritesheet) {
     try {
       return JSON.parse('[' + window.localStorage.getItem(rootModule + 'sheet') + ']')
     } catch (e) {}
   }
+  console.log(rootModule)
   return new Array(CANVAS_SIZE ** 2 * 4)
 }
 
-export default (rootModule) => ({
+export default (rootModule, CANVAS_SIZE) => ({
   namespaced: true,
 
   state: () => ({
-    spritesheet: getStoredSpritesheet(rootModule),
+    spritesheet: getStoredSpritesheet(rootModule, CANVAS_SIZE),
   }),
 
   getters: {

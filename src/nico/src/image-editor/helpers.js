@@ -80,10 +80,3 @@ export function lowerBoundary (coords) {
 export function upperBoundary (coords) {
   return coords.map((i) => (i > CANVAS_SIZE ? CANVAS_SIZE : i))
 }
-
-export function getCoordsFromEvent (event) {
-  return [
-    event.offsetX - CANVAS_PADDING_OUTER - CANVAS_PADDING,
-    event.offsetY - CANVAS_PADDING_OUTER - CANVAS_PADDING,
-  ].map((coord) => Math.floor(coord / SCALE))
-}

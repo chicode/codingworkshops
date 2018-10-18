@@ -1,13 +1,14 @@
 import select from './select'
 import sprite from './sprite'
+import { SCALE, CANVAS_PADDING, CANVAS_PADDING_OUTER } from '../constants'
 
 window.mouseDown = false
 window.lastCoords = [null, null]
 
-export default (rootModule) => ({
+export default (rootModule, CANVAS_SIZE) => ({
   namespaced: true,
 
-  modules: { select: select(rootModule), sprite: sprite(rootModule) },
+  modules: { select: select(rootModule), sprite: sprite(rootModule, CANVAS_SIZE) },
 
   state: () => ({
     tool: 'pencil',
@@ -18,6 +19,12 @@ export default (rootModule) => ({
   getters: {
     isTool: (state) => (options) => {
       return options.includes(state.tool)
+    },
+    getCoordsFromEvent: (state) => (event) => {
+      return [
+        event.offsetX - CANVAS_PADDING_OUTER - CANVAS_PADDING,
+        event.offsetY - CANVAS_PADDING_OUTER - CANVAS_PADDING,
+      ].map((coord) => Math.floor(coord / SCALE))
     },
   },
 
@@ -66,7 +73,8 @@ export default (rootModule) => ({
       }
     },
 
-    mouseDown ({ dispatch }, coords) {
+    mouseDown ({ dispatch, getters }, event) {
+      const coords = getters.getCoordsFromEvent(event)
       window.mouseDown = true
       if (coords[0] !== window.lastCoords[0] || coords[1] !== window.lastCoords[1]) {
         dispatch('change', { eventType: 'down', coords })
@@ -79,7 +87,8 @@ export default (rootModule) => ({
     mouseLeave () {
       window.mouseDown = false
     },
-    mouseMove ({ dispatch }, coords) {
+    mouseMove ({ dispatch, getters }, event) {
+      const coords = getters.getCoordsFromEvent(event)
       if (
         window.mouseDown &&
         (coords[0] !== window.lastCoords[0] || coords[1] !== window.lastCoords[1])
