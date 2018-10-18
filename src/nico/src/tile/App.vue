@@ -1,6 +1,6 @@
 <template lang='pug'>
 div
-  ImageEditor(module='tile')
+  ImageEditor(module='tile' :show-grid='false')
   .tile-actions
     .canvas
       TileSelect

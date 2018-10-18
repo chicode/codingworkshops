@@ -14,6 +14,13 @@ export default {
 
   CANVAS_PADDING_OUTER,
 
+  props: {
+    showGrid: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
   mounted () {
     const el = this.$refs.grid
     initCanvas(el, CANVAS_PADDING)
@@ -27,23 +34,31 @@ export default {
     ctx.fillStyle = GRID_COLOR
     ctx.font = GRID_FONT
     ctx.lineWidth = GRID_WIDTH
-    let begin, end
-    for (let x = 0; x <= GRID_NUMBER; x++) {
-      begin = [x * GRID_SIZE * SCALE, 0]
-      end = [x * GRID_SIZE * SCALE, CANVAS_SIZE * SCALE]
-      ctx.moveTo(begin[0], begin[1])
-      ctx.lineTo(end[0], end[1])
-    }
-    for (let y = 0; y <= GRID_NUMBER; y++) {
-      begin = [0, y * GRID_SIZE * SCALE]
-      end = [CANVAS_SIZE * SCALE, y * GRID_SIZE * SCALE]
-      ctx.moveTo(begin[0], begin[1])
-      ctx.lineTo(end[0], end[1])
-    }
-    for (let x = 0; x <= GRID_NUMBER; x++) {
-      for (let y = 0; y <= GRID_NUMBER; y++) {
-        ctx.fillText(x + GRID_NUMBER * y, x * GRID_SIZE * SCALE + 4, y * GRID_SIZE * SCALE + 12)
+    if (this.showGrid) {
+      let begin, end
+      for (let x = 0; x <= GRID_NUMBER; x++) {
+        begin = [x * GRID_SIZE * SCALE, 0]
+        end = [x * GRID_SIZE * SCALE, CANVAS_SIZE * SCALE]
+        ctx.moveTo(begin[0], begin[1])
+        ctx.lineTo(end[0], end[1])
       }
+      for (let y = 0; y <= GRID_NUMBER; y++) {
+        begin = [0, y * GRID_SIZE * SCALE]
+        end = [CANVAS_SIZE * SCALE, y * GRID_SIZE * SCALE]
+        ctx.moveTo(begin[0], begin[1])
+        ctx.lineTo(end[0], end[1])
+      }
+      for (let x = 0; x <= GRID_NUMBER; x++) {
+        for (let y = 0; y <= GRID_NUMBER; y++) {
+          ctx.fillText(x + GRID_NUMBER * y, x * GRID_SIZE * SCALE + 4, y * GRID_SIZE * SCALE + 12)
+        }
+      }
+    } else {
+      ctx.moveTo(0, 0)
+      ctx.lineTo(CANVAS_SIZE * SCALE, 0)
+      ctx.lineTo(CANVAS_SIZE * SCALE, CANVAS_SIZE * SCALE)
+      ctx.lineTo(0, CANVAS_SIZE * SCALE)
+      ctx.lineTo(0, 0)
     }
     ctx.stroke()
   },

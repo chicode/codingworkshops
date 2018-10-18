@@ -5,7 +5,7 @@
     OptionBar(:module='module')
   .canvas
     MainCanvas(:module='module')
-    GridCanvas(:module='module')
+    GridCanvas(:show-grid='showGrid' :module='module')
     OverlayCanvas(ref='canvas' :module='module')
 </template>
 
@@ -31,6 +31,11 @@ export default {
     module: {
       type: String,
       required: true,
+    },
+    showGrid: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
 
