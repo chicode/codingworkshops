@@ -28,9 +28,8 @@ div.footer
       @click="previousSlide"
     ): div previous
     button.button(
-      :disabled="isLastSlide"
       @click="nextSlide"
-    ): div next
+    ): div {{ isLastSlide ? 'create next slide' : 'next' }}
 </template>
 
 <script>
@@ -45,15 +44,23 @@ export default {
       type: Boolean,
       required: true,
     },
+    create: {
+      type: Function,
+      required: true,
+    },
   },
   methods: {
     nextSlide () {
-      this.$router.push({ name: 'edit-slide',
-        params: {
-          ...this.$route.params,
-          slide: parseInt(this.$route.params.slide) + 1,
-        },
-      })
+      if (this.isLastSlide) {
+        this.create()
+      } else {
+        this.$router.push({ name: 'edit-slide',
+          params: {
+            ...this.$route.params,
+            slide: parseInt(this.$route.params.slide) + 1,
+          },
+        })
+      }
     },
     previousSlide () {
       this.$router.push({ name: 'edit-slide',

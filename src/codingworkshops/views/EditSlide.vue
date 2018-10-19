@@ -1,12 +1,13 @@
 <template lang="pug">
 .full.lesson
     EditInstructionSlide.content
-    EditSlideFooter(:isFirstSlide='isFirstSlide' :isLastSlide='isLastSlide').footer
+    EditSlideFooter(:isFirstSlide='isFirstSlide' :isLastSlide='isLastSlide' :create='create').footer
 </template>
 
 <script>
 import EditInstructionSlide from '../components/EditInstructionSlide'
 import EditSlideFooter from '../components/EditSlideFooter'
+import { create } from '@/edit-abstractions'
 
 export default {
   name: 'EditSlide',
@@ -14,7 +15,11 @@ export default {
     EditInstructionSlide, EditSlideFooter,
   },
   data: () => ({
-    data: [],
+    data: {
+
+      lessonSlides: [],
+      lesson: {},
+    },
   }),
   apollo: {
     data: {
@@ -22,7 +27,7 @@ export default {
       variables () {
         return this.$route.params
       },
-      update: (result) => result.lessonSlides,
+      update: (result) => result,
     },
   },
   computed: {
@@ -30,8 +35,26 @@ export default {
       return parseInt(this.$route.params.slide) === 1
     },
     isLastSlide () {
-      return parseInt(this.$route.params.slide) === this.data.length
+      return parseInt(this.$route.params.slide) === this.data.lessonSlides.length
     },
+  },
+  methods: {
+    create: create('slide', null, {
+      onSuccess () {
+        this.$router.push({ name: 'edit-slide',
+          params: {
+            ...this.$route.params,
+            slide: parseInt(this.$route.params.slide) + 1,
+          },
+        })
+      },
+      getVars () {
+        return {
+          lesson: this.data.lesson.id,
+          index: parseInt(this.$route.params.slide) + 1,
+        }
+      },
+    }),
   },
 }
 </script>
