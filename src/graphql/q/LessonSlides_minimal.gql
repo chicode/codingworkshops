@@ -4,5 +4,6 @@ query($lesson: Int!, $workshop: String!, $human: String!) {
   }
   lesson(lesson: $lesson, workshop: $workshop, human: $human) {
     id
+    name
   }
 }

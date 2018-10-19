@@ -21,7 +21,7 @@ div.footer
         workshop: $route.params.workshop,
         lesson: $route.params.lesson,
       }
-    }`) {{ $route.params.lesson }}
+    }`) {{ lesson.name }}
   div.buttons
     button.button(
       :disabled="isFirstSlide"
@@ -46,6 +46,10 @@ export default {
     },
     create: {
       type: Function,
+      required: true,
+    },
+    lesson: {
+      type: Object,
       required: true,
     },
   },

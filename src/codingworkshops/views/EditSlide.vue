@@ -1,7 +1,7 @@
 <template lang="pug">
 .full.lesson
     EditInstructionSlide.content
-    EditSlideFooter(:isFirstSlide='isFirstSlide' :isLastSlide='isLastSlide' :create='create').footer
+    EditSlideFooter(:isFirstSlide='isFirstSlide' :isLastSlide='isLastSlide' :create='create' :lesson='data.lesson').footer
 </template>
 
 <script>
