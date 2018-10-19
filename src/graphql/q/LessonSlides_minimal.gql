@@ -1,0 +1,5 @@
+query($lesson: Int!, $workshop: String!, $human: String!) {
+  lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
+    id
+  }
+}

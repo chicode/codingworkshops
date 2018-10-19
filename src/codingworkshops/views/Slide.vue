@@ -1,5 +1,5 @@
 <template lang="pug">
-div.full(v-if="!loading")
+.full(v-if="!loading")
   div.lesson.full(v-if="slides.length")
     InstructionSlide.content.full
     SlideFooter.footer
