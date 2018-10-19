@@ -1,5 +1,13 @@
 <template lang="pug">
 .edit-lesson.standard-layout(v-if='!loading')
+  router-link.workshop.underline(:to=`{
+    name: 'edit-workshop',
+    params: {
+      human: $route.params.human,
+      workshop: $route.params.workshop,
+    }
+  }`) {{ $route.params.workshop }}
+
   p.error(v-if='errors.name') {{ errors.name }}
   InputWrapper(:value='data.lesson.name' @input='edit("name")($event)')
     h1 {{ data.lesson.name }}
