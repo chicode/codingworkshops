@@ -1,20 +1,19 @@
 <template lang="pug">
   component(:is='edit && draggable ? "vue-draggable" : "ul"' @end='drag' element='ul')
-    transition-group
-      // for some reason the key being the item index breaks the ordering of the items
-      // and vue draggable shows the incorrect result of a drag operation
-      component(
-        :is='router ? "router-link" : "li"'
-        v-for='item in items'
-        :key='item.name'
-        :to=`{
-          name: edit ? 'edit-' + type : type,
-          params: getRouteParams(item)
-        }`
-        tag='li'
-      ): tile(:edit='edit' @del='del(item.id)')
-        slot(:item='item')
-      slot(name='footer')
+    // for some reason the key being the item index breaks the ordering of the items
+    // and vue draggable shows the incorrect result of a drag operation
+    component(
+      :is='router ? "router-link" : "li"'
+      v-for='item in items'
+      :key='item.name'
+      :to=`{
+        name: edit ? 'edit-' + type : type,
+        params: getRouteParams(item)
+      }`
+      tag='li'
+    ): tile(:edit='edit' @del='del(item.id)')
+      slot(:item='item')
+    slot(name='footer')
 </template>
 
 <script>
