@@ -101,7 +101,9 @@ export const drag = () =>
     this.$apollo.mutate(
       require(`@/graphql/m/Move${this.type.capitalize()}`).default(
         {
+          // oldIndex is unchanged bc array is 0 indexed
           pk: this.items[oldIndex].id,
+          // newIndex is changed bc index is 1 indexed on server
           index: newIndex + 1,
         },
         this.$route.params,
