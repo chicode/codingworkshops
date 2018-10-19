@@ -1,7 +1,7 @@
 <template lang="pug">
-.full
-  EditInstructionSlide.content
-  EditSlideFooter(:isFirstSlide='isFirstSlide' :isLastSlide='isLastSlide').footer
+.full.lesson
+    EditInstructionSlide.content
+    EditSlideFooter(:isFirstSlide='isFirstSlide' :isLastSlide='isLastSlide').footer
 </template>
 
 <script>
@@ -35,3 +35,10 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="stylus">
+.lesson {
+  display: flex;
+  flex-direction: column;
+}
+</style>
