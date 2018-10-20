@@ -1,0 +1,10 @@
+fragment WorkshopContributors on WorkshopType {
+  id
+  name
+  slug
+  description
+  contributors {
+    id
+    username
+  }
+}

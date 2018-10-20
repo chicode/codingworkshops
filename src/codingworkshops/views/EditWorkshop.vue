@@ -8,6 +8,16 @@
 
   LessonTiles(:edit='true' :lessons='data.workshopLessons')
   button.button(@click='create'): div new lesson
+
+  .new-contributor
+    p.error(v-if="errors.contributors") {{ errors.contributors }}
+    .row
+      input.input(v-model="contributor" placeholder="username")
+      button.button(@click=`edit('contributors')([
+        contributor,
+        ...data.workshop.contributors.map(contributor => contributor.username)
+      ])`): div add contributor
+
 p(v-else) loading...
 </template>
 
@@ -30,8 +40,9 @@ export default {
       },
       workshopLessons: [],
     },
+    contributor: '',
   }),
-  ...apollo('workshop'),
+  ...apollo('workshopContributors'),
   methods: {
     edit: edit('workshop'),
     create: create('lesson', 'workshop', {
@@ -47,3 +58,16 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="stylus">
+.new-contributor {
+  margin-top: 50px;
+  .row {
+    display: flex;
+    align-items: flex-end;
+  }
+  input {
+    margin-right: 20px;
+  }
+}
+</style>
