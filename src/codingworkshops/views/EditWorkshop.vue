@@ -14,9 +14,9 @@
     .row
       input.input(v-model="contributor" placeholder="username")
       button.button(@click=`edit('contributors')([
-        contributor,
-        ...data.workshop.contributors.map(contributor => contributor.username)
+        contributor, ...contributors
       ])`): div add contributor
+  p currently: {{ contributors.join(' ') }}
 
 p(v-else) loading...
 </template>
@@ -42,6 +42,11 @@ export default {
     },
     contributor: '',
   }),
+  computed: {
+    contributors () {
+      return this.data.workshop.contributors.map(contributor => contributor.username)
+    },
+  },
   ...apollo('workshopContributors'),
   methods: {
     edit: edit('workshop'),
