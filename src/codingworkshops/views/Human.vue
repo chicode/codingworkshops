@@ -1,11 +1,15 @@
 <template lang="pug">
 .human
   query(:query="require('@/graphql/q/User.gql')" :variables="{ human: $route.params.human }")
-    template(slot-scope='{ data: { user: { username, bio }, userWorkshops } }')
+    template(slot-scope='{ data: { user: { username, bio, contributedWorkshopSet }, userWorkshops } }')
       h1.no-margin {{ username }}
       p {{ bio }}
-      h2 Workshops
-      WorkshopTiles.workshops(:edit='true' :center='false' :workshops="userWorkshops")
+      div(v-if="userWorkshops.length")
+        h2 Your Workshops
+        WorkshopTiles.workshops(:edit='true' :center='false' :workshops="userWorkshops")
+      div(v-if="contributedWorkshopSet.length")
+        h2 Workshops You Contribute To
+        WorkshopTiles.workshops(:edit='true' :center='false' :workshops="contributedWorkshopSet")
 
       .new-workshop
         p.error(v-if="errors.name") {{ errors.name }}
