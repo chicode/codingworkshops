@@ -3,7 +3,13 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['plugin:vue/recommended', '@vue/standard'],
+  plugins: ['lodash', 'lodash-fp'],
+  extends: [
+    'plugin:lodash/recommended',
+    'plugin:lodash-fp/recommended',
+    'plugin:vue/recommended',
+    '@vue/standard',
+  ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -19,6 +25,11 @@ module.exports = {
         multiline: 'always',
       },
     ],
+
+    // temporary fix for the pipeline operator
+    'operator-linebreak': 'off',
+    'lodash/prefer-lodash-method': 'off',
+    'lodash-fp/no-unused-result': 'off',
   },
   parserOptions: {
     parser: 'babel-eslint',

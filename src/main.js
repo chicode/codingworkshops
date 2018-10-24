@@ -9,7 +9,7 @@ import routerConfig from './codingworkshops/router'
 import storeConfig from './store'
 import App from './codingworkshops/App.vue'
 
-import './styles/index.styl'
+import './styles/index.scss'
 import './directives.js'
 
 // eslint-disable-next-line no-extend-native

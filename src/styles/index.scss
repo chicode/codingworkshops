@@ -1,0 +1,120 @@
+@import './fixes.scss';
+@import './defs.scss';
+
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400');
+@import './fantasque/stylesheet.css';
+
+$colors: (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";
+/*
+
+body, html {
+  height: 100%;
+}
+
+body, button, input {
+  font-family: fonts.body;
+  font-size: font-sizes[2];
+  color: black;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6,
+h1 *, h2 *, h3 *, h4 *, h5 *, h6 *,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.h1 *, .h2 *, .h3 *, .h4 *, .h5 *, .h6 *, {
+  font-family: fonts.heading;
+}
+
+h1, .h1 {
+  font-size: font-sizes[0];
+  margin-top: 50px;
+}
+
+h2, .h2 {
+  font-size: font-sizes[1];
+  margin-top: 40px;
+}
+
+p, h3, .h3 {
+  font-size: font-sizes[2];
+  margin-top: 10px;
+}
+
+.no-margin {
+  margin-top: 0;
+}
+
+code {
+  font-family: fonts.code;
+  font-size: font-sizes[2] - 1;
+  padding: 2px;
+  background: #EEEEEE;
+  border-radius: 5px;
+}
+pre code {
+  display: block;
+  padding: 10px;
+}
+
+.marked {
+  > * {
+    margin-bottom: 20px;
+  }
+}
+*/
+
+@mixin button-properties {
+  padding: 3px 10px;
+  font-family: $heading-family;
+  font-weight: bold;
+}
+
+.input {
+  @include standard-border;
+  padding: 5px;
+  width: 300px;
+  display: block;
+}
+
+.button {
+  @include tile('button') {
+    @include button-properties;
+  }
+}
+
+/*
+.link {
+  color: palette.purple;
+  text-decoration: underline;
+}
+*/
+
+.tile {
+  @include tile('tile') {
+    padding: 20px;
+  }
+}
+
+.tile-light {
+  @include light-border;
+}
+
