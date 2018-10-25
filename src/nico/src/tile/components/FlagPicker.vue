@@ -1,5 +1,6 @@
 <template lang="pug">
 div.flagpicker
+  p Flags:
   button.flag(
     v-for="(flag, i) in currentFlags"
     :key="i"
@@ -31,9 +32,14 @@ export default {
 @import '../../styles/defs.styl'
 
 .flagpicker {
+  margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
+  justify-content: center;
+  p {
+    margin-right: 30px;
+  }
 }
 
 .flag {
