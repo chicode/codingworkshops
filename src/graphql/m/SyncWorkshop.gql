@@ -1,0 +1,6 @@
+mutation ($pk: ID!) {
+  syncWorkshop(pk: $pk) {
+    ok
+    error
+  }
+}
