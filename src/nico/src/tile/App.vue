@@ -5,6 +5,7 @@ div
     .canvas
       TileSelect
       TileSelectOverlay(ref='canvas')
+    FlagPicker
 </template>
 
 <script>
