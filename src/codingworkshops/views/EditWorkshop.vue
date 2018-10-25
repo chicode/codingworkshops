@@ -18,6 +18,14 @@
       ])`): div add contributor
   p currently: {{ contributors.join(' ') }}
 
+  .url.row
+    p.error(v-if="errors.source_url") {{ errors.source_url }}
+    input.input(v-model="sourceUrl" placeholder="YAML source url")
+    button.button(@click=`edit('sourceUrl')(sourceUrl)`)
+      div save
+    button.button(@click=`sync`)
+      div sync source (warning: will overwrite!)
+
 p(v-else) loading...
 </template>
 
@@ -38,9 +46,9 @@ export default {
         description: '',
         id: '',
       },
-      workshopLessons: [],
-    },
+      workshopLessons: [] },
     contributor: '',
+    sourceUrl: '',
   }),
   computed: {
     contributors () {
@@ -60,6 +68,16 @@ export default {
         })
       },
     }),
+    async sync () {
+      await this.$apollo.mutate(
+        require('@/graphql/m/SyncWorkshop').default({
+          pk: this.data.workshop.id,
+        })
+      )
+
+      // reset to home in case the name changes
+      this.$router.push({ name: 'human', params: this.$route.params })
+    },
   },
 }
 </script>
@@ -67,12 +85,15 @@ export default {
 <style scoped lang="stylus">
 .new-contributor {
   margin-top: 50px;
-  .row {
-    display: flex;
-    align-items: flex-end;
-  }
-  input {
-    margin-right: 20px;
-  }
+}
+.url {
+  margin-top: 50px;
+}
+input, button {
+  margin-right: 20px;
+}
+.row {
+  display: flex;
+  align-items: flex-end;
 }
 </style>
