@@ -17,6 +17,7 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'object-curly-spacing': ['error', 'always'],
     camelcase: 'off',
+    'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
 
     'vue/html-closing-bracket-newline': [
       'error',
