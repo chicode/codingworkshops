@@ -109,7 +109,8 @@ export default {
                 _ctx: state.mainCtx,
                 _sprites: rootGetters['sprite/sprite/sprites'],
                 _clear: true,
-                _tilemap: getCanvasFromData(rootGetters['tile/sprite/spritesheetDisplay']()),
+                _tilemap: rootGetters['tile/sprite/tilemap'](),
+                _flags: rootState.tile.flags,
               }
               /* eslint-enable no-unused-vars */
 

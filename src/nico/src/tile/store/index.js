@@ -22,32 +22,46 @@ export function getStoredFlags () {
       return JSON.parse(flags)
     } catch (e) {}
   }
-  return Array(GRID_NUMBER).fill(Array(GRID_NUMBER).fill(Array(FLAG_NUMBER).fill(false)))
+  return _.range(GRID_NUMBER).map(() =>
+    _.range(GRID_NUMBER).map(() => Array(FLAG_NUMBER).fill(false)),
+  )
 }
 
 export default _.merge(sprite('tile', CANVAS_SIZE), {
   modules: {
     sprite: {
       getters: {
-        spritesheetDisplay: (state, getters_, rootState_, rootGetters) => () => {
+        spritesheetDisplay: (state, getters, _rootState, rootGetters) => () => {
           const sprites = rootGetters['sprite/sprite/rawSprites']
+          const tilemap = getters.tilemap()
+
+          console.log(tilemap)
           return transformData(null, (ctx) => {
-            _.range(0, state.spritesheet.length, 4).forEach((i) => {
-              if (state.spritesheet[i + 3]) {
-                // the coordinates of the original sprite are encoded into the color of the tilesheet
-                const spriteX = state.spritesheet[i]
-                const spriteY = state.spritesheet[i + 1]
-                const [x, y] = getCoordsFromIndex(i)
-                // console.log(i, x, y)
-                // make sure that the sprites are drawn in grid increments
-                ctx.putImageData(
-                  sprites[spriteY * GRID_NUMBER + spriteX],
-                  x * GRID_SIZE,
-                  y * GRID_SIZE,
-                )
-              }
-            })
+            tilemap.forEach((row, y) =>
+              row.forEach((spriteI, x) => {
+                if (spriteI !== null) {
+                  ctx.putImageData(sprites[spriteI], x * GRID_SIZE, y * GRID_SIZE)
+                }
+              }),
+            )
           })
+        },
+        tilemap: (state) => () => {
+          const result = _.range(GRID_NUMBER).map(() => Array(GRID_NUMBER))
+
+          _.range(0, state.spritesheet.length, 4).forEach((i) => {
+            const spriteX = state.spritesheet[i]
+            const spriteY = state.spritesheet[i + 1]
+            const [y, x] = getCoordsFromIndex(i)
+            if (x < GRID_NUMBER && y < GRID_NUMBER) {
+              if (state.spritesheet[i + 3]) {
+                result[x][y] = spriteY * GRID_SIZE + spriteX
+              } else {
+                result[x][y] = null
+              }
+            }
+          })
+          return result
         },
       },
     },

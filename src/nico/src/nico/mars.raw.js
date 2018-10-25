@@ -1,4 +1,4 @@
-/* global _state, _ctx, _sprites, _clear, _tilemap, draw, init, update */
+/* global _state, _ctx, _sprites, _clear, _tilemap, _flags, draw, init, update */
 /* eslint-disable no-unused-vars */
 
 if (typeof draw === 'undefined' || !draw) throw new Error('You must define a "draw" function.')
@@ -6,6 +6,24 @@ if (typeof draw === 'undefined' || !draw) throw new Error('You must define a "dr
 const SCALE = 10
 const _mars = {}
 ;((_mars) => {
+  const tilemapCanvas = document.createElement('canvas')
+  const tilemapCtx = tilemapCanvas.getContext('2d')
+
+  const GRID_SIZE = 8
+
+  function updateTilemapCanvas () {
+    _tilemap.forEach((row, y) =>
+      row.forEach((spriteI, x) => {
+        if (spriteI !== null) {
+          tilemapCtx.clearRect(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE)
+          tilemapCtx.drawImage(_sprites[spriteI], x * GRID_SIZE, y * GRID_SIZE)
+        }
+      }),
+    )
+  }
+
+  updateTilemapCanvas()
+
   // drawing
 
   window.rect = (x, y, width, height, outline = false, color = null) => {
@@ -35,7 +53,7 @@ const _mars = {}
   window.text = (text, x, y) => _ctx.fillText(text, x, y)
 
   window.tilemap = () => {
-    _ctx.drawImage(_tilemap, 0, 0)
+    _ctx.drawImage(tilemapCanvas, 0, 0)
   }
 
   // key
@@ -56,17 +74,15 @@ const _mars = {}
   window.getKeys = () => _mars.keys
 
   window.keyDown = (key) => {
-    // || false because this function should return true or false, not undefined
-    // console.log(_mars.keys, key, _mars.keys[key])
-    return _mars.keys[key] || false
+    return !!_mars.keys[key]
   }
 
   window.keyUp = (key) => {
-    return !_mars.keys[key] || true
+    return !_mars.keys[key]
   }
 
   window.keyPressed = (key) => {
-    return _mars.keysPressed[key] || false
+    return !!_mars.keysPressed[key]
   }
 
   // button
@@ -98,29 +114,31 @@ const _mars = {}
   window.getButtons = () => _mars.buttons
 
   window.buttonDown = (button) => {
-    return _mars.buttons[button] || false
+    return !!_mars.buttons[button]
   }
 
   window.buttonUp = (button) => {
-    return !_mars.buttons[button] || true
+    return !_mars.buttons[button]
   }
 
   window.buttonPressed = (button) => {
-    return _mars.buttonsPressed[button] || false
+    return !!_mars.buttonsPressed[button]
   }
-
-  /* TODO
 
   // tilemap
 
-  window.hasFlag = (x, y) => {}
+  window.hasFlag = (flag, x, y) => {
+    return !!_flags[x][y][flag]
+  }
 
-  window.moveTile = (x, y, newX, newY) => {}
+  window.getTile = (x, y) => {
+    return _tilemap[x][y]
+  }
 
-  window.deleteTile = (x, y) => {}
-
-  window.createTile = (x, y, tile) => {}
-  */
+  window.changeTile = (i, x, y) => {
+    _tilemap[x][y] = i
+    updateTilemapCanvas()
+  }
 })(_mars)
 
 init()
