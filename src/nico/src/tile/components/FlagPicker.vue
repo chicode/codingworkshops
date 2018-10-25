@@ -1,29 +1,28 @@
-
 <template lang="pug">
-div.colorpicker
-  div(
-    v-for="color in $options.COLORS"
-    :style="{ background: color }"
-    :key="color"
-    class="color"
-    @click="setColor(color)"
+div.flagpicker
+  button.flag(
+    v-for="(flag, i) in currentFlags"
+    :key="i"
+    :class="flag && 'active'"
+    @click="toggleFlag(i)"
   )
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import { FLAG_NUMBER } from '../constants'
 
 export default {
-  name: 'ColorPicker',
+  name: 'FlagPicker',
 
-  COLORS: ['red'],
+  FLAG_NUMBER,
 
   computed: {
-    ...mapState('module', ['color']),
+    ...mapGetters('tile', ['currentFlags']),
   },
 
   methods: {
-    ...mapMutations('module', ['setColor']),
+    ...mapActions('tile', ['toggleFlag']),
   },
 }
 </script>
@@ -31,15 +30,18 @@ export default {
 <style scoped lang="stylus">
 @import '../../styles/defs.styl'
 
-.colorpicker {
+.flagpicker {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.color {
+.flag {
   width: 20px;
   height: 20px;
   standard-border()
+  &.active {
+    background: palette.purple;
+  }
 }
 </style>

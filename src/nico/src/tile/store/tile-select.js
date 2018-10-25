@@ -19,6 +19,9 @@ export default {
     selectionExists: (state) => {
       return state.selectSize[0] !== 0 || state.selectSize[1] !== 0
     },
+    selectStartCoords: (state) => {
+      return state.selectStart.map((coord) => Math.floor(coord / (GRID_SIZE * SCALE)))
+    },
   },
 
   mutations: {
