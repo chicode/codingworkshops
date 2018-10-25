@@ -102,13 +102,13 @@ ${this.mars}
     const scriptId = '__main__'
 
     let py = this.transformPython(code)
-    console.log('PYTHON CODE:\n', py)
+    // console.log('PYTHON CODE:\n', py)
 
     let js
     try {
       js = $B.py2js(py, scriptId, scriptId).to_js()
     } catch (e) {
-      console.dir(e)
+      // console.dir(e)
       return {
         success: false,
         errors: [this.convertError(e)],
@@ -116,7 +116,7 @@ ${this.mars}
     }
 
     js = this.transformJS(js, scriptId)
-    console.log('JS CODE:\n', js)
+    // console.log('JS CODE:\n', js)
 
     return {
       success: true,

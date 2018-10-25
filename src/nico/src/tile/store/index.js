@@ -35,7 +35,6 @@ export default _.merge(sprite('tile', CANVAS_SIZE), {
           const sprites = rootGetters['sprite/sprite/rawSprites']
           const tilemap = getters.tilemap()
 
-          console.log(tilemap)
           return transformData(null, (ctx) => {
             tilemap.forEach((row, y) =>
               row.forEach((spriteI, x) => {
