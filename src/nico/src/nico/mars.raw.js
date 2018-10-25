@@ -3,7 +3,6 @@
 
 if (typeof draw === 'undefined' || !draw) throw new Error('You must define a "draw" function.')
 
-const SCALE = 10
 const _mars = {}
 ;((_mars) => {
   const tilemapCanvas = document.createElement('canvas')
@@ -27,7 +26,7 @@ const _mars = {}
   // drawing
 
   window.rect = (x, y, width, height, outline = false, color = null) => {
-    _ctx.rect(x * SCALE, y * SCALE, width * SCALE, height * SCALE)
+    _ctx.rect(x * GRID_SIZE, y * GRID_SIZE, width, height)
     if (outline) {
       _ctx.stroke()
     } else {
@@ -36,11 +35,11 @@ const _mars = {}
   }
 
   window.sprite = (i, x, y) => {
-    _ctx.drawImage(_sprites[i], x * SCALE, y * SCALE)
+    _ctx.drawImage(_sprites[i], x * GRID_SIZE, y * GRID_SIZE)
   }
 
   window.point = (x, y) => {
-    _ctx.rect(x * SCALE, y * SCALE, SCALE, SCALE)
+    _ctx.rect(x * GRID_SIZE, y * GRID_SIZE, 1, 1)
   }
 
   window.line = (x1, y1, x2, y2) => {
