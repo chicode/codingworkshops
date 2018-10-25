@@ -15,6 +15,9 @@ export const FUNCTIONS = [
   'buttonDown',
   'buttonUp',
   'buttonPressed',
+  'hasFlag',
+  'getTile',
+  'changeTile',
 ]
 
 export const TEMPLATES = [
