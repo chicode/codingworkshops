@@ -1,4 +1,4 @@
-export const LANGUAGES = { javascript: 0, fsharp: 1 }
+export const LANGUAGES = { javascript: 0, fsharp: 1, python: 0 }
 
 export const FUNCTIONS = [
   'rect',
@@ -73,6 +73,10 @@ export const BOOKLET_SECTIONS = [
       },
       {
         code: ['rect(x, y, w, h)', 'rect x y w h'],
+        description: 'Draw a rectangle, given its coordinates and size.',
+      },
+      {
+        code: ['point(x, y, w, h)', 'point x y w h'],
         description: 'Draw a rectangle, given its coordinates and size.',
       },
     ],

@@ -5,6 +5,9 @@ if (typeof draw === 'undefined' || !draw) throw new Error('You must define a "dr
 
 const _mars = {}
 ;((_mars) => {
+  _ctx.font = '.3rem Karla'
+  _ctx.textBaseline = 'top'
+
   const tilemapCanvas = document.createElement('canvas')
   const tilemapCtx = tilemapCanvas.getContext('2d')
 
@@ -40,16 +43,35 @@ const _mars = {}
 
   window.point = (x, y) => {
     _ctx.rect(x * GRID_SIZE, y * GRID_SIZE, 1, 1)
+    _ctx.fill()
   }
 
-  window.line = (x1, y1, x2, y2) => {
+  window.line = (x0, y0, x1, y1) => {
     _ctx.beginPath()
-    _ctx.moveTo(x1, y1)
-    _ctx.lineTo(x2, y2)
+    _ctx.moveTo(x0, y0)
+
+    const dx = Math.abs(x1 - x0)
+    const dy = Math.abs(y1 - y0)
+    const sx = x0 < x1 ? 1 : -1
+    const sy = y0 < y1 ? 1 : -1
+    let err = dx - dy
+
+    while (x0 !== x1 && y0 !== y1) {
+      if (2 * err > -dy) {
+        err -= dy
+        x0 += sx
+      } else if (2 * err < dx) {
+        err += dx
+        y0 += sy
+      }
+      _ctx.lineTo(x0, y0)
+    }
     _ctx.stroke()
   }
 
-  window.text = (text, x, y) => _ctx.fillText(text, x, y)
+  window.text = (text, x, y) => {
+    _ctx.fillText(text, x, y)
+  }
 
   window.tilemap = () => {
     _ctx.drawImage(tilemapCanvas, 0, 0)
