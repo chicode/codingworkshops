@@ -1,22 +1,4 @@
-export const FUNCTIONS_BARE = [
-  'rect',
-  'sprite',
-  'point',
-  'line',
-  'text',
-  'tilemap',
-  'getKeys',
-  'keyDown',
-  'keyUp',
-  'keyPressed',
-  'getButtons',
-  'buttonDown',
-  'buttonUp',
-  'buttonPressed',
-  'hasFlag',
-  'getTile',
-  'changeTile',
-]
+import _ from 'lodash'
 
 export const FUNCTIONS = [
   {
@@ -155,3 +137,5 @@ export const FUNCTIONS = [
   },
 ].reverse()
 // reverse is because the sections appear in reverse order due to the rotation
+
+export const FUNCTIONS_BARE = _.map(_.flatMap(FUNCTIONS, 'functions'), 'name')
