@@ -164,13 +164,10 @@ const _mars = {}
 
 init()
 
-let _frame = 0
-const _FRAME_LIMITING = 10
-
 // this being an arrow function is important because it makes the browser treat
 // the errors thrown inside of the function as normkl errors and not cross-origin errors
 const _main = () => {
-  if (!_state.paused && _frame % _FRAME_LIMITING === 0) {
+  if (!_state.paused) {
     update()
     if (_clear) _ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
     draw()
@@ -178,6 +175,5 @@ const _main = () => {
   if (_state.running) window.requestAnimationFrame(_main)
   _mars.keysPressed = {}
   _mars.buttonsPressed = {}
-  _frame += 1
 }
 window.requestAnimationFrame(_main)
