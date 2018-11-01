@@ -37,6 +37,26 @@ def draw():
 `,
 ]
 
+export const FUNCTIONS_BARE = [
+  'rect',
+  'sprite',
+  'point',
+  'line',
+  'text',
+  'tilemap',
+  'getKeys',
+  'keyDown',
+  'keyUp',
+  'keyPressed',
+  'getButtons',
+  'buttonDown',
+  'buttonUp',
+  'buttonPressed',
+  'hasFlag',
+  'getTile',
+  'changeTile',
+]
+
 export const FUNCTIONS = [
   {
     name: 'User',

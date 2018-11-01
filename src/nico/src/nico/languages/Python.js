@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import Lang from './Lang'
-import { FUNCTIONS } from '../constants.js'
+import { FUNCTIONS_BARE } from '../constants.js'
 
 function ifDoesntExist (id, callback) {
   if (!document.querySelector(id)) callback()
@@ -22,7 +22,7 @@ export default class Python extends Lang {
   // prettier-ignore
   PYTHON_TEMPLATE = `
 from browser import window
-` + FUNCTIONS.map(funcName => `
+` + FUNCTIONS_BARE.map(funcName => `
 def ${_.snakeCase(funcName)}(*args):
   return window.${funcName}(*args)
 `).join('\n')
