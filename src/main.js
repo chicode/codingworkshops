@@ -10,7 +10,8 @@ import storeConfig from './store'
 import App from './codingworkshops/App.vue'
 
 import './styles/index.scss'
-import './directives.js'
+import './directives'
+import './lodash'
 
 // eslint-disable-next-line no-extend-native
 String.prototype.capitalize = function () {
