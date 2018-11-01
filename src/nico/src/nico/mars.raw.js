@@ -29,7 +29,7 @@ const _mars = {}
   // drawing
 
   window.rect = (x, y, width, height, outline = false, color = null) => {
-    _ctx.rect(x * GRID_SIZE, y * GRID_SIZE, width, height)
+    _ctx.rect(x, y, width, height)
     if (outline) {
       _ctx.stroke()
     } else {
@@ -38,11 +38,11 @@ const _mars = {}
   }
 
   window.sprite = (i, x, y) => {
-    _ctx.drawImage(_sprites[i], x * GRID_SIZE, y * GRID_SIZE)
+    _ctx.drawImage(_sprites[i], Math.floor(x) * GRID_SIZE, Math.floor(y) * GRID_SIZE)
   }
 
   window.point = (x, y) => {
-    _ctx.rect(x * GRID_SIZE, y * GRID_SIZE, 1, 1)
+    _ctx.rect(x, y, 1, 1)
     _ctx.fill()
   }
 
@@ -164,10 +164,13 @@ const _mars = {}
 
 init()
 
+let _frame = 0
+const _FRAME_LIMITING = 10
+
 // this being an arrow function is important because it makes the browser treat
 // the errors thrown inside of the function as normkl errors and not cross-origin errors
 const _main = () => {
-  if (!_state.paused) {
+  if (!_state.paused && _frame % _FRAME_LIMITING === 0) {
     update()
     if (_clear) _ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
     draw()
@@ -175,5 +178,6 @@ const _main = () => {
   if (_state.running) window.requestAnimationFrame(_main)
   _mars.keysPressed = {}
   _mars.buttonsPressed = {}
+  _frame += 1
 }
 window.requestAnimationFrame(_main)
