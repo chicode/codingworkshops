@@ -18,6 +18,18 @@ function loadScript (id, source) {
 
 export default class Python extends Lang {
   name = 'Python'
+  boilerplate = `def init():
+  # initialize variables here
+  pass
+
+def update():
+  # respond to player inputs and update game state here
+  pass
+
+def draw():
+  # draw your game here
+  pass
+`
 
   // prettier-ignore
   PYTHON_TEMPLATE = `

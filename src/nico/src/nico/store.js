@@ -1,5 +1,3 @@
-import { TEMPLATES, LANGUAGES } from './constants'
-import { getCanvasFromData } from '../image-editor/helpers.js'
 import generateSet from '@/generateSet'
 import * as languages from './languages'
 
@@ -64,7 +62,7 @@ export default {
       state.hasBeenRun = true
     },
     loadBoilerplate (state) {
-      state.code = TEMPLATES[LANGUAGES[state.language.name]]
+      state.code = state.language.boilerplate
     },
   },
 
