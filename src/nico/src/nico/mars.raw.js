@@ -149,16 +149,22 @@ const _mars = {}
   // tilemap
 
   window.hasFlag = (flag, x, y) => {
-    return !!_flags[x][y][flag]
+    try {
+      return !!_flags[Math.floor(x)][Math.floor(y)][flag]
+    } catch (e) {}
   }
 
   window.getTile = (x, y) => {
-    return _tilemap[x][y]
+    try {
+      return _tilemap[Math.floor(x)][Math.floor(y)]
+    } catch (e) {}
   }
 
   window.changeTile = (i, x, y) => {
-    _tilemap[x][y] = i
-    updateTilemapCanvas()
+    try {
+      _tilemap[Math.floor(x)][Math.floor(y)] = i
+      updateTilemapCanvas()
+    } catch (e) {}
   }
 })(_mars)
 
