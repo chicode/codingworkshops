@@ -16,4 +16,8 @@ ${this.mars}
       `,
     }
   }
+
+  getSyntax ({ name, parameters }) {
+    return `${name}(${parameters.join(', ')})`
+  }
 }

@@ -123,4 +123,8 @@ ${this.mars}
       code: js,
     }
   }
+
+  getSyntax ({ name, parameters }) {
+    return `${name}(${parameters.join(', ')})`
+  }
 }

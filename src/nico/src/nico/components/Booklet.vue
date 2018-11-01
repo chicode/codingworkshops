@@ -5,30 +5,30 @@
   .main(v-show='expanded')
     .sections-buffer(ref='sectionsBuffer')
     .sections(ref='sections')
-      button(v-for='isection in $options.BOOKLET_SECTIONS', :key='isection.title', :class="'button-2' + (isection.title === section.title ? ' active' : '')", @click='switchSection(isection)')
-        | {{ isection.title }}
+      button(v-for='isection in $options.FUNCTIONS', :key='isection.name', :class="'button-2' + (isection.name === section.name ? ' active' : '')", @click='switchSection(isection)')
+        | {{ isection.name }}
     .content
-      h2.title {{ section.title }}
+      h2.name {{ section.name }}
       p {{ section.description }}
       ul
         li.function(v-for='(function_, i) in section.functions', :key='i')
-          h3.code {{ checkLanguage(function_.code) }}
-          p {{ checkLanguage(function_.description) }}
+          h3.code {{ getSyntax(function_) }}
+          p {{ function_.description }}
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { BOOKLET_SECTIONS, LANGUAGES } from '../constants'
+import { FUNCTIONS } from '../constants'
 
 export default {
   name: 'Booklet',
 
-  BOOKLET_SECTIONS,
+  FUNCTIONS,
 
-  data: function () {
+  data () {
     return {
       expanded: false,
-      section: BOOKLET_SECTIONS[window.localStorage.getItem('booklet-section') || 0],
+      section: FUNCTIONS[window.localStorage.getItem('booklet-section') || 0],
     }
   },
 
@@ -50,7 +50,7 @@ export default {
     },
     switchSection (section) {
       this.section = section
-      window.localStorage.setItem('booklet-section', BOOKLET_SECTIONS.indexOf(this.section))
+      window.localStorage.setItem('booklet-section', FUNCTIONS.indexOf(this.section))
     },
     correctWidth () {
       if (this.$refs.sectionsBuffer) {
@@ -59,12 +59,8 @@ export default {
         this.$refs.sectionsBuffer.style.flex = `1 0 ${this.$refs.sections.offsetHeight}px`
       }
     },
-    checkLanguage (data) {
-      if (typeof data === 'object') {
-        return data[LANGUAGES[this.language]]
-      } else {
-        return data
-      }
+    getSyntax (data) {
+      return this.language.getSyntax(data)
     },
   },
 }
@@ -143,7 +139,7 @@ padding = 10px
     padding: padding;
     margin-left: -4px;
 
-    .title {
+    .name {
       margin: 10px 0;
     }
 
