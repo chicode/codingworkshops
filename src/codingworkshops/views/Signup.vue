@@ -43,6 +43,7 @@
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
 import { convertErrors } from '@/edit-abstractions'
+import { signup } from '@/graphql/mutations'
 
 export default {
   name: 'Signup',
@@ -79,7 +80,7 @@ export default {
       if (hasErrored) return
 
       const { data: { createUser: { ok, errors } } } = await this.$apollo.mutate(
-        require('@/graphql/m/Signup').default(this.data)
+        signup(this.data)
       )
 
       if (ok) {

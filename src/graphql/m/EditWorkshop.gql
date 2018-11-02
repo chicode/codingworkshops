@@ -1,7 +1,0 @@
-#import '../f/MutationResult.gql'
-
-mutation($pk: ID!, $description: String, $contributors: [String!], $sourceUrl: String) {
-  editWorkshop(pk: $pk, description: $description, contributors: $contributors, sourceUrl: $sourceUrl) {
-    ...MutationResult
-  }
-}

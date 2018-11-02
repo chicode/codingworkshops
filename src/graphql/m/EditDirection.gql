@@ -1,7 +1,0 @@
-#import '../f/MutationResult.gql'
-
-mutation($pk: ID!, $description: String) {
-  editDirection(pk: $pk, description: $description) {
-    ...MutationResult
-  }
-}

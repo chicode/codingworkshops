@@ -1,8 +1,0 @@
-fragment MutationResult on MutationResult {
-  ok
-  errors {
-    field
-    message
-  }
-  pk
-}

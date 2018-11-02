@@ -1,3 +1,0 @@
-fragment MutationResultNoErrors on MutationResult {
-  ok
-}

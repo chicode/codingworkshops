@@ -1,5 +1,0 @@
-mutation {
-  logoutUser {
-    ok
-  }
-}

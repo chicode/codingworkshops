@@ -1,5 +1,6 @@
 import generateSet from '@/generateSet'
 import { router } from '@/main'
+import { LessonSlides } from '@/graphql/schema.gql'
 
 function setNamespacedVar (variable, value, { workshop, lesson, slide }) {
   window.localStorage.setItem([variable, workshop, lesson || '', slide || ''].join('~'), value)
@@ -96,7 +97,7 @@ export default {
       commit('setLoading', true)
       const { lesson, workshop, human } = getters.routeContext()
       const response = await this.apolloClient.query({
-        query: require('@/graphql/q/LessonSlides.gql'),
+        query: LessonSlides,
         variables: {
           lesson,
           workshop,

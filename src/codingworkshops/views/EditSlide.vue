@@ -8,6 +8,7 @@
 import EditInstructionSlide from '../components/EditInstructionSlide'
 import EditSlideFooter from '../components/EditSlideFooter'
 import { create } from '@/edit-abstractions'
+import { LessonSlides_minimal } from '@/graphql/schema.gql'
 
 export default {
   name: 'EditSlide',
@@ -23,7 +24,7 @@ export default {
   }),
   apollo: {
     data: {
-      query: require('@/graphql/q/LessonSlides_minimal.gql'),
+      query: LessonSlides_minimal,
       variables () {
         return this.$route.params
       },

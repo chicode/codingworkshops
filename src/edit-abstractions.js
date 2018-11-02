@@ -1,13 +1,22 @@
 import _ from 'lodash/fp'
+import { toObject } from '@/lodash'
+import * as schemaObject from '@/graphql/schema.gql'
+
+function getRouteParams () {
+  return this.$route.params
+}
+
+function schema (key) {
+  if (!schemaObject[key]) {
+    throw new Error(`GraphQL type ${key} does not exist!`)
+  }
+  return schemaObject[key]
+}
 
 // convert from the error list sent from the backend
 // to a more friendly object with fields as keys
 export function convertErrors (errors, type = null) {
-  return (
-    errors
-    |> _.map((error) => [type ? type + _.capitalize(error.field) : error.field, error.message])
-    |> _.fromPairs
-  )
+  return errors |> toObject(({ field }) => (type ? type + _.capitalize(field) : field), 'message')
 }
 
 export const edit = (
@@ -17,75 +26,77 @@ export const edit = (
       return this.data[type].id
     },
     namespacedErrors = false,
+    errorsKey = 'errors',
   } = {},
 ) =>
   async function (property, value) {
-    const key = `edit${_.capitalize(type)}`
-    const { ok, errors } =
-      (await this.$apollo.mutate(
-        require(`@/graphql/m/Edit${type.capitalize()}`).default({
+    const key = `edit${type}`
+    const { ok, errors } = _.at(
+      await this.$apollo.mutate(
+        schema(type)({
           [property]: value,
           pk: getPk.call(this, type),
         }),
-      )) |> _.at(['data', key])
-    _.set(this, namespacedErrors ? ['errors', key] : ['errors'], ok ? {} : convertErrors(errors))
+      ),
+      ['data', key],
+    )
+    _.set(this, namespacedErrors ? [errorsKey, key] : [errorsKey], ok ? {} : convertErrors(errors))
   } |> _.curry // this curry makes using this function inside of vue components easier
 
 export const create = (
   type,
   parentType,
-  { namespacedErrors = false, onSuccess = _.noop, getVars = _.stubObject } = {},
+  {
+    namespacedErrors = false,
+    onSuccess = _.noop,
+    getVars = _.stubObject,
+    getQueryVariables = getRouteParams,
+    errorsKey = 'errors',
+  } = {},
 ) =>
   async function () {
-    const key = `create${_.capitalize(type)}`
-    const { ok, errors } =
-      (await this.$apollo.mutate(
-        require(`@/graphql/m/Create${type.capitalize()}`).default(
-          {
-            ...(parentType ? { [parentType]: this.data[parentType].id } : {}),
-            ...getVars.call(this),
-          },
-          this.$route.params,
+    const key = `create${type}`
+    const { ok, errors } = _.at(
+      await this.$apollo.mutate(
+        schema(type)(
+          _.assign(
+            parentType ? { [parentType]: this.data[parentType].id } : {},
+            getVars.call(this),
+          ),
+          getQueryVariables.call(this),
         ),
-      )) |> _.at(['data', key])
-    _.set(this, namespacedErrors ? ['errors', key] : ['errors'], ok ? {} : convertErrors(errors))
+      ),
+      ['data', key],
+    )
+    _.set(this, namespacedErrors ? [errorsKey, key] : [errorsKey], ok ? {} : convertErrors(errors))
     if (ok) onSuccess.call(this)
   }
 
-export const apollo = (...types) => ({
-  apollo:
-    types
-    |> _.map((type) => [
-      type,
-      {
-        loadingKey: 'loading',
-        query: require(`@/graphql/q/${_.capitalize(type)}.gql`),
-        variables () {
-          return this.$route.params
-        },
-        update: (result) => result,
-      },
-    ])
-    |> _.fromPairs,
-})
-
-export const data = (errorKeys = []) => ({
-  // sometimes the errors object needs to be nested
-  errors: errorKeys |> _.map((error) => [error, {}]) |> _.fromPairs,
-  loading: 0,
-})
-
 export const del = (type) =>
-  function (pk) {
-    this.$apollo.mutate(
-      require(`@/graphql/m/Delete${_.capitalize(this.type)}`).default({ pk }, this.$route.params),
-    )
+  function (id, { getQueryVariables = getRouteParams } = {}) {
+    this.$apollo.mutate(schema(type)(id, getQueryVariables.call(this)))
   }
 
-export const drag = () =>
+export const data = ({ errorKeys = [], errorsKey = 'errors', loadingKey = 'loading' } = {}) => ({
+  // sometimes the errors object needs to be nested
+  [errorsKey]: errorKeys |> toObject(_.identity, _.stubObject),
+  [loadingKey]: 0,
+})
+
+export const apollo = (
+  type,
+  { getQueryVariables = getRouteParams, loadingKey = 'loading' } = {},
+) => ({
+  loadingKey,
+  query: schema(type),
+  variables: getQueryVariables,
+  update: _.identity,
+})
+
+export const drag = (type) =>
   function ({ oldIndex, newIndex }) {
     this.$apollo.mutate(
-      require(`@/graphql/m/Move${_.capitalize(this.type)}`).default(
+      schema(type)(
         {
           // oldIndex is unchanged bc array is 0 indexed
           pk: this.items[oldIndex].id,

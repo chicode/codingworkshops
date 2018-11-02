@@ -1,0 +1,280 @@
+# FRAGMENTS
+
+fragment Direction on Direction {
+  id
+  index
+  description
+  hint
+}
+
+fragment Lesson on Lesson {
+  id
+  index
+  name
+  description
+}
+
+fragment MutationResult on MutationResult {
+  ok
+  errors {
+    field
+    message
+  }
+  pk
+}
+
+fragment MutationResultNoErrors on MutationResult {
+  ok
+}
+
+fragment Slide on Slide {
+  id
+  index
+  name
+  description
+  startingCode
+  directionSet {
+    ...Direction
+  }
+}
+
+fragment User on User {
+  username
+  bio
+  contributedWorkshopSet {
+    ...Workshop
+    author {
+      username
+    }
+  }
+}
+
+fragment WorkshopContributors on Workshop {
+  id
+  name
+  slug
+  description
+  contributors {
+    id
+    username
+  }
+}
+
+fragment Workshop on Workshop {
+  id
+  name
+  slug
+  description
+}
+
+# QUERIES
+
+query AllWorkshops {
+  allWorkshops {
+    ...Workshop
+    author {
+      username
+    }
+  }
+}
+
+query CurrentUser_minimal {
+  currentUser {
+    username
+  }
+}
+
+query Lesson ($workshop: String!, $human: String!, $lesson: Int!) {
+  lesson(workshop: $workshop, human: $human, lesson: $lesson) {
+    ...Lesson
+  }
+
+  lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
+    ...Slide
+  }
+}
+
+query LessonSlides ($lesson: Int!, $workshop: String!, $human: String!) {
+  lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
+    ...Slide
+  }
+}
+
+query LessonSlides_minimal ($lesson: Int!, $workshop: String!, $human: String!) {
+  lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
+    id
+  }
+  lesson(lesson: $lesson, workshop: $workshop, human: $human) {
+    id
+    name
+  }
+}
+
+query Slide ($workshop: String!, $human: String!, $lesson: Int!, $slide: Int!) {
+  slide(workshop: $workshop, human: $human, lesson: $lesson, slide: $slide) {
+    ...Slide
+  }
+}
+
+query User ($human: String!) {
+  user(human: $human) {
+    ...User
+  }
+
+  userWorkshops(human: $human) {
+    ...Workshop
+    author {
+      username
+    }
+  }
+}
+
+query UserWorkshops ($human: String!) {
+  userWorkshops(human: $human) {
+    ...Workshop
+    author {
+      username
+    }
+  }
+}
+
+query Workshop ($workshop: String!, $human: String!) {
+  workshop(workshop: $workshop, human: $human) {
+    ...WorkshopContributors
+  }
+  workshopLessons(workshop: $workshop, human: $human) {
+    ...Lesson
+  }
+}
+
+query WorkshopContributors ($workshop: String!, $human: String!) {
+  workshop(workshop: $workshop, human: $human) {
+    ...Workshop
+  }
+  workshopLessons(workshop: $workshop, human: $human) {
+    ...Lesson
+  }
+}
+
+query WorkshopLessons ($workshop: String!, $human: String!) {
+  workshopLessons(workshop: $workshop, human: $human) {
+    ...Lesson
+  }
+}
+
+# MUTATIONS
+
+mutation CreateDirection ($description: String!, $slide: ID!) {
+  createDirection(description: $description, slide: $slide) {
+    ...MutationResult
+  }
+}
+
+mutation CreateLesson ($name: String, $workshop: ID!) {
+  createLesson(name: $name, workshop: $workshop) {
+    ...MutationResult
+  }
+}
+
+mutation CreateSlide ($name: String, $lesson: ID!) {
+  createSlide(name: $name, lesson: $lesson) {
+    ...MutationResult
+  }
+}
+
+mutation CreateWorkshop ($name: String!) {
+  createWorkshop(name: $name) {
+    ...MutationResult
+  }
+}
+
+mutation DeleteDirection ($pk: ID!) {
+  deleteDirection(pk: $pk) {
+    ...MutationResultNoErrors
+  }
+}
+
+mutation DeleteLesson ($pk: ID!) {
+  deleteLesson(pk: $pk) {
+    ...MutationResultNoErrors
+  }
+}
+
+mutation DeleteSlide ($pk: ID!) {
+  deleteSlide(pk: $pk) {
+    ...MutationResultNoErrors
+  }
+}
+
+mutation DeleteWorkshop ($pk: ID!) {
+  deleteWorkshop(pk: $pk) {
+    ...MutationResultNoErrors
+  }
+}
+
+mutation EditDirection ($pk: ID!, $description: String) {
+  editDirection(pk: $pk, description: $description) {
+    ...MutationResult
+  }
+}
+
+mutation EditLesson ($pk: ID!, $description: String, $name: String) {
+  editLesson(pk: $pk, description: $description, name: $name) {
+    ...MutationResult
+  }
+}
+
+mutation EditSlide ($pk: ID!, $startingCode: String, $description: String, $name: String) {
+  editSlide(pk: $pk, startingCode: $startingCode description: $description, name: $name) {
+    ...MutationResult
+  }
+}
+
+mutation EditWorkshop ($pk: ID!, $description: String, $contributors: [String!], $sourceUrl: String) {
+  editWorkshop(pk: $pk, description: $description, contributors: $contributors, sourceUrl: $sourceUrl) {
+    ...MutationResult
+  }
+}
+
+mutation LoginUser ($username: String!, $password: String!) {
+  loginUser(username: $username, password: $password) {
+    ok
+  }
+}
+
+mutation LogoutUser {
+  logoutUser {
+    ok
+  }
+}
+
+mutation MoveDirection ($pk: ID!, $index: Int!) {
+  moveDirection(pk: $pk, index: $index) {
+    ...MutationResultNoErrors
+  }
+}
+
+mutation MoveLesson ($pk: ID!, $index: Int!) {
+  moveLesson(pk: $pk, index: $index) {
+    ...MutationResultNoErrors
+  }
+}
+
+mutation MoveSlide ($pk: ID!, $index: Int!) {
+  moveSlide(pk: $pk, index: $index) {
+    ...MutationResultNoErrors
+  }
+}
+
+mutation CreateUser ($username: String!, $email: String!, $password: String!, $bio: String, $location: String) {
+  createUser(username: $username, email: $email, password: $password, bio: $bio, location: $location) {
+    ...MutationResult
+  }
+}
+
+mutation SyncWorkshop ($pk: ID!) {
+  syncWorkshop(pk: $pk) {
+    ok
+    error
+  }
+}

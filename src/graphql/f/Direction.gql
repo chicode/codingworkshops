@@ -1,6 +1,0 @@
-fragment DirectionType on DirectionType {
-  id
-  index
-  description
-  hint
-}

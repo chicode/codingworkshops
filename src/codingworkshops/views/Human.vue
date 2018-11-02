@@ -1,20 +1,18 @@
 <template lang="pug">
-.human
-  query(:query="require('@/graphql/q/User.gql')" :variables="{ human: $route.params.human }")
-    template(slot-scope='{ data: { user: { username, bio, contributedWorkshopSet }, userWorkshops } }')
-      h1.no-margin {{ username }}
-      p {{ bio }}
-      div(v-if="userWorkshops.length")
-        h2 Your Workshops
-        WorkshopTiles.workshops(:edit='true' :center='false' :workshops="userWorkshops")
-      div(v-if="contributedWorkshopSet.length")
-        h2 Workshops You Contribute To
-        WorkshopTiles.workshops(:edit='true' :center='false' :workshops="contributedWorkshopSet")
+.human(v-if="!loading")
+  h1.no-margin {{ data.user.username }}
+  p {{ data.user.bio }}
+  div(v-if="data.userWorkshops.length")
+    h2 Your Workshops
+    WorkshopTiles.workshops(:edit='true' :center='false' :workshops="data.userWorkshops")
+  div(v-if="data.user.contributedWorkshopSet.length")
+    h2 Workshops You Contribute To
+    WorkshopTiles.workshops(:edit='true' :center='false' :workshops="data.user.contributedWorkshopSet")
 
-      .new-workshop
-        p.error(v-if="errors.name") {{ errors.name }}
-        input.input(v-model="workshop" placeholder="name")
-        button.button(@click="create"): div new workshop
+  .new-workshop
+    p.error(v-if="errors.name") {{ errors.name }}
+    input.input(v-model="workshop" placeholder="name")
+    button.button(@click="create"): div new workshop
 </template>
 
 <script>
@@ -22,17 +20,17 @@ import { mapActions } from 'vuex'
 
 import Query from '@/components/Query'
 import WorkshopTiles from '../components/WorkshopTiles.vue'
-import { create } from '@/edit-abstractions'
+import { create, apollo, data } from '@/edit-abstractions'
 
 export default {
   name: 'Human',
   components: { Query, WorkshopTiles },
-  data: function () {
-    return {
-      workshop: '',
-      errors: '',
-    }
-  },
+  data: () => ({
+    ...data(),
+    workshop: '',
+    errors: '',
+  }),
+  apollo: { user: apollo('User') },
   methods: {
     ...mapActions('codingworkshops', ['enterEditMode']),
     create: create('workshop', null, {

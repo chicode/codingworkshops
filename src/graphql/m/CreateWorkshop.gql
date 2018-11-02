@@ -1,7 +1,0 @@
-#import '../f/MutationResult.gql'
-
-mutation($name: String!) {
-  createWorkshop(name: $name) {
-    ...MutationResult
-  }
-}

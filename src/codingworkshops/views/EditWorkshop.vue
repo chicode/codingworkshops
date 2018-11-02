@@ -34,6 +34,7 @@ import Query from '@/components/Query'
 import InputWrapper from '@/components/InputWrapper'
 import LessonTiles from '../components/LessonTiles'
 import { edit, create, apollo, data } from '@/edit-abstractions'
+import { syncWorkshop } from '@/graphql/mutations'
 
 export default {
   name: 'EditWorkshop',
@@ -70,7 +71,7 @@ export default {
     }),
     async sync () {
       await this.$apollo.mutate(
-        require('@/graphql/m/SyncWorkshop').default({
+        syncWorkshop({
           pk: this.data.workshop.id,
         })
       )
