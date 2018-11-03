@@ -40,7 +40,7 @@ export default {
     },
   },
   methods: {
-    create: create('slide', null, {
+    create: create('Slide', null, {
       onSuccess () {
         this.$router.push({ name: 'edit-slide',
           params: {

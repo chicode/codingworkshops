@@ -13,16 +13,6 @@ import './styles/index.styl'
 import './directives'
 import './lodash'
 
-// eslint-disable-next-line no-extend-native
-String.prototype.capitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1)
-}
-
-// eslint-disable-next-line no-extend-native
-String.prototype.toUnderscore = function () {
-  return this.replace(/([A-Z])/g, ($1) => '_' + $1.toLowerCase())
-}
-
 Vue.config.productionTip = false
 
 Vue.use(Vuex)

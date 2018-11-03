@@ -1,12 +1,10 @@
-function capitalize (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
+import _ from 'lodash/fp'
 
 export default function generateSet (variables) {
   return variables.reduce(
     (acc, val) => ({
       ...acc,
-      ['set' + capitalize(val)]: (state, value) => (state[val] = value),
+      ['set' + _.upperFirst(val)]: (state, value) => (state[val] = value),
     }),
     {},
   )

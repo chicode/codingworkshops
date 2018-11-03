@@ -16,13 +16,15 @@ export function fragment (name) {
   }
 }
 
+const firstValue = (obj) => Object.values(obj)[0]
+
 export const generateCreate = (type, propertyPath) => (variables, queryVariables = {}) => (
   proxy,
   { data },
 ) => {
-  if (!data) return
+  if (!firstValue(data).ok) return
   // first value of property path is always the queryname
-  const queryName = propertyPath[0] |> _.capitalize
+  const queryName = _.upperFirst(propertyPath[0])
 
   const params = {
     query: schema(queryName),
@@ -31,15 +33,15 @@ export const generateCreate = (type, propertyPath) => (variables, queryVariables
   proxy.writeQuery({
     ...params,
     data: _.update(
-      proxy.readQuery(params),
       propertyPath,
-      _.concat({ ...variables, __typename: type }), // TODO figure out id
+      _.concat({ ...variables, __typename: type, id: firstValue(data).pk }),
+      proxy.readQuery(params),
     ),
   })
 }
 
 export const generateEdit = (type) => (variables) => (proxy, { data }) => {
-  if (!data) return
+  if (!firstValue(data).ok) return
 
   const params = {
     // Apollo ids are type:id for some reason
@@ -57,8 +59,8 @@ export const generateDelete = (propertyPath) => (variables, queryVariables = {})
   proxy,
   { data },
 ) => {
-  if (!data) return
-  const queryName = propertyPath[0] |> _.capitalize
+  if (!firstValue(data).ok) return
+  const queryName = _.upperFirst(propertyPath[0])
 
   const params = {
     query: schema(queryName),
@@ -67,9 +69,9 @@ export const generateDelete = (propertyPath) => (variables, queryVariables = {})
   proxy.writeQuery({
     ...params,
     data: _.update(
-      proxy.readQuery(params),
       propertyPath,
       _.filter((value) => value.id !== variables.pk),
+      proxy.readQuery(params),
     ),
   })
 }

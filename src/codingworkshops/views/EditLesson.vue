@@ -35,9 +35,9 @@ export default {
   }),
   apollo: { data: apollo('Lesson') },
   methods: {
-    edit: edit('lesson'),
-    create: create('slide', 'lesson', {
-      onSuccess: function () {
+    edit: edit('Lesson'),
+    create: create('Slide', 'Lesson', {
+      onSuccess () {
         this.$router.push({ name: 'edit-slide',
           params: {
             ...this.$route.params,

@@ -13,7 +13,7 @@ div.instruction-slide(v-if="!loading")
       Tiles.directions(:items='data.slide.directionSet' type='direction' :edit='true' :draggable='true' :router='false')
         template(slot-scope='{ item }')
           p.error(v-if='errors.editDirection.description') {{ errors.editDirection.description }}
-          InputWrapper(:value='item.description' @input='editDirection(item)("description")($event)' :markdown='true')
+          InputWrapper(:value='item.description' @input='editDirection(item)("description", $event)' :markdown='true')
             .text.marked(v-marked="item.description")
 
       p.error(v-if='errors.createDirection.description') {{ errors.createDirection.description }}
@@ -30,12 +30,11 @@ import InputWrapper from '@/components/InputWrapper'
 import MarkdownEditor from '@/components/MarkdownEditor'
 import Tiles from './Tiles'
 import { edit, create, apollo, data } from '@/edit-abstractions'
-
 export default {
   name: 'EditInstructionSlide',
   components: { Nico, InputWrapper, Tiles, MarkdownEditor },
   data: () => ({
-    ...data(['createDirection', 'editDirection', 'editSlide']),
+    ...data({ errorKeys: ['createDirection', 'editDirection', 'editSlide'] }),
     newDirectionDescription: '',
   }),
   apollo: { data: apollo('Slide') },

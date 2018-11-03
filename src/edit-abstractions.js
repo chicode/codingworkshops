@@ -17,7 +17,7 @@ function mutation (mutation) {
 // convert from the error list sent from the backend
 // to a more friendly object with fields as keys
 export function convertErrors (errors, type = null) {
-  return errors |> toObject(({ field }) => (type ? type + _.capitalize(field) : field), 'message')
+  return errors |> toObject(({ field }) => (type ? type + _.upperFirst(field) : field), 'message')
 }
 
 export const edit = (
@@ -32,15 +32,13 @@ export const edit = (
 ) =>
   async function (property, value) {
     const key = `edit${type}`
-    const { ok, errors } = _.at(
-      await this.$apollo.mutate(
+    const { ok, errors } =
+      (await this.$apollo.mutate(
         mutation(key)({
           [property]: value,
           pk: getPk.call(this, type),
         }),
-      ),
-      ['data', key],
-    )
+      )) |> _.get(['data', key])
     _.set(this, namespacedErrors ? [errorsKey, key] : [errorsKey], ok ? {} : convertErrors(errors))
   }
 
@@ -60,18 +58,17 @@ export const create = (
 ) =>
   async function () {
     const key = `create${type}`
-    const { ok, errors } = _.at(
-      await this.$apollo.mutate(
+    const { ok, errors } =
+      (await this.$apollo.mutate(
         mutation(key)(
           _.assign(
-            parentType ? { [parentType]: getParentPk.call(this, parentType) } : {},
+            parentType ? { [_.lowerFirst(parentType)]: getParentPk.call(this, parentType) } : {},
             getVars.call(this),
           ),
           getQueryVariables.call(this),
         ),
-      ),
-      ['data', key],
-    )
+      )) |> _.get(['data', key])
+
     _.set(this, namespacedErrors ? [errorsKey, key] : [errorsKey], ok ? {} : convertErrors(errors))
     if (ok) onSuccess.call(this)
   }

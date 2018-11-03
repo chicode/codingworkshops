@@ -61,8 +61,8 @@ export default {
     },
   },
   methods: {
-    del (...args) { del(_.capitalize(this.type)).call(this, ...args) },
-    drag (...args) { drag(_.capitalize(this.type)).call(this, ...args) },
+    del (...args) { del(_.upperFirst(this.type)).call(this, ...args) },
+    drag (...args) { drag(_.upperFirst(this.type)).call(this, ...args) },
   },
 }
 </script>
