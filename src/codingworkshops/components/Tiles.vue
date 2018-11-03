@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import _ from 'lodash/fp'
 import VueDraggable from 'vuedraggable'
 import Tile from './Tile'
 import { del, drag } from '@/edit-abstractions'
@@ -60,8 +61,8 @@ export default {
     },
   },
   methods: {
-    del (...args) { del(this.type).call(this, ...args) },
-    drag (...args) { drag(this.type).call(this, ...args) },
+    del (...args) { del(_.capitalize(this.type)).call(this, ...args) },
+    drag (...args) { drag(_.capitalize(this.type)).call(this, ...args) },
   },
 }
 </script>

@@ -2,11 +2,11 @@
 div.instruction-slide(v-if="!loading")
   div.instructions
     p.error(v-if='errors.editSlide.name') {{ errors.editSlide.name }}
-    InputWrapper(:value='data.slide.name' @input='edit("name")($event)')
+    InputWrapper(:value='data.slide.name' @input='edit("name", $event)')
       h1.name {{ data.slide.name }}
 
     p.error(v-if='errors.editSlide.description') {{ errors.editSlide.description }}
-    InputWrapper(:value='data.slide.description' @input='edit("description")($event)' :markdown='true')
+    InputWrapper(:value='data.slide.description' @input='edit("description", $event)' :markdown='true')
       p.description.marked(v-marked='data.slide.description || "enter a description"')
     ul.directions
       h2 Directions
@@ -38,20 +38,20 @@ export default {
     ...data(['createDirection', 'editDirection', 'editSlide']),
     newDirectionDescription: '',
   }),
-  ...apollo('slide'),
+  apollo: { data: apollo('Slide') },
   methods: {
-    edit: edit('slide', {
+    edit: edit('Slide', {
       namespacedErrors: true,
     }),
     editDirection (item) {
-      return edit('direction', {
+      return edit('Direction', {
         getPk () {
           return item.id
         },
         namespacedErrors: true,
       }).bind(this)
     },
-    createDirection: create('direction', 'slide', {
+    createDirection: create('Direction', 'Slide', {
       getVars: function () {
         return { description: this.newDirectionDescription, hint: '', index: this.data.slide.directionSet.length + 1 }
       },

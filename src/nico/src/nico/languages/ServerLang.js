@@ -1,6 +1,5 @@
 import Lang from './Lang'
-import { CompilationTime } from '@/graphql/schema.gql'
-import { compileCode } from '@/graphql/mutations'
+import { CompilationTime, compileCode } from '../graphql/schema.gql'
 
 export default class ServerLang extends Lang {
   needsLoading = true

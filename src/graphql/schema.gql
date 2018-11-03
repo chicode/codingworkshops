@@ -1,20 +1,20 @@
 # FRAGMENTS
 
-fragment Direction on Direction {
+fragment DirectionF on Direction {
   id
   index
   description
   hint
 }
 
-fragment Lesson on Lesson {
+fragment LessonF on Lesson {
   id
   index
   name
   description
 }
 
-fragment MutationResult on MutationResult {
+fragment MutationResultF on MutationResult {
   ok
   errors {
     field
@@ -23,33 +23,22 @@ fragment MutationResult on MutationResult {
   pk
 }
 
-fragment MutationResultNoErrors on MutationResult {
+fragment MutationResultNoErrorsF on MutationResult {
   ok
 }
 
-fragment Slide on Slide {
+fragment SlideF on Slide {
   id
   index
   name
   description
   startingCode
   directionSet {
-    ...Direction
+    ...DirectionF
   }
 }
 
-fragment User on User {
-  username
-  bio
-  contributedWorkshopSet {
-    ...Workshop
-    author {
-      username
-    }
-  }
-}
-
-fragment WorkshopContributors on Workshop {
+fragment WorkshopContributorsF on Workshop {
   id
   name
   slug
@@ -60,18 +49,29 @@ fragment WorkshopContributors on Workshop {
   }
 }
 
-fragment Workshop on Workshop {
+fragment WorkshopF on Workshop {
   id
   name
   slug
   description
 }
 
+fragment UserF on User {
+  username
+  bio
+  contributedWorkshopSet {
+    ...WorkshopF
+    author {
+      username
+    }
+  }
+}
+
 # QUERIES
 
 query AllWorkshops {
   allWorkshops {
-    ...Workshop
+    ...WorkshopF
     author {
       username
     }
@@ -86,17 +86,17 @@ query CurrentUser_minimal {
 
 query Lesson ($workshop: String!, $human: String!, $lesson: Int!) {
   lesson(workshop: $workshop, human: $human, lesson: $lesson) {
-    ...Lesson
+    ...LessonF
   }
 
   lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
-    ...Slide
+    ...SlideF
   }
 }
 
 query LessonSlides ($lesson: Int!, $workshop: String!, $human: String!) {
   lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
-    ...Slide
+    ...SlideF
   }
 }
 
@@ -112,17 +112,17 @@ query LessonSlides_minimal ($lesson: Int!, $workshop: String!, $human: String!) 
 
 query Slide ($workshop: String!, $human: String!, $lesson: Int!, $slide: Int!) {
   slide(workshop: $workshop, human: $human, lesson: $lesson, slide: $slide) {
-    ...Slide
+    ...SlideF
   }
 }
 
 query User ($human: String!) {
   user(human: $human) {
-    ...User
+    ...UserF
   }
 
   userWorkshops(human: $human) {
-    ...Workshop
+    ...WorkshopF
     author {
       username
     }
@@ -131,7 +131,7 @@ query User ($human: String!) {
 
 query UserWorkshops ($human: String!) {
   userWorkshops(human: $human) {
-    ...Workshop
+    ...WorkshopF
     author {
       username
     }
@@ -140,25 +140,25 @@ query UserWorkshops ($human: String!) {
 
 query Workshop ($workshop: String!, $human: String!) {
   workshop(workshop: $workshop, human: $human) {
-    ...WorkshopContributors
+    ...WorkshopContributorsF
   }
   workshopLessons(workshop: $workshop, human: $human) {
-    ...Lesson
+    ...LessonF
   }
 }
 
 query WorkshopContributors ($workshop: String!, $human: String!) {
   workshop(workshop: $workshop, human: $human) {
-    ...Workshop
+    ...WorkshopContributorsF
   }
   workshopLessons(workshop: $workshop, human: $human) {
-    ...Lesson
+    ...LessonF
   }
 }
 
 query WorkshopLessons ($workshop: String!, $human: String!) {
   workshopLessons(workshop: $workshop, human: $human) {
-    ...Lesson
+    ...LessonF
   }
 }
 
@@ -166,73 +166,73 @@ query WorkshopLessons ($workshop: String!, $human: String!) {
 
 mutation CreateDirection ($description: String!, $slide: ID!) {
   createDirection(description: $description, slide: $slide) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
 mutation CreateLesson ($name: String, $workshop: ID!) {
   createLesson(name: $name, workshop: $workshop) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
 mutation CreateSlide ($name: String, $lesson: ID!) {
   createSlide(name: $name, lesson: $lesson) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
 mutation CreateWorkshop ($name: String!) {
   createWorkshop(name: $name) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
 mutation DeleteDirection ($pk: ID!) {
   deleteDirection(pk: $pk) {
-    ...MutationResultNoErrors
+    ...MutationResultNoErrorsF
   }
 }
 
 mutation DeleteLesson ($pk: ID!) {
   deleteLesson(pk: $pk) {
-    ...MutationResultNoErrors
+    ...MutationResultNoErrorsF
   }
 }
 
 mutation DeleteSlide ($pk: ID!) {
   deleteSlide(pk: $pk) {
-    ...MutationResultNoErrors
+    ...MutationResultNoErrorsF
   }
 }
 
 mutation DeleteWorkshop ($pk: ID!) {
   deleteWorkshop(pk: $pk) {
-    ...MutationResultNoErrors
+    ...MutationResultNoErrorsF
   }
 }
 
 mutation EditDirection ($pk: ID!, $description: String) {
   editDirection(pk: $pk, description: $description) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
 mutation EditLesson ($pk: ID!, $description: String, $name: String) {
   editLesson(pk: $pk, description: $description, name: $name) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
 mutation EditSlide ($pk: ID!, $startingCode: String, $description: String, $name: String) {
   editSlide(pk: $pk, startingCode: $startingCode description: $description, name: $name) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
 mutation EditWorkshop ($pk: ID!, $description: String, $contributors: [String!], $sourceUrl: String) {
   editWorkshop(pk: $pk, description: $description, contributors: $contributors, sourceUrl: $sourceUrl) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 
@@ -250,25 +250,25 @@ mutation LogoutUser {
 
 mutation MoveDirection ($pk: ID!, $index: Int!) {
   moveDirection(pk: $pk, index: $index) {
-    ...MutationResultNoErrors
+    ...MutationResultNoErrorsF
   }
 }
 
 mutation MoveLesson ($pk: ID!, $index: Int!) {
   moveLesson(pk: $pk, index: $index) {
-    ...MutationResultNoErrors
+    ...MutationResultNoErrorsF
   }
 }
 
 mutation MoveSlide ($pk: ID!, $index: Int!) {
   moveSlide(pk: $pk, index: $index) {
-    ...MutationResultNoErrors
+    ...MutationResultNoErrorsF
   }
 }
 
-mutation CreateUser ($username: String!, $email: String!, $password: String!, $bio: String, $location: String) {
+mutation Signup ($username: String!, $email: String!, $password: String!, $bio: String, $location: String) {
   createUser(username: $username, email: $email, password: $password, bio: $bio, location: $location) {
-    ...MutationResult
+    ...MutationResultF
   }
 }
 

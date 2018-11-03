@@ -1,5 +1,5 @@
-@import './fixes.scss';
-@import './defs.scss';
+// @import './fixes.scss';
+// @import './defs.scss';
 
 @import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400');
 @import './fantasque/stylesheet.css';
@@ -48,7 +48,6 @@ h1, .h1 {
   font-size: font-sizes[0];
   margin-top: 50px;
 }
-
 h2, .h2 {
   font-size: font-sizes[1];
   margin-top: 40px;

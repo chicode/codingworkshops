@@ -8,18 +8,18 @@
       span.text-orange code!
   h1: a set of interactive coding tutorials, for all skill levels!
 
-  p.h2(v-if="!data.currentUser")
+  p.h2(v-if="!currentUser")
     router-link.button(:to="{ name: 'enter' }"): div login
     | to save progress
   p.h2(v-else)
     | welcome,&nbsp;
     router-link.link(:to=`{
       name: 'human',
-      params: { human: data.currentUser.username }
-    }`) {{ data.currentUser.username }}
+      params: { human: currentUser.username }
+    }`) {{ currentUser.username }}
     |!
 
-  WorkshopTiles(:workshops="data.allWorkshops")
+  WorkshopTiles(:workshops="allWorkshops")
 </template>
 
 <script>
@@ -30,6 +30,14 @@ import { apollo } from '@/edit-abstractions'
 export default {
   name: 'Home',
   components: { Query, WorkshopTiles },
-  ...apollo(['currentUser', 'allWorkshops']),
+  data: () => ({
+    loading: 0,
+    currentUser: null,
+    allWorkshops: [],
+  }),
+  apollo: {
+    currentUser: apollo('CurrentUser_minimal', { queryKey: 'currentUser' }),
+    allWorkshops: apollo('AllWorkshops', { queryKey: 'allWorkshops' }),
+  },
 }
 </script>

@@ -9,7 +9,7 @@ import routerConfig from './codingworkshops/router'
 import storeConfig from './store'
 import App from './codingworkshops/App.vue'
 
-import './styles/index.scss'
+import './styles/index.styl'
 import './directives'
 import './lodash'
 

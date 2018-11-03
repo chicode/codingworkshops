@@ -30,7 +30,7 @@ export default {
     workshop: '',
     errors: '',
   }),
-  apollo: { user: apollo('User') },
+  apollo: { data: apollo('User') },
   methods: {
     ...mapActions('codingworkshops', ['enterEditMode']),
     create: create('workshop', null, {

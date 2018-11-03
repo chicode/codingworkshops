@@ -1,16 +1,17 @@
 import _ from 'lodash/fp'
 import { toObject } from '@/lodash'
-import * as schemaObject from '@/graphql/schema.gql'
+import * as mutations from '@/graphql/mutations'
+import { schema } from '@/graphql/mutation-helpers'
 
 function getRouteParams () {
   return this.$route.params
 }
 
-function schema (key) {
-  if (!schemaObject[key]) {
-    throw new Error(`GraphQL type ${key} does not exist!`)
+function mutation (mutation) {
+  if (!mutations[mutation]) {
+    throw new Error(`GraphQL mutation abstraction ${mutation} does not exist!`)
   }
-  return schemaObject[key]
+  return mutations[mutation]
 }
 
 // convert from the error list sent from the backend
@@ -23,7 +24,7 @@ export const edit = (
   type,
   {
     getPk = function (type) {
-      return this.data[type].id
+      return this.data[_.lowerFirst(type)].id
     },
     namespacedErrors = false,
     errorsKey = 'errors',
@@ -33,7 +34,7 @@ export const edit = (
     const key = `edit${type}`
     const { ok, errors } = _.at(
       await this.$apollo.mutate(
-        schema(type)({
+        mutation(key)({
           [property]: value,
           pk: getPk.call(this, type),
         }),
@@ -41,7 +42,7 @@ export const edit = (
       ['data', key],
     )
     _.set(this, namespacedErrors ? [errorsKey, key] : [errorsKey], ok ? {} : convertErrors(errors))
-  } |> _.curry // this curry makes using this function inside of vue components easier
+  }
 
 export const create = (
   type,
@@ -52,15 +53,18 @@ export const create = (
     getVars = _.stubObject,
     getQueryVariables = getRouteParams,
     errorsKey = 'errors',
+    getParentPk = function (type) {
+      return this.data[_.lowerFirst(type)].id
+    },
   } = {},
 ) =>
   async function () {
     const key = `create${type}`
     const { ok, errors } = _.at(
       await this.$apollo.mutate(
-        schema(type)(
+        mutation(key)(
           _.assign(
-            parentType ? { [parentType]: this.data[parentType].id } : {},
+            parentType ? { [parentType]: getParentPk.call(this, parentType) } : {},
             getVars.call(this),
           ),
           getQueryVariables.call(this),
@@ -73,8 +77,8 @@ export const create = (
   }
 
 export const del = (type) =>
-  function (id, { getQueryVariables = getRouteParams } = {}) {
-    this.$apollo.mutate(schema(type)(id, getQueryVariables.call(this)))
+  function (pk, { getQueryVariables = getRouteParams } = {}) {
+    this.$apollo.mutate(mutation(`delete${type}`)({ pk }, getQueryVariables.call(this)))
   }
 
 export const data = ({ errorKeys = [], errorsKey = 'errors', loadingKey = 'loading' } = {}) => ({
@@ -85,25 +89,22 @@ export const data = ({ errorKeys = [], errorsKey = 'errors', loadingKey = 'loadi
 
 export const apollo = (
   type,
-  { getQueryVariables = getRouteParams, loadingKey = 'loading' } = {},
+  { getQueryVariables = getRouteParams, loadingKey = 'loading', queryKey = null } = {},
 ) => ({
   loadingKey,
   query: schema(type),
   variables: getQueryVariables,
-  update: _.identity,
+  update: queryKey ? _.property(queryKey) : _.identity,
 })
 
 export const drag = (type) =>
   function ({ oldIndex, newIndex }) {
     this.$apollo.mutate(
-      schema(type)(
-        {
-          // oldIndex is unchanged bc array is 0 indexed
-          pk: this.items[oldIndex].id,
-          // newIndex is changed bc index is 1 indexed on server
-          index: newIndex + 1,
-        },
-        this.$route.params,
-      ),
+      mutation(`move${type}`)({
+        // oldIndex is unchanged bc array is 0 indexed
+        pk: this.items[oldIndex].id,
+        // newIndex is changed bc index is 1 indexed on server
+        index: newIndex + 1,
+      }),
     )
   }

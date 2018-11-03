@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import login from '@/graphql/mutations'
+import { login } from '@/graphql/mutations'
 
 export default {
   name: 'Enter',
@@ -31,6 +31,7 @@ export default {
         return
       }
 
+      console.log(login(this.data))
       const { data: { loginUser: { ok } } } = await this.$apollo.mutate(
         login(this.data)
       )
