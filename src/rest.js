@@ -85,11 +85,15 @@ export default function prepare ({
     })
 
     Vue.mixin({
-      data: () => ({
-        $rest: {
-          loading: false,
-        },
-      }),
+      data () {
+        return this.$options.$rest
+          ? {
+            $rest: {
+              loading: false,
+            },
+          }
+          : {}
+      },
 
       created () {
         init.call(this)
