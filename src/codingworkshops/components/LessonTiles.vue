@@ -1,6 +1,6 @@
 <template lang="pug">
-ul.lessons
-  router-link(
+ul.mt-5
+  router-link.w-100.mb-4.tile(
     v-for="lesson in lessons"
     tag="li"
     :key="lesson.name"
@@ -10,7 +10,7 @@ ul.lessons
         lesson: lesson.index
       })
     }`
-  )
+  ): div
     h2.bold.no-margin {{ lesson.name }}
     p {{ lesson.description }}
 </template>
@@ -26,14 +26,3 @@ export default {
   },
 }
 </script>
-
-<style lang="stylus">
-.lessons {
-  margin: 50px 0;
-
-  li {
-     width: 100%;
-     margin-bottom: 20px;
-  }
-}
-</style>

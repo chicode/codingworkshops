@@ -1,22 +1,18 @@
 <template lang="pug">
-.container(v-if="!$rest.loading")
-  .row.align-items-center
-    img(src="img/landing-welcome.svg")
-    h1 Anyone can&nbsp;
-      span.text-purple learn&nbsp;
-      span.text-blue to&nbsp;
-      span.text-orange code!
-  h1: a set of interactive coding tutorials, for all skill levels!
+.container.mt-7(v-if="!$rest.loading")
+  .row.align-items-center.justify-content-center.mb-6
+    img.col-6.mr-5(src="img/landing-welcome.svg")
+    h1.col-4 Anyone can learn to code!
 
-  p.h2(v-if="!$rest.currentUser.ok")
-    router-link.button(:to="{ name: 'enter' }" tag="button"): div login
-    | to save progress
-  p.h2(v-else)
+  p.h3.text-center(v-if="!$rest.currentUser.ok")
+    router-link.button(:to="{ name: 'enter' }" tag="div"): div.font-weight-normal login
+    | &nbsp;&nbsp;to save progress
+  p.h3.text-center(v-else)
     | welcome,&nbsp;
-    router-link.link(:to=`{
+    router-link(:to=`{
       name: 'human',
       params: { human: $rest.currentUser.username }
-    }`) {{ $rest.currentUser.username }}
+    }` tag="a") {{ $rest.currentUser.username }}
     |!
 
   WorkshopTiles(:workshops="$rest.allWorkshops")

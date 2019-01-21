@@ -1,11 +1,11 @@
 <template lang="pug">
-.workshop.standard-layout(v-if="!$rest.loading")
-  h1.name {{ $rest.workshop.name }}
-  p.description {{ $rest.workshop.description }}
+.container(v-if="!$rest.loading")
+  h1 {{ $rest.workshop.name }}
+  p {{ $rest.workshop.description }}
   button.button(v-if="isOwner" @click="load"): div load from source
   p(v-if="success") success!
   p(v-else-if="error") {{ error }}
-  LessonTiles.tiles(:lessons="$rest.workshop.lessons")
+  LessonTiles(:lessons="$rest.workshop.lessons")
 </template>
 
 <script>

@@ -1,6 +1,7 @@
 <template lang="pug">
-ul.slides
-  router-link(
+ul.m-6.d-flex.flex-wrap.justify-content-center.align-items-center
+  router-link.mb-2(
+    style="width: 300px;"
     v-for="slide in slides"
     tag="li"
     :key="slide.name"
@@ -36,22 +37,3 @@ export default {
   },
 }
 </script>
-
-<style lang="stylus">
-@import '~@/styles/defs';
-
-.slides {
-  margin: 50px 0;
-
-  align-items: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-
-  li {
-    width: 300px;
-    margin: 10px;
-  }
-}
-</style>

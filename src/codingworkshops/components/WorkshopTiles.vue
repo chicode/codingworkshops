@@ -1,6 +1,7 @@
 <template lang="pug">
-ul.workshops(:class="center && 'center'")
-  router-link(
+ul.workshops.mt-6.d-flex.flex-wrap.justify-content-center(:class="center && 'center'")
+  router-link.m-1.tile(
+    style="width: 300px;"
     v-for="workshop in workshops"
     tag="li"
     :key="workshop.name"
@@ -11,7 +12,7 @@ ul.workshops(:class="center && 'center'")
         workshop: workshop.slug,
       }
     }`
-  )
+  ): div
     h2.bold.no-margin {{ workshop.name }}
     p {{ workshop.description }}
 
@@ -37,27 +38,3 @@ export default {
   },
 }
 </script>
-
-<style lang="stylus">
-@import '~@/styles/defs'
-
-.workshops {
-  margin-top: 30px;
-
-  align-items: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-
-  &.center {
-    justify-content: center;
-  }
-  &:not(.center) {
-    margin-left: -10px;
-  }
-
-  > * {
-    width: 300px;
-    margin: 10px;
-  }
-}
-</style>

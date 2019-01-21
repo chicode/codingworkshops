@@ -1,3 +1,4 @@
+import _ from 'lodash/fp'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Router from 'vue-router'
@@ -7,11 +8,11 @@ import prepare from './rest'
 
 import routerConfig from './codingworkshops/router'
 import storeConfig from './store'
+import restConfig from './endpoints'
 import App from './codingworkshops/App.vue'
 
-import './styles/index.styl'
+import './styles/index.scss'
 import './directives'
-import './lodash'
 import './globals'
 
 Vue.config.productionTip = false
@@ -27,45 +28,18 @@ Vuex.Store.prototype.router = router
 
 sync(store, router, { moduleName: 'router' })
 
-const { methods, install } = prepare({
-  root: `${
-    process.env.NODE_ENV === 'development'
-      ? 'http://127.0.0.1:4000'
-      : 'https://codingworkshops.org/api'
-  }/api/v1`,
-  endpoints: {
-    GET: {
-      users: '/users',
-      user: '/users/:user',
-      workshops: '/workshops',
-      workshop: '/workshops/:workshop',
-      lesson: '/workshops/:workshop/:lesson',
+const { methods, install } = prepare(
+  _.merge(
+    {
+      root: `${
+        process.env.NODE_ENV === 'development'
+          ? 'http://127.0.0.1:4000'
+          : 'https://codingworkshops.org/api'
+      }/api/v1`,
     },
-    POST: {
-      me: '/users/me',
-      createUser: '/users',
-      createWorkshop: '/workshops',
-      login: '/sessions',
-      loadWorkshop: '/workshops/:workshop/load',
-    },
-    PATCH: {
-      updateWorkshop: '/workshops/:workshop',
-    },
-    DELETE: {
-      deleteWorkshop: '/workshops/:workshop',
-    },
-  },
-  prepareBody (body, { method }) {
-    if (method !== 'GET') {
-      return { ...body, jwt: localStorage.getItem('jwt') }
-    }
-    return body
-  },
-  processResult (result, { res }) {
-    result.ok = res.status === 200
-    return result
-  },
-})
+    restConfig,
+  ),
+)
 
 Vue.use(install)
 Vuex.Store.prototype.$methods = methods

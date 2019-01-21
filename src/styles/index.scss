@@ -1,61 +1,73 @@
-// @import './fixes.scss';
-// @import './defs.scss';
+@import './fixes.scss';
 
 @import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400');
 @import './fantasque/stylesheet.css';
 
-$colors: (
-  "blue": $blue,
-  "indigo": $indigo,
-  "purple": $purple,
-  "pink": $pink,
-  "red": $red,
-  "orange": $orange,
-  "yellow": $yellow,
-  "green": $green,
-  "teal": $teal,
-  "cyan": $cyan,
-  "white": $white,
-  "gray": $gray-600,
-  "gray-dark": $gray-800
+$line-height-base: 1.2;
+
+$font-size-base: 1.4rem;
+$h1-font-size: 5rem;
+$h2-font-size: 3rem;
+$h3-font-size: 2.8rem;
+$h4-font-size: 2.5rem;
+$spacers: (
+  6: 5rem,
+  7: 10rem,
 );
 
-@import "node_modules/bootstrap/scss/bootstrap";
-/*
+$sizes: (
+  60: 60%,
+);
 
-body, html {
+$colors: (
+  purple: #AE5CFF,
+  blue: #3976D0,
+  orange: #FF8A00,
+  green: #1CB893,
+  light-purple: #E2C5FF,
+  light-green: #9AFFB8,
+  light-blue: #C0D9FF,
+  light-orange: #FFEAD1,
+  light-red: #FF9B9B,
+  grey: #C4C4C4,
+  grey-light: #E5E5E5,
+  grey-lighter: #F7F7F7,
+);
+$link-color: map_get($colors, purple);
+$font-family-base: Karla;
+$font-family-monospace: Fantasque;
+$headings-font-family: Comfortaa;
+
+@import './defs.scss';
+
+@import "node_modules/bootstrap/scss/bootstrap-grid";
+@import "node_modules/bootstrap/scss/bootstrap-reboot";
+@import "node_modules/bootstrap/scss/type";
+@import "node_modules/bootstrap/scss/utilities";
+
+@each $color, $value in $colors {
+  .text-#{$color} {
+    color: map_get($colors, $color);
+  }
+}
+@each $color, $value in $colors {
+  .bg-#{$color} {
+    background: map_get($colors, $color);
+  }
+}
+
+.full {
   height: 100%;
 }
 
-body, button, input {
-  font-family: fonts.body;
-  font-size: font-sizes[2];
-  color: black;
+.underline {
+  text-decoration: underline;
 }
 
-button {
-  cursor: pointer;
-}
-
-h1, h2, h3, h4, h5, h6,
-h1 *, h2 *, h3 *, h4 *, h5 *, h6 *,
-.h1, .h2, .h3, .h4, .h5, .h6,
-.h1 *, .h2 *, .h3 *, .h4 *, .h5 *, .h6 *, {
-  font-family: fonts.heading;
-}
-
-h1, .h1 {
-  font-size: font-sizes[0];
-  margin-top: 50px;
-}
-h2, .h2 {
-  font-size: font-sizes[1];
-  margin-top: 40px;
-}
-
-p, h3, .h3 {
-  font-size: font-sizes[2];
-  margin-top: 10px;
+@include media-breakpoint-down(md) {
+  .container {
+    max-width: 100%;
+  }
 }
 
 .no-margin {
@@ -63,9 +75,6 @@ p, h3, .h3 {
 }
 
 code {
-  font-family: fonts.code;
-  font-size: font-sizes[2] - 1;
-  padding: 2px;
   background: #EEEEEE;
   border-radius: 5px;
 }
@@ -79,11 +88,10 @@ pre code {
     margin-bottom: 20px;
   }
 }
-*/
 
 @mixin button-properties {
   padding: 3px 10px;
-  font-family: $heading-family;
+  font-family: $headings-font-family;
   font-weight: bold;
 }
 
@@ -92,20 +100,16 @@ pre code {
   padding: 5px;
   width: 300px;
   display: block;
+  margin-bottom: 0.5rem;
 }
 
 .button {
+  display: inline-block;
   @include tile('button') {
     @include button-properties;
+    background: map_get($colors, light-green)
   }
 }
-
-/*
-.link {
-  color: palette.purple;
-  text-decoration: underline;
-}
-*/
 
 .tile {
   @include tile('tile') {
@@ -117,3 +121,6 @@ pre code {
   @include light-border;
 }
 
+.error {
+  color: map_get($colors, orange)
+}

@@ -1,5 +1,5 @@
 <template  lang="pug">
-.signup
+div.mx-auto(style="width: 300px;")
   div
     p.error(v-if="errors.email") {{ errors.email[0] }}
     input.input(
@@ -37,7 +37,7 @@
       @keyup.enter="signup"
     )
 
-  button.button(@click="signup"): div sign up!
+  button.button.mt-3(@click="signup"): div sign up!
 </template>
 
 <script>
@@ -90,22 +90,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="stylus">
-@import '~@/styles/defs'
-
-.signup {
-  width: 300px;
-  margin: auto;
-  margin-top: 100px;
-  margin-bottom: 100px;
-}
-
-.input {
-  margin-bottom: 10px;
-}
-
-.button {
-  margin-top: 30px;
-}
-</style>

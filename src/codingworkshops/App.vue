@@ -1,6 +1,6 @@
 <template lang="pug">
 div.full
-  status-bar(v-if="!$router.currentRoute.meta.noStatusBar")
+  status-bar.mb-6(v-if="!$router.currentRoute.meta.noStatusBar")
   router-view
 </template>
 
