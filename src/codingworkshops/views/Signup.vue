@@ -48,17 +48,19 @@ export default {
 
   components: { MarkdownEditor },
 
-  data: () => ({
-    data: {
-      email: '',
-      username: '',
-      password: '',
-      password2: '',
-      bio: '',
-      location: '',
-    },
-    errors: {},
-  }),
+  data () {
+    return {
+      data: {
+        email: '',
+        username: '',
+        password: '',
+        password2: '',
+        bio: '',
+        location: '',
+      },
+      errors: {},
+    }
+  },
 
   methods: {
     async signup () {

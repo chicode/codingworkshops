@@ -19,7 +19,7 @@ import WorkshopTiles from '../components/WorkshopTiles.vue'
 export default {
   name: 'Human',
   components: { WorkshopTiles },
-  data: function () {
+  data () {
     return {
       errors: {},
       workshop: '',
