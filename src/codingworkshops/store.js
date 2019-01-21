@@ -30,7 +30,7 @@ export default {
       return state.slideIndex === state.slides.length - 1
     },
     isSlideDone (state, getters) {
-      return getters.slide && state.directionIndex === getters.slide.directionSet.length
+      return getters.slide && state.directionIndex === getters.slide.directions.length
     },
     routeContext: (_state, _getters, rootState) => (excludes = []) => {
       return ['human', 'workshop', 'lesson', 'slide']
@@ -96,9 +96,12 @@ export default {
     async fetchLesson ({ commit, rootState, getters }) {
       commit('setLoading', true)
       const { lesson, workshop, human } = getters.routeContext()
-      const response = await this.$get(`/workshops/${workshop}/${lesson}`)
+      const response = await this.$methods.lesson({
+        lesson,
+        workshop,
+      })
       commit('setLoading', false)
-      commit('setSlides', response.data.lessonSlides)
+      commit('setSlides', response.slides)
     },
     async enterEditMode ({ commit, getters }, workshop) {
       commit('setEditing', true)

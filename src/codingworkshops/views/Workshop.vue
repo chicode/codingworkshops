@@ -11,10 +11,15 @@ import LessonTiles from '../components/LessonTiles'
 export default {
   name: 'Workshop',
   components: { LessonTiles },
-  rest () {
-    return {
-      workshop: '/workshops/' + this.$route.params.workshop,
-    }
+  rest: {
+    workshop () {
+      return [
+        'workshop',
+        {
+          workshop: this.$route.params.workshop,
+        },
+      ]
+    },
   },
 }
 </script>

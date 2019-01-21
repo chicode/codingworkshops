@@ -3,10 +3,10 @@ div.instruction-slide
   div.instructions
     h1.name {{ slide.name }}
     p.description.marked(v-marked="slide.description")
-    ul.directions(v-if="slide.directionSet.length")
+    ul.directions(v-if="slide.directions.length")
       h2 Directions
       li.direction(
-        v-for="({ description }, index) in slide.directionSet"
+        v-for="({ description }, index) in slide.directions"
         :key="description"
       )
         p.text.marked(:style="directionStyle(index)" v-marked="description")
