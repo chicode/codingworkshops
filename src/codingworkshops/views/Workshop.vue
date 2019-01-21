@@ -1,19 +1,20 @@
 <template lang="pug">
-.workshop.standard-layout(v-if="!loading")
-  h1.name {{ workshop.workshop.name }}
-  p.description {{ workshop.workshop.description }}
-  LessonTiles.tiles(:lessons="workshop.workshopLessons")
+.workshop.standard-layout(v-if="!$rest.loading")
+  h1.name {{ $rest.workshop.name }}
+  p.description {{ $rest.workshop.description }}
+  LessonTiles.tiles(:lessons="$rest.workshop.lessons")
 </template>
 
 <script>
-import Query from '@/components/Query'
 import LessonTiles from '../components/LessonTiles'
-import { apollo, data } from '@/edit-abstractions'
 
 export default {
   name: 'Workshop',
-  components: { Query, LessonTiles },
-  data: () => ({ ...data() }),
-  apollo: { workshop: apollo('Workshop') },
+  components: { LessonTiles },
+  rest () {
+    return {
+      workshop: '/workshops/' + this.$route.params.workshop,
+    }
+  },
 }
 </script>

@@ -96,14 +96,7 @@ export default {
     async fetchLesson ({ commit, rootState, getters }) {
       commit('setLoading', true)
       const { lesson, workshop, human } = getters.routeContext()
-      const response = await this.apolloClient.query({
-        query: LessonSlides,
-        variables: {
-          lesson,
-          workshop,
-          human,
-        },
-      })
+      const response = await this.$get(`/workshops/${workshop}/${lesson}`)
       commit('setLoading', false)
       commit('setSlides', response.data.lessonSlides)
     },

@@ -1,46 +1,46 @@
 <template lang="pug">
-.human(v-if="!loading")
-  h1.no-margin {{ data.user.username }}
-  p {{ data.user.bio }}
-  div(v-if="data.userWorkshops.length")
+.human(v-if="!$rest.loading")
+  h1.no-margin {{ $rest.user.username }}
+  p {{ $rest.user.bio }}
+  div(v-if="$rest.user.workshops.length")
     h2 Your Workshops
-    WorkshopTiles.workshops(:edit='true' :center='false' :workshops="data.userWorkshops")
-  div(v-if="data.user.contributedWorkshopSet.length")
-    h2 Workshops You Contribute To
-    WorkshopTiles.workshops(:edit='true' :center='false' :workshops="data.user.contributedWorkshopSet")
+    WorkshopTiles.workshops(:center='false' :workshops="$rest.user.workshops")
 
   .new-workshop
-    p.error(v-if="errors.name") {{ errors.name }}
+    p.error(v-if="errors.name") {{ errors.name[0] }}
     input.input(v-model="workshop" placeholder="name")
     button.button(@click="create"): div new workshop
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-
-import Query from '@/components/Query'
 import WorkshopTiles from '../components/WorkshopTiles.vue'
-import { create, apollo, data } from '@/edit-abstractions'
 
 export default {
   name: 'Human',
-  components: { Query, WorkshopTiles },
-  data: () => ({
-    ...data(),
-    workshop: '',
-    errors: '',
-  }),
-  apollo: { data: apollo('User') },
+  components: { WorkshopTiles },
+  data: function () {
+    return {
+      errors: {},
+      workshop: '',
+    }
+  },
+  rest: {
+    user () {
+      return ['user', { user: this.$route.params.human }]
+    },
+  },
   methods: {
     ...mapActions('codingworkshops', ['enterEditMode']),
-    create: create('workshop', null, {
-      getVars () {
-        return { name: this.workshop }
-      },
-      onSuccess () {
+
+    create () {
+      const { errors } = this.$post('/workshops')
+      if (errors) {
+        this.errors = errors
+      } else {
         this.enterEditMode(this.workshop)
-      },
-    }),
+      }
+    },
   },
 }
 </script>

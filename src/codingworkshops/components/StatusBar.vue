@@ -3,31 +3,23 @@
   router-link(:to="{ name: 'home' }")
     span.accent-2 coding
     span.accent-1 workshops
-  div(v-if="!loading")
-    div.profile(v-if='data.currentUser')
-      router-link(:to="{ name: 'human', params: { human: data.currentUser.username } }") {{ data.currentUser.username }}
+  div(v-if="!$rest.loading")
+    div.profile(v-if='$rest.currentUser')
+      router-link(:to="{ name: 'human', params: { human: $rest.currentUser.username } }") {{ $rest.currentUser.username }}
       button(@click='logout') logout
     div(v-else='')
       router-link(:to="{ name: 'enter' }") login
 </template>
 
 <script>
-import Query from '@/components/Query'
-import { CurrentUser_minimal } from '@/graphql/schema.gql'
-import { logout } from '@/graphql/mutations'
-import { apollo } from '@/edit-abstractions'
-
 export default {
   name: 'StatusBar',
-
-  components: { Query },
-
-  data: () => ({ loading: 0 }),
-  apollo: { data: apollo('CurrentUser_minimal') },
-
+  rest: {
+    currentUser: 'me',
+  },
   methods: {
     async logout () {
-      await this.$apollo.mutate(logout())
+      localStorage.removeItem('jwt')
       this.$router.push({ name: 'home' })
     },
   },

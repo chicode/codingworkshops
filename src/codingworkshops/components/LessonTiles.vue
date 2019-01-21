@@ -1,25 +1,27 @@
 <template lang="pug">
-tiles.lessons(:items='lessons' type='lesson' :edit='edit' :draggable='edit')
-  template(slot-scope='{ item }')
-    h2.no-margin {{ item.name }}
-    p {{ item.description }}
+ul.lessons
+  router-link(
+    v-for="lesson in lessons"
+    tag="li"
+    :key="lesson.name"
+    :to=`{
+      name: 'lesson',
+      params: Object.assign($route.params, {
+        lesson: lesson.index
+      })
+    }`
+  )
+    h2.bold.no-margin {{ lesson.name }}
+    p {{ lesson.description }}
 </template>
 
 <script>
-import Tiles from './Tiles'
-
 export default {
   name: 'LessonTiles',
-  components: { Tiles },
   props: {
     lessons: {
       type: Array,
       required: true,
-    },
-    edit: {
-      type: Boolean,
-      required: false,
-      default: false,
     },
   },
 }

@@ -16,6 +16,7 @@ module.exports = {
 
     'comma-dangle': ['error', 'always-multiline'],
     'object-curly-spacing': ['error', 'always'],
+    'quote-props': ['error', 'consistent-as-needed'],
 
     'vue/html-closing-bracket-newline': [
       'error',
@@ -24,16 +25,29 @@ module.exports = {
         multiline: 'always',
       },
     ],
+    'vue/require-prop-types': 'off',
 
     // fix lodash variable being called undefined
-    'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+    'no-unused-vars': ['error', { varsIgnorePattern: '^_.*' }],
 
     // temporary fix for the pipeline operator
     'operator-linebreak': 'off',
     'lodash/prefer-lodash-method': 'off',
     'lodash-fp/no-unused-result': 'off',
+
+    'no-unused-expressions': 'off',
   },
   parserOptions: {
     parser: 'babel-eslint',
+    ecmaFeatures: {
+      legacyDecorators: true,
+    },
+  },
+
+  // global debugging vars (defined in globals.js)
+  globals: {
+    debug: true,
+    p: true,
+    c: true,
   },
 }

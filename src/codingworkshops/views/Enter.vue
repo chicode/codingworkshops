@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import { login } from '@/graphql/mutations'
-
 export default {
   name: 'Enter',
 
@@ -31,15 +29,13 @@ export default {
         return
       }
 
-      console.log(login(this.data))
-      const { data: { loginUser: { ok } } } = await this.$apollo.mutate(
-        login(this.data)
-      )
+      const { ok, error, jwt } = await this.$methods.login({ session: this.data })
 
       if (ok) {
+        window.localStorage.setItem('jwt', jwt)
         this.$router.push({ name: 'home' })
       } else {
-        this.error = 'wrong username or password'
+        this.error = error
       }
     },
   },
@@ -47,7 +43,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-@import '~@/styles/defs'
+@import '~@/styles/defs';
 
 .enter {
   width: 300px;

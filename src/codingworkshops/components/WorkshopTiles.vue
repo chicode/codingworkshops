@@ -1,45 +1,38 @@
 <template lang="pug">
-tiles.workshops(:items='workshops' type='workshop' :edit='edit' :getRouteParams='getRouteParams' :class="center && 'center'")
-  template(slot-scope='{ item }')
-    h2.bold.no-margin {{ item.name }}
-    p {{ item.description }}
+ul.workshops(:class="center && 'center'")
+  router-link(
+    v-for="workshop in workshops"
+    tag="li"
+    :key="workshop.name"
+    :to=`{
+      name: 'workshop',
+      params: {
+        human: workshop.author.username,
+        workshop: workshop.slug,
+      }
+    }`
+  )
+    h2.bold.no-margin {{ workshop.name }}
+    p {{ workshop.description }}
 
-  template(slot='footer')
-    // the empty elements help make the flex grid look
-    // like it's a list despite it actually having justify-content: center
-
-    // empty_ + i in order to avoid key duplication
-    li.empty(v-for='i in 20', :key='"empty_" + i')
+  // the empty elements help make the flex grid look
+  // like it's a list despite it actually having justify-content: center
+  // empty_ + i in order to avoid key duplication
+  li.empty(v-for='i in 20', :key='"empty_" + i')
 </template>
 
 <script>
-import Tiles from './Tiles'
-
 export default {
   name: 'WorkshopTiles',
-  components: { Tiles },
   props: {
     workshops: {
       type: Array,
       required: true,
     },
-    edit: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
     center: {
       type: Boolean,
       required: false,
       default: true,
-    },
-  },
-  methods: {
-    getRouteParams (workshop) {
-      return {
-        workshop: workshop.slug,
-        human: workshop.author.username,
-      }
     },
   },
 }

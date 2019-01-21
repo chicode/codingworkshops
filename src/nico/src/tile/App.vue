@@ -20,7 +20,7 @@ export default {
   components: { ImageEditor, TileSelect, TileSelectOverlay, FlagPicker },
   mounted () {
     const el = this.$refs.canvas.$el
-    const f = (e) => [e.offsetX, e.offsetY]
+    const f = (e) => [e.offsetY, e.offsetX]
     el.addEventListener('mousedown', (event) => this.mouseDown(f(event)))
     el.addEventListener('mousemove', (event) => this.mouseMove(f(event)))
     el.addEventListener('mouseup', this.mouseUp)
@@ -32,10 +32,10 @@ export default {
     ...mapMutations('tile/tileSelect', ['startSelect']),
   },
 }
-</script>
+</script>;
 
 <style scoped lang="stylus">
-@import '../image-editor/layered-canvas'
+@import '../image-editor/layered-canvas';
 .canvas {
   canvas {
     // TODO: compute this number automatically

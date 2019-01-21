@@ -1,21 +1,28 @@
 <template lang="pug">
-tiles.slides(:items='slides' type='slide' :edit='edit' :draggable='edit')
-  template(slot-scope='{ item }')
-    h2.no-margin {{ item.name }}
-  template(slot='footer')
-    // the empty elements help make the flex grid look
-    // like it's a list despite it actually having justify-content: center
+ul.slides
+  router-link(
+    v-for="slide in slides"
+    tag="li"
+    :key="slide.name"
+    :to=`{
+      name: 'slide',
+      params: Object.assign($route.params, {
+        slide: slide.index
+      })
+    }`
+  )
+    h2.no-margin {{ slide.name }}
 
-    // empty_ + i in order to avoid key duplication
-    li.empty(v-for='i in 20', :key='"empty_" + i')
+  // the empty elements help make the flex grid look
+  // like it's a list despite it actually having justify-content: center
+
+  // empty_ + i in order to avoid key duplication
+  li.empty(v-for='i in 20', :key='"empty_" + i')
 </template>
 
 <script>
-import Tiles from './Tiles'
-
 export default {
   name: 'SlideTiles',
-  components: { Tiles },
   props: {
     slides: {
       type: Array,
@@ -31,7 +38,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~@/styles/defs'
+@import '~@/styles/defs';
 
 .slides {
   margin: 50px 0;
