@@ -86,7 +86,7 @@ export default function prepare ({
 
     Vue.mixin({
       data () {
-        return this.$options.$rest
+        return this.$options.rest
           ? {
             $rest: {
               loading: false,

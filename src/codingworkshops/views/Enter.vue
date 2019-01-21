@@ -29,10 +29,11 @@ export default {
         return
       }
 
-      const { ok, error, jwt } = await this.$methods.login({ session: this.data })
+      const { ok, error, jwt, user } = await this.$methods.login({ session: this.data })
 
       if (ok) {
         window.localStorage.setItem('jwt', jwt)
+        window.localStorage.setItem('id', user.id)
         this.$router.push({ name: 'home' })
       } else {
         this.error = error

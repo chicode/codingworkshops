@@ -8,12 +8,15 @@
 
   .new-workshop
     p.error(v-if="errors.name") {{ errors.name[0] }}
-    input.input(v-model="workshop" placeholder="name")
+    input.input(v-model="data.name" placeholder="name")
+    p.error(v-if="errors.description") {{ errors.description[0] }}
+    input.input(v-model="data.description" placeholder="description")
+    p.error(v-if="errors.source_url") {{ errors.source_url[0] }}
+    input.input(v-model="data.source_url" placeholder="source url")
     button.button(@click="create"): div new workshop
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import WorkshopTiles from '../components/WorkshopTiles.vue'
 
 export default {
@@ -22,7 +25,11 @@ export default {
   data () {
     return {
       errors: {},
-      workshop: '',
+      data: {
+        name: '',
+        description: '',
+        source_url: '',
+      },
     }
   },
   rest: {
@@ -31,14 +38,20 @@ export default {
     },
   },
   methods: {
-    ...mapActions('codingworkshops', ['enterEditMode']),
-
-    create () {
-      const { errors } = this.$post('/workshops')
-      if (errors) {
-        this.errors = errors
+    async create () {
+      const { ok, errors, slug } = await this.$methods.createWorkshop({
+        workshop: this.data,
+      })
+      if (ok) {
+        this.$router.push({
+          name: 'workshop',
+          params: {
+            human: this.$route.params.human,
+            workshop: slug,
+          },
+        })
       } else {
-        this.enterEditMode(this.workshop)
+        this.errors = errors
       }
     },
   },

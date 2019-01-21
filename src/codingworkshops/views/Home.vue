@@ -8,8 +8,8 @@
       span.text-orange code!
   h1: a set of interactive coding tutorials, for all skill levels!
 
-  p.h2(v-if="!$rest.currentUser")
-    router-link.button(:to="{ name: 'enter' }"): div login
+  p.h2(v-if="!$rest.currentUser.ok")
+    router-link.button(:to="{ name: 'enter' }" tag="button"): div login
     | to save progress
   p.h2(v-else)
     | welcome,&nbsp;

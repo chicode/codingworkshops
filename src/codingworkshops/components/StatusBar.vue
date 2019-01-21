@@ -20,6 +20,7 @@ export default {
   methods: {
     async logout () {
       localStorage.removeItem('jwt')
+      localStorage.removeItem('id')
       this.$router.push({ name: 'home' })
     },
   },
