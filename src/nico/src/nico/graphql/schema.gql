@@ -10,7 +10,7 @@ fragment Error on Error {
     }
 }
 
-mutation($language: Language!, $code: String!) {
+mutation CompileCode ($language: Language!, $code: String!) {
   compileCode(language: $language, code: $code) {
     success
     blocked
@@ -22,4 +22,7 @@ mutation($language: Language!, $code: String!) {
       ...Error
     }
   }
+}
+query compilationTime ($language: Language!) {
+  compilationTime(language: $language)
 }

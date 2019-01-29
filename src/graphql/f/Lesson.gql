@@ -1,6 +1,0 @@
-fragment LessonType on LessonType {
-  id
-  index
-  name
-  description
-}

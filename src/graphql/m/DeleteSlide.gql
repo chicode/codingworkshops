@@ -1,7 +1,0 @@
-#import '../f/MutationResultNoErrors.gql'
-
-mutation($pk: ID!) {
-  deleteSlide(pk: $pk) {
-    ...MutationResultNoErrors
-  }
-}

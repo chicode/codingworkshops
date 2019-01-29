@@ -1,4 +1,5 @@
 import Lang from './Lang'
+import { CompilationTime, compileCode } from '../graphql/schema.gql'
 
 export default class ServerLang extends Lang {
   needsLoading = true
@@ -7,7 +8,7 @@ export default class ServerLang extends Lang {
     const {
       data: { compilationTime },
     } = await apolloClient.query({
-      query: require('../graphql/CompilationTime.gql'),
+      query: CompilationTime,
       variables: {
         language: this.language.toUpperCase(),
       },
@@ -18,9 +19,9 @@ export default class ServerLang extends Lang {
 
   async prepareCode (code, apolloClient) {
     const {
-      data: { compileCode },
+      data: { compiledCode },
     } = await apolloClient.mutate({
-      mutation: require('../graphql/CompileCode.gql'),
+      mutation: compileCode,
       variables: {
         language: this.language.toUpperCase(),
         code,
@@ -30,21 +31,21 @@ export default class ServerLang extends Lang {
     const rename = (objects) =>
       objects.map((object) => ({ ...object, from: object.from_, from_: undefined }))
 
-    if (compileCode.warnings) compileCode.warnings = rename(compileCode.warnings)
-    if (compileCode.errors) compileCode.errors = rename(compileCode.errors)
+    if (compiledCode.warnings) compiledCode.warnings = rename(compiledCode.warnings)
+    if (compiledCode.errors) compiledCode.errors = rename(compiledCode.errors)
 
-    if (compileCode.success) {
+    if (compiledCode.success) {
       return {
         success: true,
-        warnings: compileCode.warnings,
-        code: this.transformCode(compileCode.code),
+        warnings: compiledCode.warnings,
+        code: this.transformCode(compiledCode.code),
       }
     } else {
       return {
         success: false,
-        blocked: compileCode.blocked,
-        errors: compileCode.errors,
-        warnings: compileCode.warnings,
+        blocked: compiledCode.blocked,
+        errors: compiledCode.errors,
+        warnings: compiledCode.warnings,
       }
     }
   }

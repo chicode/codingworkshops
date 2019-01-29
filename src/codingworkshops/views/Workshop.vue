@@ -1,24 +1,49 @@
 <template lang="pug">
-.workshop.standard-layout
-  query(
-    :query="require('@/graphql/q/Workshop.gql')"
-    :variables=`{
-      workshop: $route.params.workshop,
-      human: $route.params.human,
-    }`
-  )
-    template(slot-scope="{ data: { workshop: { name, description }, workshopLessons } }")
-      h1.name {{ name }}
-      p.description {{ description }}
-      LessonTiles.tiles(:lessons="workshopLessons")
+.container(v-if="!$rest.loading")
+  h1 {{ $rest.workshop.name }}
+  p {{ $rest.workshop.description }}
+  button.button(v-if="isOwner" @click="load"): div load from source
+  p(v-if="success") success!
+  p(v-else-if="error") {{ error }}
+  LessonTiles(:lessons="$rest.workshop.lessons")
 </template>
 
 <script>
-import Query from '@/components/Query'
 import LessonTiles from '../components/LessonTiles'
 
 export default {
   name: 'Workshop',
-  components: { Query, LessonTiles },
+  components: { LessonTiles },
+  data () {
+    return { success: false, error: '' }
+  },
+  rest: {
+    workshop () {
+      return [
+        'workshop',
+        {
+          workshop: this.$route.params.workshop,
+        },
+      ]
+    },
+  },
+  computed: {
+    isOwner () {
+      return parseInt(localStorage.getItem('id')) === this.$rest.workshop.author.id
+    },
+  },
+  methods: {
+    async load () {
+      const { ok, error } = await this.$methods.loadWorkshop(
+        { workshop: this.$rest.workshop.id },
+        {},
+      )
+      if (ok) {
+        this.success = true
+      } else {
+        this.error = error
+      }
+    },
+  },
 }
 </script>

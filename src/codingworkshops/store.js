@@ -1,5 +1,4 @@
 import generateSet from '@/generateSet'
-import { router } from '@/main'
 
 function setNamespacedVar (variable, value, { workshop, lesson, slide }) {
   window.localStorage.setItem([variable, workshop, lesson || '', slide || ''].join('~'), value)
@@ -16,7 +15,6 @@ export default {
     slideIndex: 0,
     directionIndex: 0,
     loading: false,
-    editing: false,
   },
   getters: {
     slide (state) {
@@ -29,7 +27,7 @@ export default {
       return state.slideIndex === state.slides.length - 1
     },
     isSlideDone (state, getters) {
-      return getters.slide && state.directionIndex === getters.slide.directionSet.length
+      return getters.slide && state.directionIndex === getters.slide.directions.length
     },
     routeContext: (_state, _getters, rootState) => (excludes = []) => {
       return ['human', 'workshop', 'lesson', 'slide']
@@ -38,7 +36,7 @@ export default {
     },
   },
   mutations: {
-    ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading', 'editing']),
+    ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading']),
   },
   actions: {
     setSlideIndex ({ getters, commit }, slideIndex) {
@@ -77,7 +75,7 @@ export default {
       )
     },
 
-    nextSlide ({ dispatch, getters, state, rootActions }) {
+    nextSlide ({ dispatch, getters, state }) {
       if (getters.isLastSlide) {
         this.router.push({ name: 'workshop', params: getters.routeContext() })
       } else {
@@ -92,24 +90,15 @@ export default {
     nextDirection ({ dispatch, state }) {
       dispatch('setDirectionIndex', state.directionIndex + 1)
     },
-    async fetchLesson ({ commit, rootState, getters }) {
+    async fetchLesson ({ commit, getters }) {
       commit('setLoading', true)
-      const { lesson, workshop, human } = getters.routeContext()
-      const response = await this.apolloClient.query({
-        query: require('@/graphql/q/LessonSlides.gql'),
-        variables: {
-          lesson,
-          workshop,
-          human,
-        },
+      const { lesson, workshop } = getters.routeContext()
+      const response = await this.$methods.lesson({
+        lesson,
+        workshop,
       })
       commit('setLoading', false)
-      commit('setSlides', response.data.lessonSlides)
-    },
-    async enterEditMode ({ commit, getters }, workshop) {
-      commit('setEditing', true)
-      const { human } = getters.routeContext()
-      router.push({ name: 'edit-workshop', params: { human, workshop } })
+      commit('setSlides', response.slides)
     },
   },
 }

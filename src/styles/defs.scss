@@ -1,0 +1,138 @@
+$line-height-base: 1.2;
+
+$font-size-base: 1.4rem;
+$h1-font-size: 5rem;
+$h2-font-size: 3rem;
+$h3-font-size: 2.8rem;
+$h4-font-size: 2.5rem;
+$spacers: (
+  6: 5rem,
+  7: 10rem,
+);
+
+$sizes: (
+  60: 60%,
+);
+
+$colors: (
+  purple: #AE5CFF,
+  blue: #3976D0,
+  orange: #FF8A00,
+  green: #1CB893,
+  light-purple: #E2C5FF,
+  light-green: #9AFFB8,
+  light-blue: #C0D9FF,
+  light-orange: #FFEAD1,
+  light-red: #FF9B9B,
+  grey: #C4C4C4,
+  grey-light: #E5E5E5,
+  grey-lighter: #F7F7F7,
+);
+$link-color: map_get($colors, purple);
+$font-family-base: Karla;
+$font-family-monospace: Fantasque Sans Mono;
+$headings-font-family: Comfortaa;
+
+$standard-border-radius: 10px;
+$standard-border-width: 3px;
+$standard-border-color: black;
+
+$light-border-radius: 10px;
+$light-border-width: 2px;
+$light-border-color: map_get($colors, grey-light);
+
+@mixin standard-border {
+  border: $standard-border-width solid $standard-border-color;
+  border-radius: $standard-border-radius;
+}
+
+@mixin light-border {
+  border: $light-border-width solid $light-border-color;
+}
+
+@mixin light-margin-top {
+  margin-top: -1 * $light-border-width;
+}
+@mixin light-margin-left { margin-left: -1 * $light-border-width; }
+
+
+@mixin absolute {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+@mixin full-size {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin psuedo-element {
+  @include absolute;
+  @include full-size;
+  content: "";
+}
+
+
+$shadow-offsets: (
+  tile: 10px,
+  button: 15px,
+);
+
+$shadow: map_get($colors, grey);
+
+@mixin tile($shadow-offset) {
+  $shadow-offset: map-get($shadow-offsets, $shadow-offset);
+  $transition-duration: .1s;
+  position: relative;
+
+  // padding makes sure that the shadow always has the same amount of room
+  padding-bottom: ($shadow-offset / 2);
+  // make button align relative to base
+  margin-top: (-1 * $shadow-offset);
+
+  cursor: pointer;
+
+  > div {
+    @include standard-border;
+    transition-duration: $transition-duration;
+    // this line makes this animation way smoother on firefox
+    background-color: white;
+    transform: translateY(0);
+
+    @content;
+  }
+
+  // the tile shadow
+  &::after {
+    @include psuedo-element;
+    // shadow height can't be full 100% because then it will show through the top
+    height: 50%;
+    top: unset;
+
+    @include standard-border;
+    z-index: -1;
+    background: $shadow;
+    transition-duration: $transition-duration;
+
+    // this makes sure that the shadow takes up the same width
+    // including the border
+    box-sizing: border-box;
+  }
+
+  &:active:not(:disabled) {
+    div {
+      transform: translateY($shadow-offset / 2.0);
+    }
+  }
+
+  &:disabled {
+    div {
+      background: $shadow;
+      color: black;
+    }
+  }
+}
+

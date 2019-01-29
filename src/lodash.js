@@ -1,6 +1,5 @@
-import _ from 'lodash'
+import _ from 'lodash/fp'
 
 _.mixin({
-  toObject: (input, keyFunc = _.iteratee, valFunc = _.iteratee) =>
-    _.zipObject(_.map(input, keyFunc), _.map(input, valFunc)),
+  toObject: (keyFunc, valFunc, input) => _.zipObject(_.map(keyFunc, input), _.map(valFunc, input)),
 })

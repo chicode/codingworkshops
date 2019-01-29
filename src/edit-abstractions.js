@@ -1,112 +1,107 @@
+import _ from 'lodash/fp'
+import { toObject } from '@/lodash'
+import * as mutations from '@/graphql/mutations'
+import { schema } from '@/graphql/mutation-helpers'
+
+function getRouteParams () {
+  return this.$route.params
+}
+
+function mutation (mutation) {
+  if (!mutations[mutation]) {
+    throw new Error(`GraphQL mutation abstraction ${mutation} does not exist!`)
+  }
+  return mutations[mutation]
+}
+
 // convert from the error list sent from the backend
 // to a more friendly object with fields as keys
 export function convertErrors (errors, type = null) {
-  return errors.reduce(
-    (acc, val) => ({ ...acc, [type ? type + val.field.capitalize() : val.field]: val.message }),
-    {},
-  )
+  return errors |> toObject(({ field }) => (type ? type + _.upperFirst(field) : field), 'message')
 }
 
 export const edit = (
   type,
   {
     getPk = function (type) {
-      return this.data[type].id
+      return this.data[_.lowerFirst(type)].id
     },
     namespacedErrors = false,
+    errorsKey = 'errors',
   } = {},
 ) =>
-  function (property) {
-    return async (value) => {
-      const key = `edit${type.capitalize()}`
-      const {
-        data: {
-          [key]: { ok, errors },
-        },
-      } = await this.$apollo.mutate(
-        require(`@/graphql/m/Edit${type.capitalize()}`).default({
+  async function (property, value) {
+    const key = `edit${type}`
+    const { ok, errors } =
+      (await this.$apollo.mutate(
+        mutation(key)({
           [property]: value,
           pk: getPk.call(this, type),
         }),
-      )
-
-      if (!ok) {
-        if (namespacedErrors) this.errors[key] = convertErrors(errors)
-        else this.errors = convertErrors(errors)
-      } else {
-        if (namespacedErrors) this.errors[key] = {}
-        else this.errors = {}
-      }
-    }
+      )) |> _.get(['data', key])
+    _.set(this, namespacedErrors ? [errorsKey, key] : [errorsKey], ok ? {} : convertErrors(errors))
   }
 
 export const create = (
   type,
   parentType,
-  { namespacedErrors = false, onSuccess = () => {}, getVars = () => ({}) } = {},
+  {
+    namespacedErrors = false,
+    onSuccess = _.noop,
+    getVars = _.stubObject,
+    getQueryVariables = getRouteParams,
+    errorsKey = 'errors',
+    getParentPk = function (type) {
+      return this.data[_.lowerFirst(type)].id
+    },
+  } = {},
 ) =>
   async function () {
-    const key = `create${type.capitalize()}`
-    const {
-      data: {
-        [key]: { ok, errors },
-      },
-    } = await this.$apollo.mutate(
-      require(`@/graphql/m/Create${type.capitalize()}`).default(
-        {
-          ...(parentType ? { [parentType]: this.data[parentType].id } : {}),
-          ...getVars.call(this),
-        },
-        this.$route.params,
-      ),
-    )
-    if (!ok) {
-      if (namespacedErrors) this.errors[key] = convertErrors(errors)
-      else this.errors = convertErrors(errors)
-    } else {
-      if (namespacedErrors) this.errors[key] = {}
-      else this.errors = {}
-      onSuccess.call(this)
-    }
+    const key = `create${type}`
+    const { ok, errors } =
+      (await this.$apollo.mutate(
+        mutation(key)(
+          _.assign(
+            parentType ? { [_.lowerFirst(parentType)]: getParentPk.call(this, parentType) } : {},
+            getVars.call(this),
+          ),
+          getQueryVariables.call(this),
+        ),
+      )) |> _.get(['data', key])
+
+    _.set(this, namespacedErrors ? [errorsKey, key] : [errorsKey], ok ? {} : convertErrors(errors))
+    if (ok) onSuccess.call(this)
   }
-
-export const apollo = (type) => ({
-  apollo: {
-    data: {
-      loadingKey: 'loading',
-      query: require(`@/graphql/q/${type.capitalize()}.gql`),
-      variables () {
-        return this.$route.params
-      },
-      update: (result) => result,
-    },
-  },
-})
-
-export const data = (errorKeys = []) => ({
-  // sometimes the errors object needs to be nested
-  errors: errorKeys.reduce((acc, val) => ({ ...acc, [val]: {} }), {}),
-  loading: 0,
-})
 
 export const del = (type) =>
-  function (pk) {
-    this.$apollo.mutate(
-      require(`@/graphql/m/Delete${this.type.capitalize()}`).default({ pk }, this.$route.params),
-    )
+  function (pk, { getQueryVariables = getRouteParams } = {}) {
+    this.$apollo.mutate(mutation(`delete${type}`)({ pk }, getQueryVariables.call(this)))
   }
 
-export const drag = () =>
+export const data = ({ errorKeys = [], errorsKey = 'errors', loadingKey = 'loading' } = {}) => ({
+  // sometimes the errors object needs to be nested
+  [errorsKey]: errorKeys |> toObject(_.identity, _.stubObject),
+  [loadingKey]: 0,
+})
+
+export const apollo = (
+  type,
+  { getQueryVariables = getRouteParams, loadingKey = 'loading', queryKey = null } = {},
+) => ({
+  loadingKey,
+  query: schema(type),
+  variables: getQueryVariables,
+  update: queryKey ? _.property(queryKey) : _.identity,
+})
+
+export const drag = (type) =>
   function ({ oldIndex, newIndex }) {
     this.$apollo.mutate(
-      require(`@/graphql/m/Move${this.type.capitalize()}`).default(
-        {
-          // oldIndex is unchanged bc array is 0 indexed
-          pk: this.items[oldIndex].id,
-          // newIndex is changed bc index is 1 indexed on server
-          index: newIndex + 1,
-        },
-        this.$route.params,
-      ),
+      mutation(`move${type}`)({
+        // oldIndex is unchanged bc array is 0 indexed
+        pk: this.items[oldIndex].id,
+        // newIndex is changed bc index is 1 indexed on server
+        index: newIndex + 1,
+      }),
     )
   }

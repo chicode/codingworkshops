@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400');
+@import './fantasque/stylesheet.css';
+@import './fixes.scss';
+
+@import './defs.scss';
+
+@import "node_modules/bootstrap/scss/bootstrap-grid";
+@import "node_modules/bootstrap/scss/bootstrap-reboot";
+@import "node_modules/bootstrap/scss/type";
+@import "node_modules/bootstrap/scss/utilities";
+
+@each $color, $value in $colors {
+  .text-#{$color} {
+    color: map_get($colors, $color);
+  }
+}
+@each $color, $value in $colors {
+  .bg-#{$color} {
+    background: map_get($colors, $color);
+  }
+}
+
+.full {
+  height: 100%;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+@include media-breakpoint-down(md) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+.no-margin {
+  margin-top: 0;
+}
+
+code {
+  background: #EEEEEE;
+  border-radius: 5px;
+}
+pre code {
+  display: block;
+  padding: 10px;
+}
+
+.marked {
+  > * {
+    margin-bottom: 20px;
+  }
+}
+
+@mixin button-properties {
+  padding: 3px 10px;
+  font-family: $headings-font-family;
+  font-weight: bold;
+}
+
+.input {
+  @include standard-border;
+  padding: 5px;
+  width: 300px;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  display: inline-block;
+  @include tile('button') {
+    @include button-properties;
+    background: map_get($colors, light-green)
+  }
+}
+
+.button-2 {
+  @include button-properties;
+  cursor: pointer;
+  font-weight: bold;
+
+  &.active {
+    color: map_get($colors, purple);
+  }
+}
+.tile {
+  @include tile('tile') {
+    padding: 20px;
+  }
+}
+
+.tile-light {
+  @include light-border;
+}
+
+.error {
+  color: map_get($colors, orange)
+}
+
+
+// weird bug means that each browser needs separate rule
+
+@mixin thumb {
+  @include standard-border();
+  background: map_get($colors, purple);
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  margin-top: -13px;
+}
+
+@mixin track() {
+  @include standard-border();
+  height: 10px;
+  cursor: pointer;
+  background: map_get($colors, gray);
+}
+
+input[type=range] {
+  &::-webkit-slider-thumb {
+    @include thumb();
+  }
+  &::-moz-range-thumb {
+    @include thumb();
+  }
+  &::-ms-thumb {
+    @include thumb();
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track();
+  }
+  &::-moz-range-track {
+    @include track();
+    height: 5px;
+  }
+  &::-ms-track {
+    @include track();
+  }
+}
+

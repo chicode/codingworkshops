@@ -1,19 +1,19 @@
 <template lang="pug">
-div.instruction-slide
+div.d-flex.full
   div.instructions
-    h1.name {{ slide.name }}
+    h1.mb-3 {{ slide.name }}
     p.description.marked(v-marked="slide.description")
-    ul.directions(v-if="slide.directionSet.length")
-      h2 Directions
-      li.direction(
-        v-for="({ description }, index) in slide.directionSet"
+    ul.mt-6(v-if="slide.directions.length")
+      h2.font-weight-bold Directions
+      li.mt-2(
+        v-for="({ description }, index) in slide.directions"
         :key="description"
       )
-        p.text.marked(:style="directionStyle(index)" v-marked="description")
-        div.buttons(v-if="index === directionIndex")
-          button.button(@click="nextDirection")
-            div done!
-          // TODO: implement help
+        p(:style="directionStyle(index)" v-marked="description")
+        div.d-flex.mt-3(v-if="index === directionIndex")
+          div.pt-3
+            button.button(@click="nextDirection")
+              div done!
 
   Nico(:show-greeting="false" language="Python" :script-boilerplate="false").nico
 </template>
@@ -41,12 +41,30 @@ export default {
       } else {
         color = '#C1C1C1'
       }
-      return { color }
+      return {
+        color,
+        transitionDuration: '.2s',
+      }
     },
   },
 }
 </script>
 
-<style scoped lang="stylus">
-@import './InstructionSlide.styl'
+<style scoped lang="scss">
+@import '~@/styles/defs';
+
+.instructions {
+  overflow-y: auto;
+  flex: 1 0 40%;
+  padding: 30px;
+  @include light-border;
+}
+
+.nico {
+  overflow-y: auto;
+  flex: 1 0 60%;
+  padding: 50px;
+  @include light-border;
+  @include light-margin-left;
+}
 </style>

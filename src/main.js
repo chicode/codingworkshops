@@ -1,32 +1,24 @@
+import _ from 'lodash/fp'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Router from 'vue-router'
-import VueApollo from 'vue-apollo'
-import ApolloClient from 'apollo-boost'
 import { sync } from 'vuex-router-sync'
+
+import prepare from './rest'
 
 import routerConfig from './codingworkshops/router'
 import storeConfig from './store'
+import restConfig from './endpoints'
 import App from './codingworkshops/App.vue'
 
-import './styles/index.styl'
-import './directives.js'
-
-// eslint-disable-next-line no-extend-native
-String.prototype.capitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1)
-}
-
-// eslint-disable-next-line no-extend-native
-String.prototype.toUnderscore = function () {
-  return this.replace(/([A-Z])/g, ($1) => '_' + $1.toLowerCase())
-}
+import './styles/index.scss'
+import './directives'
+import './globals'
 
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
 Vue.use(Router)
-Vue.use(VueApollo)
 
 export const store = new Vuex.Store(storeConfig)
 export const router = new Router(routerConfig)
@@ -36,27 +28,24 @@ Vuex.Store.prototype.router = router
 
 sync(store, router, { moduleName: 'router' })
 
-export const apolloClient = new ApolloClient({
-  uri: `${
-    process.env.NODE_ENV === 'development'
-      ? 'http://127.0.0.1:8000'
-      : 'https://codingworkshops.org/api'
-  }/graphql/`,
-  credentials: 'include',
+const { methods, install } = prepare(
+  _.merge(
+    {
+      root: `${
+        process.env.NODE_ENV === 'development'
+          ? 'http://127.0.0.1:4000'
+          : 'https://codingworkshops.org/api'
+      }/api/v1`,
+    },
+    restConfig,
+  ),
+)
 
-  fetchOptions: {
-    credentials: 'include',
-  },
-})
-Vuex.Store.prototype.apolloClient = apolloClient
-
-const apolloProvider = new VueApollo({
-  defaultClient: apolloClient,
-})
+Vue.use(install)
+Vuex.Store.prototype.$methods = methods
 
 new Vue({
   router,
   store,
-  apolloProvider,
   render: (h) => h(App),
 }).$mount('#app')

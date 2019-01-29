@@ -1,7 +1,0 @@
-#import '../f/Slide.gql'
-
-query($lesson: Int!, $workshop: String!, $human: String!) {
-  lessonSlides(lesson: $lesson, workshop: $workshop, human: $human) {
-    ...SlideType
-  }
-}

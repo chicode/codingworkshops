@@ -1,18 +1,18 @@
 <template lang="pug">
-div.footer
-  div.breadcrumbs
-    router-link(:to="{ name: 'home' }")
+div.p-4.d-flex.justify-content-between(style="height: 70px;")
+  div
+    router-link.mr-3(:to="{ name: 'home' }")
       span.accent-2 coding
       span.accent-1 workshops
-    router-link.workshop(:to=`{
+    router-link.underline(:to=`{
       name: 'workshop',
       params: {
         human: $route.params.human,
         workshop: $route.params.workshop,
       }
     }`) {{ $route.params.workshop }}
-  div.buttons
-    button.button(
+  div.d-flex.align-items-start.mt-1
+    button.button.mr-3(
       :disabled="isFirstSlide"
       @click="previousSlide"
     ): div previous
@@ -34,9 +34,11 @@ export default {
     ...mapActions('codingworkshops', ['previousSlide', 'nextSlide']),
   },
 }
-
 </script>
 
-<style scoped lang="stylus">
-@import './SlideFooter'
+<style lang="scss">
+body,
+html {
+  height: calc(100%);
+}
 </style>

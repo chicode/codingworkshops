@@ -1,7 +1,0 @@
-#import '../f/MutationResult.gql'
-
-mutation($description: String!, $slide: ID!) {
-  createDirection(description: $description, slide: $slide) {
-    ...MutationResult
-  }
-}

@@ -1,28 +1,19 @@
-html, body {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  padding: 0;
-  margin: 0;
-  box-sizing: inherit;
-}
-
 button,
 input,
 select {
   border: 0;
   background: none;
   padding: 0;
-}
-button:focus,
-input:focus,
-select:focus {
-  outline: 0;
+  color: black;
 }
 
-button::-moz-focus-inner {
-  border: 0;
+*:focus {
+  outline: 0 !important;
+}
+
+*::-moz-focus-inner {
+  outline: 0 !important;
+  border: 0 !important;
 }
 
 button,
@@ -32,32 +23,16 @@ img {
 
 ul {
   list-style: none;
+  padding-left: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-a {
-  text-decoration: none;
-  color: black;
+* {
+  user-select: none !important;
 }
-
-button, button *,
-img {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-}
-
 
 /* Slider resets https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */
 

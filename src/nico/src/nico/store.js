@@ -86,12 +86,10 @@ export default {
       setTimeout(() => {
         if (state.language.needsLoading) {
           commit('setLoading', true)
-          state.language
-            .getLoadingTime(this.apolloClient)
-            .then((time) => commit('setLoadingTime', time))
+          state.language.getLoadingTime(this.client).then((time) => commit('setLoadingTime', time))
         }
         state.language
-          .prepareCode(state.code, this.apolloClient)
+          .prepareCode(state.code, this.client)
           .then(({ success, code, errors, warnings, blocked }) => {
             commit('setLoading', false)
             commit('setWarnings', warnings || [])

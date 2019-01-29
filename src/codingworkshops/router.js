@@ -13,24 +13,6 @@ export default {
       },
     },
     {
-      name: 'edit-slide',
-      path: '/:human/edit/:workshop/:lesson/:slide',
-      component: () => import(/* webpackChunkName: "edit-slide" */ './views/EditSlide.vue'),
-      meta: {
-        noStatusBar: true,
-      },
-    },
-    {
-      name: 'edit-lesson',
-      path: '/:human/edit/:workshop/:lesson',
-      component: () => import(/* webpackChunkName: "edit-lesson" */ './views/EditLesson.vue'),
-    },
-    {
-      name: 'edit-workshop',
-      path: '/:human/edit/:workshop',
-      component: () => import(/* webpackChunkName: "edit-workshop" */ './views/EditWorkshop.vue'),
-    },
-    {
       name: 'slide',
       path: '/:human/:workshop/:lesson/:slide',
       component: () => import(/* webpackChunkName: "slide" */ './views/Slide.vue'),
