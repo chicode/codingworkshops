@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash.clonedeep'
+import _ from 'lodash/fp'
 
 export default (modules, afterRevert = () => {}) => (store) => {
   let history = []
@@ -7,7 +7,7 @@ export default (modules, afterRevert = () => {}) => (store) => {
     return modules.reduce((acc, val) => acc[val], state)
   }
   function getModuleStateCloned (state) {
-    return cloneDeep(getModuleState(state))
+    return _.cloneDeep(getModuleState(state))
   }
 
   function setModuleState (state, assign) {
@@ -35,7 +35,7 @@ export default (modules, afterRevert = () => {}) => (store) => {
   function revert () {
     // replaceState affects all modules, and this code needs to revert only the module of the history that this plugin controls
     const state = store.state
-    setModuleState(state, cloneDeep(history[index]))
+    setModuleState(state, _.cloneDeep(history[index]))
     store.replaceState(state)
 
     afterRevert(store)
