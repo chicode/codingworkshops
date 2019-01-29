@@ -1,5 +1,5 @@
 <template lang="pug">
-div.p-4
+div.p-4.d-flex.justify-content-between(style="height: 70px;")
   div
     router-link.mr-3(:to="{ name: 'home' }")
       span.accent-2 coding
@@ -35,3 +35,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+body,
+html {
+  height: calc(100%);
+}
+</style>

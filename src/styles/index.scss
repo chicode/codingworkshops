@@ -1,42 +1,6 @@
-@import './fixes.scss';
-
 @import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Karla:400');
 @import './fantasque/stylesheet.css';
-
-$line-height-base: 1.2;
-
-$font-size-base: 1.4rem;
-$h1-font-size: 5rem;
-$h2-font-size: 3rem;
-$h3-font-size: 2.8rem;
-$h4-font-size: 2.5rem;
-$spacers: (
-  6: 5rem,
-  7: 10rem,
-);
-
-$sizes: (
-  60: 60%,
-);
-
-$colors: (
-  purple: #AE5CFF,
-  blue: #3976D0,
-  orange: #FF8A00,
-  green: #1CB893,
-  light-purple: #E2C5FF,
-  light-green: #9AFFB8,
-  light-blue: #C0D9FF,
-  light-orange: #FFEAD1,
-  light-red: #FF9B9B,
-  grey: #C4C4C4,
-  grey-light: #E5E5E5,
-  grey-lighter: #F7F7F7,
-);
-$link-color: map_get($colors, purple);
-$font-family-base: Karla;
-$font-family-monospace: Fantasque;
-$headings-font-family: Comfortaa;
+@import './fixes.scss';
 
 @import './defs.scss';
 
@@ -124,3 +88,46 @@ pre code {
 .error {
   color: map_get($colors, orange)
 }
+
+
+// weird bug means that each browser needs separate rule
+
+@mixin thumb {
+  @include standard-border();
+  background: map_get($colors, purple);
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  margin-top: -13px;
+}
+
+@mixin track() {
+  @include standard-border();
+  height: 10px;
+  cursor: pointer;
+  background: map_get($colors, gray);
+}
+
+input[type=range] {
+  &::-webkit-slider-thumb {
+    @include thumb();
+  }
+  &::-moz-range-thumb {
+    @include thumb();
+  }
+  &::-ms-thumb {
+    @include thumb();
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track();
+  }
+  &::-moz-range-track {
+    @include track();
+    height: 5px;
+  }
+  &::-ms-track {
+    @include track();
+  }
+}
+

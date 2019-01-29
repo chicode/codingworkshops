@@ -6,17 +6,14 @@ select {
   padding: 0;
   color: black;
 }
-button:focus,
-input:focus,
-select:focus {
-  outline: 0;
-  outline-style:none;
+
+*:focus {
+  outline: 0 !important;
 }
 
-button::-moz-focus-inner {
-  outline: 0;
-  border: 0;
-  outline-style:none;
+*::-moz-focus-inner {
+  outline: 0 !important;
+  border: 0 !important;
 }
 
 button,

@@ -10,10 +10,10 @@ div.d-flex.full
         :key="description"
       )
         p(:style="directionStyle(index)" v-marked="description")
-        div.d-flex.mt-3(style="height: 30px;" v-if="index === directionIndex")
-          button(@click="nextDirection")
-            div.pw-1.h2 done!
-          // TODO: implement help
+        div.d-flex.mt-3(v-if="index === directionIndex")
+          div.pt-3
+            button.button(@click="nextDirection")
+              div done!
 
   Nico(:show-greeting="false" language="Python" :script-boilerplate="false").nico
 </template>
