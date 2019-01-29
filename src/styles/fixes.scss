@@ -30,19 +30,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-button, button *,
-img {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
+* {
+  user-select: none !important;
 }
 
 /* Slider resets https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ */

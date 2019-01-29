@@ -75,6 +75,15 @@ pre code {
   }
 }
 
+.button-2 {
+  @include button-properties;
+  cursor: pointer;
+  font-weight: bold;
+
+  &.active {
+    color: map_get($colors, purple);
+  }
+}
 .tile {
   @include tile('tile') {
     padding: 20px;
