@@ -12,6 +12,9 @@ div.p-4.d-flex.justify-content-between(style="height: 70px;")
       }
     }`) {{ $route.params.workshop }}
   div.d-flex.align-items-start.mt-1
+    button.button.mr-6(
+      @click="exportProject"
+    ): div export project
     button.button.mr-3(
       :disabled="isFirstSlide"
       @click="previousSlide"
@@ -31,7 +34,7 @@ export default {
     ...mapGetters('codingworkshops', ['isSlideDone', 'isLastSlide', 'isFirstSlide']),
   },
   methods: {
-    ...mapActions('codingworkshops', ['previousSlide', 'nextSlide']),
+    ...mapActions('codingworkshops', ['previousSlide', 'nextSlide', 'exportProject']),
   },
 }
 </script>
@@ -39,6 +42,6 @@ export default {
 <style lang="scss">
 body,
 html {
-  height: calc(100%);
+  height: 100%;
 }
 </style>

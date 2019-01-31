@@ -4,15 +4,15 @@
     img.col-6.mr-5(src="img/landing-welcome.svg")
     h1.col-4 Anyone can learn to code!
 
-  p.h3.text-center(v-if="!$rest.currentUser.ok")
+  p.h3.text-center(v-if="!$auth.loggedIn()")
     router-link.button(:to="{ name: 'enter' }" tag="div"): div.font-weight-normal login
     | &nbsp;&nbsp;to save progress
   p.h3.text-center(v-else)
     | welcome,&nbsp;
     router-link(:to=`{
       name: 'human',
-      params: { human: $rest.currentUser.username }
-    }` tag="a") {{ $rest.currentUser.username }}
+      params: { human: $auth.currentUser().username }
+    }` tag="a") {{ $auth.currentUser().username }}
     |!
 
   WorkshopTiles(:workshops="$rest.allWorkshops")
@@ -25,8 +25,11 @@ export default {
   name: 'Home',
   components: { WorkshopTiles },
   rest: {
-    currentUser: 'me',
     allWorkshops: 'workshops',
+  },
+
+  created () {
+    console.log(this.$auth.currentUser())
   },
 }
 </script>

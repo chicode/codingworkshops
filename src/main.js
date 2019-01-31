@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 import Router from 'vue-router'
 import { sync } from 'vuex-router-sync'
 
-import prepare from './rest'
+import prepareRest from './rest'
+import prepareAuth from './auth'
 
 import routerConfig from './codingworkshops/router'
 import storeConfig from './store'
@@ -22,13 +23,13 @@ Vue.use(Router)
 
 export const store = new Vuex.Store(storeConfig)
 export const router = new Router(routerConfig)
-// use router/client from within vuex with this.router
+// use router/client from within vuex with this.$router
 // this is better than importing because it is more general ie nico can use the same implementation both as a component and separate app
-Vuex.Store.prototype.router = router
+Vuex.Store.prototype.$router = router
 
 sync(store, router, { moduleName: 'router' })
 
-const { methods, install } = prepare(
+const { methods, install: installRest } = prepareRest(
   _.merge(
     {
       root: `${
@@ -40,9 +41,10 @@ const { methods, install } = prepare(
     restConfig,
   ),
 )
+installRest(Vue, Vuex)
 
-Vue.use(install)
-Vuex.Store.prototype.$methods = methods
+const { install: installAuth } = prepareAuth(methods)
+installAuth(Vue, Vuex)
 
 new Vue({
   router,

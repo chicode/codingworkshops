@@ -32,7 +32,7 @@ const generateMethod = (req, name, method, path, prepareBody, processResult) => 
       try {
         result = JSON.parse(text)
       } catch (e) {
-        throw new Error('Invalid JSON returned from method ' + name)
+        throw new Error(`Invalid JSON returned from method ${name}: \n\n${text}`)
       }
     } else {
       result = {}
@@ -77,8 +77,14 @@ export default function prepare ({
     )
     |> _.mergeAll
 
-  function install (Vue) {
+  function install (Vue, Vuex) {
     Object.defineProperty(Vue.prototype, '$methods', {
+      get () {
+        return methods
+      },
+    })
+
+    Object.defineProperty(Vuex.Store.prototype, '$methods', {
       get () {
         return methods
       },

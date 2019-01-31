@@ -15,6 +15,7 @@ export default {
     slideIndex: 0,
     directionIndex: 0,
     loading: false,
+    getNextPath: null,
   },
   getters: {
     slide (state) {
@@ -36,12 +37,12 @@ export default {
     },
   },
   mutations: {
-    ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading']),
+    ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading', 'getNextPath']),
   },
   actions: {
     setSlideIndex ({ getters, commit }, slideIndex) {
       commit('setSlideIndex', slideIndex)
-      this.router.replace({
+      this.$router.replace({
         name: 'slide',
         params: { ...getters.routeContext(), slide: slideIndex },
       })
@@ -77,7 +78,7 @@ export default {
 
     nextSlide ({ dispatch, getters, state }) {
       if (getters.isLastSlide) {
-        this.router.push({ name: 'workshop', params: getters.routeContext() })
+        this.$router.push({ name: 'workshop', params: getters.routeContext() })
       } else {
         dispatch('setSlideIndex', state.slideIndex + 1)
         dispatch('setDirectionIndexFromStorage')
@@ -99,6 +100,36 @@ export default {
       })
       commit('setLoading', false)
       commit('setSlides', response.slides)
+    },
+
+    async exportProject ({ commit, rootState }) {
+      const { slug } = await this.$methods.createProject({
+        project: {
+          code: rootState.nico.code,
+          spritesheet: JSON.stringify(rootState.sprite.sprite.spritesheet),
+          tilesheet: JSON.stringify(rootState.tile.sprite.spritesheet),
+          flags: JSON.stringify(rootState.tile.flags),
+        },
+      })
+      let nextPath = () => ({
+        name: 'project',
+        params: { human: this.$auth.currentUser().username, project: slug },
+      })
+      if (this.$auth.loggedIn()) {
+        this.$router.push(nextPath())
+      } else {
+        commit('setGetNextPath', nextPath)
+        this.$router.push({ name: 'enter' })
+      }
+    },
+
+    navigate ({ state, commit }, defaultPath) {
+      let nextPath = defaultPath
+      if (state.getNextPath) {
+        nextPath = state.getNextPath()
+      }
+      this.$router.push(nextPath)
+      commit('setGetNextPath', null)
     },
   },
 }

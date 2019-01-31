@@ -3,22 +3,36 @@ export default {
     GET: {
       users: '/users',
       user: '/users/:user',
+
       workshops: '/workshops',
       workshop: '/workshops/:workshop',
+
       lesson: '/workshops/:workshop/:lesson',
+
+      projects: '/projects',
+      userProjects: '/projects/:user',
+      userProject: '/projects/:user/:project',
     },
     POST: {
+      login: '/sessions',
+
       me: '/users/me',
       createUser: '/users',
+
       createWorkshop: '/workshops',
-      login: '/sessions',
       loadWorkshop: '/workshops/:workshop/load',
+
+      createProject: '/projects',
     },
     PATCH: {
       updateWorkshop: '/workshops/:workshop',
+
+      updateProject: '/workshops/:project',
     },
     DELETE: {
       deleteWorkshop: '/workshops/:workshop',
+
+      deleteProject: '/workshops/:project',
     },
   },
   prepareBody (body, { method }) {

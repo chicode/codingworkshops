@@ -9,6 +9,8 @@ div.mx-auto(style="width: 300px;")
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Enter',
 
@@ -23,18 +25,17 @@ export default {
   },
 
   methods: {
+    ...mapActions('codingworkshops', ['navigate']),
     async login () {
       if (!this.data.username || !this.data.password) {
         this.error = 'please enter some data'
         return
       }
 
-      const { ok, error, jwt, user } = await this.$methods.login({ session: this.data })
+      const { ok, error } = await this.$auth.login(this.data)
 
       if (ok) {
-        window.localStorage.setItem('jwt', jwt)
-        window.localStorage.setItem('id', user.id)
-        this.$router.push({ name: 'home' })
+        this.navigate({ name: 'home' })
       } else {
         this.error = error
       }
