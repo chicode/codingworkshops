@@ -31,7 +31,7 @@ export default {
       return getters.slide && state.directionIndex === getters.slide.directions.length
     },
     routeContext: (_state, _getters, rootState) => (excludes = []) => {
-      return ['human', 'workshop', 'lesson', 'slide']
+      return ['user', 'workshop', 'lesson', 'slide']
         .filter((item) => !excludes.includes(item))
         .reduce((acc, val) => ({ ...acc, [val]: rootState.router.params[val] }), {})
     },
@@ -113,7 +113,7 @@ export default {
       })
       let nextPath = () => ({
         name: 'project',
-        params: { human: this.$auth.currentUser().username, project: slug },
+        params: { user: this.$auth.currentUser().username, project: slug },
       })
       if (this.$auth.loggedIn()) {
         this.$router.push(nextPath())

@@ -8,7 +8,7 @@ ul.workshops.mt-6.d-flex.flex-wrap.justify-content-center(:class="center && 'cen
     :to=`{
       name: 'workshop',
       params: {
-        human: workshop.author.username,
+        user: workshop.author.username,
         workshop: workshop.slug,
       }
     }`

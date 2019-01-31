@@ -40,13 +40,13 @@ export default {
     },
     {
       name: 'project',
-      path: '/h/:human/:project',
+      path: '/h/:user/:project',
       component: () => import(/* webpackChunkName: "workshop" */ './views/Project.vue'),
     },
     {
-      name: 'human',
-      path: '/h/:human',
-      component: () => import(/* webpackChunkName: "human" */ './views/Human.vue'),
+      name: 'user',
+      path: '/h/:user',
+      component: () => import(/* webpackChunkName: "user" */ './views/User.vue'),
     },
     {
       name: 'workshop',

@@ -7,7 +7,7 @@ div.p-4.d-flex.justify-content-between(style="height: 70px;")
     router-link.underline(:to=`{
       name: 'workshop',
       params: {
-        human: $route.params.human,
+        user: $route.params.user,
         workshop: $route.params.workshop,
       }
     }`) {{ $route.params.workshop }}

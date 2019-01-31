@@ -26,7 +26,7 @@
 import WorkshopTiles from '../components/WorkshopTiles.vue'
 
 export default {
-  name: 'Human',
+  name: 'User',
   components: { WorkshopTiles },
   data () {
     return {
@@ -40,7 +40,7 @@ export default {
   },
   rest: {
     user () {
-      return ['user', { user: this.$route.params.human }]
+      return ['user', { user: this.$route.params.user }]
     },
   },
   methods: {
@@ -52,7 +52,7 @@ export default {
         this.$router.push({
           name: 'workshop',
           params: {
-            human: this.$route.params.human,
+            user: this.$route.params.user,
             workshop: slug,
           },
         })

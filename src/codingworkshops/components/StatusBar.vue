@@ -4,7 +4,7 @@
     span.accent-2 coding
     span.accent-1 workshops
   div.d-flex(v-if='$auth.loggedIn()')
-    router-link.mr-2(:to="{ name: 'human', params: { human: $auth.currentUser().username } }") {{ $auth.currentUser().username }}
+    router-link.mr-2(:to="{ name: 'user', params: { user: $auth.currentUser().username } }") {{ $auth.currentUser().username }}
     button(@click='logout') logout
   div(v-else='')
     router-link(:to="{ name: 'enter' }") login

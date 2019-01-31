@@ -10,8 +10,8 @@
   p.h3.text-center(v-else)
     | welcome,&nbsp;
     router-link(:to=`{
-      name: 'human',
-      params: { human: $auth.currentUser().username }
+      name: 'user',
+      params: { user: $auth.currentUser().username }
     }` tag="a") {{ $auth.currentUser().username }}
     |!
 
@@ -26,10 +26,6 @@ export default {
   components: { WorkshopTiles },
   rest: {
     allWorkshops: 'workshops',
-  },
-
-  created () {
-    console.log(this.$auth.currentUser())
   },
 }
 </script>
