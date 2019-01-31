@@ -13,22 +13,6 @@ export default {
       },
     },
     {
-      name: 'slide',
-      path: '/:workshop/:lesson/:slide',
-      component: () => import(/* webpackChunkName: "slide" */ './views/Slide.vue'),
-      meta: {
-        noStatusBar: true,
-      },
-    },
-    {
-      name: 'lesson',
-      path: '/:workshop/:lesson',
-      component: () => import(/* webpackChunkName: "lesson" */ './views/Slide.vue'),
-      meta: {
-        noStatusBar: true,
-      },
-    },
-    {
       name: 'enter',
       path: '/enter',
       component: () => import(/* webpackChunkName: "enter" */ './views/Enter.vue'),
@@ -47,6 +31,22 @@ export default {
       name: 'user',
       path: '/h/:user',
       component: () => import(/* webpackChunkName: "user" */ './views/User.vue'),
+    },
+    {
+      name: 'slide',
+      path: '/:workshop/:lesson/:slide',
+      component: () => import(/* webpackChunkName: "slide" */ './views/Slide.vue'),
+      meta: {
+        noStatusBar: true,
+      },
+    },
+    {
+      name: 'lesson',
+      path: '/:workshop/:lesson',
+      component: () => import(/* webpackChunkName: "lesson" */ './views/Slide.vue'),
+      meta: {
+        noStatusBar: true,
+      },
     },
     {
       name: 'workshop',

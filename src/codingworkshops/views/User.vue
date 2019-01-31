@@ -40,7 +40,7 @@ export default {
   },
   rest: {
     user () {
-      return ['user', { user: this.$route.params.user }]
+      return ['user', this.$route.params]
     },
   },
   methods: {

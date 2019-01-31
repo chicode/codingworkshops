@@ -1,49 +1,33 @@
 <template lang="pug">
-.container(v-if="!$rest.loading")
-  h1 {{ $rest.workshop.name }}
-  p {{ $rest.workshop.description }}
-  button.button(v-if="isOwner" @click="load"): div load from source
-  p(v-if="success") success!
-  p(v-else-if="error") {{ error }}
-  LessonTiles(:lessons="$rest.workshop.lessons")
+.full.d-flex(v-if="!$rest.loading && $rest.project.ok")
+  div
+    h1 {{ $rest.project.name }}
+    button(@click="save"): div save
+    button(@click="publish"): div publish
+
+  Nico(:show-greeting="false" language="Python" :script-boilerplate="false").nico
+
+div(v-else-if="$rest.loading")
+  p loading
+
+div(v-else)
+  p 404
 </template>
 
 <script>
-import LessonTiles from '../components/LessonTiles'
+import Nico from '@/nico/src/nico/App'
 
 export default {
-  name: 'Workshop',
-  components: { LessonTiles },
-  data () {
-    return { success: false, error: '' }
-  },
+  name: 'Project',
+  components: { Nico },
   rest: {
-    workshop () {
-      return [
-        'workshop',
-        {
-          workshop: this.$route.params.workshop,
-        },
-      ]
-    },
-  },
-  computed: {
-    isOwner () {
-      return parseInt(localStorage.getItem('id')) === this.$rest.workshop.author.id
+    project () {
+      return ['userProject', this.$route.params]
     },
   },
   methods: {
-    async load () {
-      const { ok, error } = await this.$methods.loadWorkshop(
-        { workshop: this.$rest.workshop.id },
-        {},
-      )
-      if (ok) {
-        this.success = true
-      } else {
-        this.error = error
-      }
-    },
+    save () {},
+    publish () {},
   },
 }
 </script>
