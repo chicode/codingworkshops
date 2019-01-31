@@ -35,7 +35,7 @@ const { methods, install: installRest } = prepareRest(
       root: `${
         process.env.NODE_ENV === 'development'
           ? 'http://127.0.0.1:4000'
-          : 'https://codingworkshops.org/api'
+          : 'https://new.codingworkshops.org'
       }/api/v1`,
     },
     restConfig,
