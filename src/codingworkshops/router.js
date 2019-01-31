@@ -26,6 +26,9 @@ export default {
       name: 'project',
       path: '/h/:user/:project',
       component: () => import(/* webpackChunkName: "workshop" */ './views/Project.vue'),
+      meta: {
+        noStatusBar: true,
+      },
     },
     {
       name: 'user',

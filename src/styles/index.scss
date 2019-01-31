@@ -71,7 +71,7 @@ pre code {
   display: inline-block;
   @include tile('button') {
     @include button-properties;
-    background: map_get($colors, light-green)
+    background: map_get($colors, light-green);
   }
 }
 
@@ -87,11 +87,18 @@ pre code {
 .tile {
   @include tile('tile') {
     padding: 20px;
+    background: map_get($colors, light-green);
   }
 }
 
-.tile-light {
+.border-light {
   @include light-border;
+}
+
+.bt-only {
+  border-right: 0;
+  border-left: 0;
+  border-bottom: 0;
 }
 
 .error {

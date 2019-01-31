@@ -90,10 +90,14 @@ $shadow: map_get($colors, grey);
 
   // padding makes sure that the shadow always has the same amount of room
   padding-bottom: ($shadow-offset / 2);
+
   // make button align relative to base
   margin-top: (-1 * $shadow-offset);
 
   cursor: pointer;
+
+  // this is necessary for the psuedo element to vertically align itself correctly
+  // height: 100%;
 
   > div {
     @include standard-border;

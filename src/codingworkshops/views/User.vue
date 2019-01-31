@@ -2,58 +2,47 @@
 .container(v-if="!$rest.loading")
   h1.no-margin {{ $rest.user.username }}
   p {{ $rest.user.bio }}
-  div(v-if="$rest.user.workshops.length")
-    h2 Your Workshops
-    WorkshopTiles.workshops(:center='false' :workshops="$rest.user.workshops")
+  div(v-if="$rest.user.projects.length")
+    h2 Your Projects
+    ProjectTiles(:projects="$rest.user.projects")
 
-  div
+  div.mt-5
     div
       p.error(v-if="errors.name") {{ errors.name[0] }}
       input.input(v-model="data.name" placeholder="name")
-
-    div
-      p.error(v-if="errors.description") {{ errors.description[0] }}
-      input.input(v-model="data.description" placeholder="description")
-
-    div
-      p.error(v-if="errors.source_url") {{ errors.source_url[0] }}
-      input.input(v-model="data.source_url" placeholder="source url")
-
-    button.button.mt-3(@click="create"): div new workshop
+    button.button.mt-1(@click="create"): div new project
 </template>
 
 <script>
-import WorkshopTiles from '../components/WorkshopTiles.vue'
+import ProjectTiles from '../components/ProjectTiles.vue'
 
 export default {
   name: 'User',
-  components: { WorkshopTiles },
+  components: { ProjectTiles },
   data () {
     return {
       errors: {},
       data: {
         name: '',
-        description: '',
-        source_url: '',
       },
     }
   },
   rest: {
     user () {
-      return ['user', this.$route.params]
+      return ['user', { user: this.$route.params.user }]
     },
   },
   methods: {
     async create () {
-      const { ok, errors, slug } = await this.$methods.createWorkshop({
-        workshop: this.data,
+      const { ok, errors, slug } = await this.$methods.createProject({
+        project: this.data,
       })
       if (ok) {
         this.$router.push({
-          name: 'workshop',
+          name: 'project',
           params: {
             user: this.$route.params.user,
-            workshop: slug,
+            project: slug,
           },
         })
       } else {
