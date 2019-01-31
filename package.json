@@ -32,14 +32,15 @@
     "babel-plugin-lodash": "^3.3.4",
     "eslint-plugin-lodash": "^3.1.0",
     "eslint-plugin-lodash-fp": "^2.2.0-a1",
+    "node-sass": "^4.9.4",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
     "raw-loader": "^0.5.1",
+    "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
-    "node-sass": "^4.9.4",
-    "sass-loader": "^7.1.0",
+    "vue-cli": "^2.9.6",
     "vue-template-compiler": "^2.5.17"
   }
 }
