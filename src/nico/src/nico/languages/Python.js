@@ -45,11 +45,7 @@ def ${_.snakeCase(funcName)}(*args):
     super(...args)
 
     ifDoesntExist('python', () => {
-      // loadScript('python', 'https://cdnjs.cloudflare.com/ajax/libs/brython/3.6.2/brython.min.js')
-      loadScript(
-        'python',
-        'https://cdn.rawgit.com/brython-dev/brython/6dbf1e30eb45887283f30623ae9a9bdfcfa570fc/www/src/brython_dist.js',
-      )
+      loadScript('python', 'https://s3.us-east-2.amazonaws.com/codingworkshops/brython.js')
     })
   }
 
