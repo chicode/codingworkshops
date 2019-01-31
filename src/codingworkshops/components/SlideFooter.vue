@@ -2,8 +2,8 @@
 div.p-4.d-flex.justify-content-between(style="height: 70px;")
   div
     router-link.mr-3(:to="{ name: 'home' }")
-      span.accent-2 coding
-      span.accent-1 workshops
+      span.text-blue coding
+      span.text-purple workshops
     router-link.underline(:to=`{
       name: 'workshop',
       params: {
