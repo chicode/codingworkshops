@@ -170,11 +170,16 @@ const _mars = {}
 
 init()
 
+const DELAY = 1000 / 5
+let time = Date.now()
 // this being an arrow function is important because it makes the browser treat
 // the errors thrown inside of the function as normkl errors and not cross-origin errors
 const _main = () => {
   if (!_state.paused) {
-    update()
+    if (Date.now() - time >= DELAY) {
+      update()
+      time = Date.now()
+    }
     if (_clear) _ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
     draw()
   }
