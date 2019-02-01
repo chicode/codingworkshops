@@ -1,7 +1,7 @@
 <template lang="pug">
 .full(v-if="!loading")
-  div.d-flex.flex-column.full(v-if="slides.length")
-    InstructionSlide.content.full
+  div.d-flex.flex-column.full.justify-content-between(v-if="slides.length")
+    InstructionSlide.content
     SlideFooter.footer
   div(v-else) no slides!
 

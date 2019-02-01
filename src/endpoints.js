@@ -27,12 +27,12 @@ export default {
     PATCH: {
       updateWorkshop: '/workshops/:workshop',
 
-      updateProject: '/workshops/:project',
+      updateProject: '/projects/:project',
     },
     DELETE: {
       deleteWorkshop: '/workshops/:workshop',
 
-      deleteProject: '/workshops/:project',
+      deleteProject: '/projects/:project',
     },
   },
   prepareBody (body, { method }) {
