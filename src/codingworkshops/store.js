@@ -111,12 +111,12 @@ export default {
     },
 
     async exportProject ({ commit, getters }) {
-      await this.$methods.createProject({
+      const { slug } = await this.$methods.createProject({
         project: getters.projectData,
       })
       let nextPath = () => ({
         name: 'project',
-        params: { user: this.$auth.currentUser().username, project: 'untitled' },
+        params: { user: this.$auth.currentUser().username, project: slug },
       })
       if (this.$auth.loggedIn()) {
         this.$router.push(nextPath())

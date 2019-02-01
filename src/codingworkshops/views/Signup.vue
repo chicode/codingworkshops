@@ -82,7 +82,7 @@ export default {
       const { ok, errors } = await this.$methods.createUser({ user: this.data })
 
       if (ok) {
-        this.$router.push({ name: 'home' })
+        this.navigate({ name: 'home' })
       } else {
         this.errors = errors
       }
