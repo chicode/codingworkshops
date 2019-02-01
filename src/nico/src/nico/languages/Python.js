@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash/fp'
 import Lang from './Lang'
 import { FUNCTIONS_BARE } from '../constants.js'
 
@@ -136,6 +136,6 @@ ${this.mars}
   }
 
   getSyntax ({ name, parameters }) {
-    return `${name}(${parameters.join(', ')})`
+    return `${_.snakeCase(name)}(${parameters |> _.map(_.snakeCase) |> _.join(', ')})`
   }
 }
