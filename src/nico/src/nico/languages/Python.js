@@ -46,7 +46,7 @@ def ${_.snakeCase(funcName)}(*args):
     super(mars)
 
     ifDoesntExist('python', () => {
-      loadScript('python', 'https://s3.us-east-2.amazonaws.com/codingworkshops/brython.js', onLoad)
+      loadScript('python', 'https://s3.us-east-2.amazonaws.com/chicode/brython.js', onLoad)
     })
   }
 
