@@ -123,6 +123,7 @@ export default {
 
   * {
     font-family: fonts.code;
+    line-height: 1.1;
   }
 }
 
