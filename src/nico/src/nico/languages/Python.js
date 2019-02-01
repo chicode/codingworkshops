@@ -45,9 +45,11 @@ def ${_.snakeCase(funcName)}(*args):
   constructor (mars, onLoad) {
     super(mars)
 
-    ifDoesntExist('python', () => {
-      loadScript('python', 'https://s3.us-east-2.amazonaws.com/chicode/brython.js', onLoad)
-    })
+    if (onLoad) {
+      ifDoesntExist('python', () => {
+        loadScript('python', 'https://s3.us-east-2.amazonaws.com/chicode/brython.js', onLoad)
+      })
+    }
   }
 
   transformPython (code) {

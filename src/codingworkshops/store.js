@@ -35,6 +35,14 @@ export default {
         .filter((item) => !excludes.includes(item))
         .reduce((acc, val) => ({ ...acc, [val]: rootState.router.params[val] }), {})
     },
+    projectData (_state, _getters, rootState) {
+      return {
+        code: rootState.nico.code,
+        spritesheet: JSON.stringify(rootState.sprite.sprite.spritesheet),
+        tilesheet: JSON.stringify(rootState.tile.sprite.spritesheet),
+        flags: JSON.stringify(rootState.tile.flags),
+      }
+    },
   },
   mutations: {
     ...generateSet(['slides', 'directionIndex', 'slideIndex', 'loading', 'getNextPath']),
@@ -102,18 +110,13 @@ export default {
       commit('setSlides', response.slides)
     },
 
-    async exportProject ({ commit, rootState }) {
-      const { slug } = await this.$methods.createProject({
-        project: {
-          code: rootState.nico.code,
-          spritesheet: JSON.stringify(rootState.sprite.sprite.spritesheet),
-          tilesheet: JSON.stringify(rootState.tile.sprite.spritesheet),
-          flags: JSON.stringify(rootState.tile.flags),
-        },
+    async exportProject ({ commit, getters }) {
+      await this.$methods.createProject({
+        project: getters.projectData,
       })
       let nextPath = () => ({
         name: 'project',
-        params: { user: this.$auth.currentUser().username, project: slug },
+        params: { user: this.$auth.currentUser().username, project: 'untitled' },
       })
       if (this.$auth.loggedIn()) {
         this.$router.push(nextPath())

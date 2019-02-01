@@ -22,6 +22,7 @@ div(v-else)
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Nico from '@/nico/src/nico/App'
 
 export default {
@@ -32,8 +33,13 @@ export default {
       return ['userProject', this.$route.params]
     },
   },
+  computed: {
+    ...mapGetters(['projectData']),
+  },
   methods: {
-    save () {},
+    save () {
+      this.$methods.updateProject({ project: this.$rest.project.id }, this.projectData)
+    },
     publish () {},
   },
 }
