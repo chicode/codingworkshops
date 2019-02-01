@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash/fp'
 
 export const FUNCTIONS = [
   {
@@ -138,4 +138,8 @@ export const FUNCTIONS = [
 ].reverse()
 // reverse is because the sections appear in reverse order due to the rotation
 
-export const FUNCTIONS_BARE = _.map(_.flatMap(FUNCTIONS, 'functions'), 'name')
+export const FUNCTIONS_BARE =
+  FUNCTIONS |>
+  _.filter((section) => section.name !== 'User') |>
+  _.flatMap('functions') |>
+  _.map('name')
