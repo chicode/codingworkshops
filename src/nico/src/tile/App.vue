@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 div
   ImageEditor(module='tile' :show-grid='false' :show-color-picker='false')
   .tile-actions
@@ -20,7 +20,7 @@ export default {
   components: { ImageEditor, TileSelect, TileSelectOverlay, FlagPicker },
   mounted () {
     const el = this.$refs.canvas.$el
-    const f = (e) => [e.offsetY, e.offsetX]
+    const f = (e) => [e.offsetX, e.offsetY]
     el.addEventListener('mousedown', (event) => this.mouseDown(f(event)))
     el.addEventListener('mousemove', (event) => this.mouseMove(f(event)))
     el.addEventListener('mouseup', this.mouseUp)
@@ -32,7 +32,7 @@ export default {
     ...mapMutations('tile/tileSelect', ['startSelect']),
   },
 }
-</script>;
+</script>
 
 <style scoped lang="stylus">
 @import '../image-editor/layered-canvas';
