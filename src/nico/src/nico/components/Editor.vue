@@ -26,9 +26,12 @@ import Booklet from './Booklet'
 
 function getModeFromLanguage (language) {
   switch (language) {
-    case 'Javascript': return 'text/javascript'
-    case 'Fsharp': return 'text/x-fsharp'
-    case 'Python': return 'python'
+    case 'Javascript':
+      return 'text/javascript'
+    case 'Fsharp':
+      return 'text/x-fsharp'
+    case 'Python':
+      return 'python'
   }
 }
 
@@ -39,7 +42,9 @@ export default {
 
   computed: {
     ...mapState('nico', ['code', 'view', 'errors', 'language']),
-    cm () { return this.$refs.cm ? this.$refs.cm.codemirror : null },
+    cm () {
+      return this.$refs.cm ? this.$refs.cm.codemirror : null
+    },
     cmOptions () {
       return {
         tabSize: 2,
@@ -58,16 +63,22 @@ export default {
   watch: {
     errors (errors) {
       if (errors.length) {
-        if (this.marks) this.marks.forEach(mark => mark.clear())
+        if (this.marks) this.marks.forEach((mark) => mark.clear())
         this.marks = []
         for (let error of errors) {
           if (!error.from || !error.to) return
 
-          let mark = this.cm.markText(error.from, error.to, { className: 'inline-error', atomic: true })
+          let mark = this.cm.markText(error.from, error.to, {
+            className: 'inline-error',
+            atomic: true,
+          })
           // error is in area that doesn't have a character, eg no colon in python function definition
           if (!mark.lines.length) {
             this.cm.replaceRange(' ', error.from, error.to)
-            mark = this.cm.markText(error.from, error.to, { className: 'inline-error', atomic: true })
+            mark = this.cm.markText(error.from, error.to, {
+              className: 'inline-error',
+              atomic: true,
+            })
           }
           this.marks.push(mark)
         }

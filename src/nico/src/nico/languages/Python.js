@@ -119,10 +119,9 @@ ${this.mars}
     try {
       js = $B.py2js(py, scriptId, scriptId).to_js()
     } catch (e) {
-      // console.dir(e)
       return {
         success: false,
-        errors: [this.convertError(e)],
+        errors: [this.convertSyntaxError(e)],
       }
     }
 

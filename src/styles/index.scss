@@ -102,9 +102,23 @@ pre code {
 }
 
 .error {
-  color: map_get($colors, orange)
+  color: map_get($colors, orange);
 }
 
+.inline-error {
+  color: map_get($colors, orange);
+  position: relative;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background: map_get($colors, orange);
+  }
+}
 
 // weird bug means that each browser needs separate rule
 
