@@ -6,9 +6,9 @@ ul.mt-5
     :key="lesson.name"
     :to=`{
       name: 'lesson',
-      params: Object.assign($route.params, {
+      params: Object.assign({
         lesson: lesson.index
-      })
+      }, $route.params)
     }`
   ): div
     h2.bold.no-margin {{ lesson.name }}

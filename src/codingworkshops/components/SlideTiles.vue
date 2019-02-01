@@ -7,9 +7,9 @@ ul.m-6.d-flex.flex-wrap.justify-content-center.align-items-center
     :key="slide.name"
     :to=`{
       name: 'slide',
-      params: Object.assign($route.params, {
+      params: Object.assign({
         slide: slide.index
-      })
+      }, $route.params)
     }`
   )
     h2.no-margin {{ slide.name }}
