@@ -170,7 +170,7 @@ const _mars = {}
 
 init()
 
-const DELAY = 1000 / 5
+const DELAY = 1000 / 20
 let time = Date.now()
 // this being an arrow function is important because it makes the browser treat
 // the errors thrown inside of the function as normkl errors and not cross-origin errors
