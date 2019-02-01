@@ -9,7 +9,7 @@
     // this is necessary because of a chromium bug (?) that stops position: absolute elements
     // from moving with the scroll when a parent's overflow is set to auto or scroll
     // TODO figure out a proper solution
-    button.button.run(@click='run' :style='{ zIndex: buttonState ? 10 : 10 }')
+    button.button.run(@click='run' :style='{ zIndex: buttonState ? 10 : 10 }' :disabled='langLoading')
       div run code
     button.button(:disabled='pauseDisabled' @click='togglePause' :style='{ zIndex: buttonState ? 10 : 10 }')
       // ' ' + 'pause' + ' ' to stop eslint from complaining
@@ -32,7 +32,7 @@ export default {
   }),
   computed: {
     ...mapGetters('nico', ['pauseDisabled']),
-    ...mapState('nico', ['view', 'paused']),
+    ...mapState('nico', ['view', 'paused', 'langLoading']),
   },
   methods: {
     ...mapMutations('nico', ['togglePause', 'setView']),
