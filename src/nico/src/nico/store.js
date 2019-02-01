@@ -19,6 +19,7 @@ export default {
     hasBeenRun: false,
     language: new languages.Python(),
     loading: false,
+    langLoading: false,
     loadingTime: null,
     clicks: 0,
   },
@@ -34,11 +35,17 @@ export default {
   },
 
   mutations: {
-    ...generateSet(['errors', 'warnings', 'loading', 'loadingTime', 'mainCtx', 'paused', 'clicks']),
-
-    setLanguage (state, language) {
-      state.language = new languages[language](mars)
-    },
+    ...generateSet([
+      'errors',
+      'warnings',
+      'loading',
+      'loadingTime',
+      'mainCtx',
+      'paused',
+      'clicks',
+      'language',
+      'langLoading',
+    ]),
 
     setView (state, view) {
       state.view = view
@@ -67,9 +74,14 @@ export default {
   },
 
   actions: {
+    setLanguage ({ commit }, language) {
+      commit('setLangLoading', true)
+      commit('setLanguage', new languages[language](mars, () => commit('setLangLoading', false)))
+    },
+
     run ({ state, commit, rootGetters, rootState, getters }) {
       commit('setClicks', state.clicks + 1)
-      if (state.loading) return
+      if (state.loading || state.langLoading) return
 
       commit('setView', 'game')
       commit('setRunning', false)

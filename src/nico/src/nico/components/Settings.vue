@@ -16,7 +16,7 @@ export default {
         return this.$store.state.nico.language.name
       },
       set (value) {
-        return this.$store.commit('nico/setLanguage', value)
+        return this.$store.dispatch('nico/setLanguage', value)
       },
     },
   },

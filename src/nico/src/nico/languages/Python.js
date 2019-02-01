@@ -6,13 +6,14 @@ function ifDoesntExist (id, callback) {
   if (!document.querySelector(id)) callback()
 }
 
-function loadScript (id, source) {
+function loadScript (id, source, onLoad) {
   const script = document.createElement('script')
 
   script.src = source
   script.type = 'text/javascript'
   script.id = id
   script.setAttribute('crossorigin', 'anonymous')
+  script.onload = onLoad
   document.querySelector('head').appendChild(script)
 }
 
@@ -41,11 +42,11 @@ def ${_.snakeCase(funcName)}(*args):
 
   PYTHON_TEMPLATE_LENGTH = this.PYTHON_TEMPLATE.split('\n').length
 
-  constructor (...args) {
-    super(...args)
+  constructor (mars, onLoad) {
+    super(mars)
 
     ifDoesntExist('python', () => {
-      loadScript('python', 'https://s3.us-east-2.amazonaws.com/codingworkshops/brython.js')
+      loadScript('python', 'https://s3.us-east-2.amazonaws.com/codingworkshops/brython.js', onLoad)
     })
   }
 

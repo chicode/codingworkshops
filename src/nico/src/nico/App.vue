@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 import Game from './components/Game'
 import Editor from './components/Editor'
@@ -23,7 +23,12 @@ import Header from './components/Header'
 export default {
   name: 'App',
   components: {
-    Header, Game, Editor, Sprite, Settings, Tile,
+    Header,
+    Game,
+    Editor,
+    Sprite,
+    Settings,
+    Tile,
   },
   props: {
     showGreeting: {
@@ -54,7 +59,8 @@ export default {
     if (this.scriptBoilerplate) this.loadBoilerplate()
   },
   methods: {
-    ...mapMutations('nico', ['setLanguage', 'loadBoilerplate']),
+    ...mapMutations('nico', ['loadBoilerplate']),
+    ...mapActions('nico', ['setLanguage']),
   },
 }
 </script>

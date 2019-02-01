@@ -2,6 +2,7 @@
 .game
   div.errors(v-if='errors.length')
     p.error(v-for='error in errors') {{ error.message }}
+  div(v-else-if='langLoading') loading...
   div(v-else-if='loading')
     loading-bar
     img.egg(v-if='hasClickedTooMuch' src='../assets/too-many-clicks.jpeg')
@@ -35,7 +36,15 @@ export default {
   },
 
   computed: {
-    ...mapState('nico', ['errors', 'warnings', 'hasBeenRun', 'running', 'loading', 'loadingTime']),
+    ...mapState('nico', [
+      'errors',
+      'warnings',
+      'hasBeenRun',
+      'running',
+      'loading',
+      'loadingTime',
+      'langLoading',
+    ]),
     ...mapGetters('nico', ['hasClickedTooMuch']),
   },
 
