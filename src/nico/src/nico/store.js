@@ -145,7 +145,8 @@ export default {
               commit('setErrors', errors)
             }
           })
-      }, 0)
+        // delay helps make sure that the old game stops
+      }, 100)
     },
   },
 }
