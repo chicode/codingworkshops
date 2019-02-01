@@ -11,7 +11,7 @@ div.d-flex.full
       )
         p(:style="directionStyle(index)" v-marked="description")
         div.d-flex.mt-3(v-if="index === directionIndex")
-          div.pt-3
+          div.pt-1
             button.button(@click="nextDirection")
               div done!
 
