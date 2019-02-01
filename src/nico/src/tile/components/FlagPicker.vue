@@ -1,6 +1,6 @@
 <template lang="pug">
-div.flagpicker
-  p Flags:
+div.flagpicker.d-flex.align-items-start
+  p flags
   button.flag(
     v-for="(flag, i) in currentFlags"
     :key="i"
