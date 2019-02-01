@@ -64,7 +64,6 @@ export default {
     },
   },
 }
-
 </script>
 
 <style scoped lang="stylus">
@@ -88,6 +87,10 @@ padding = 10px
   pointer-events: none;
 }
 
+h3 {
+  font-size: font-sizes[1];
+}
+
 .expand {
   background: white;
   pointer-events: all;
@@ -109,7 +112,7 @@ padding = 10px
 
   display: flex;
 
-  sections-height = 550px
+  sections-height = 730px
 
   .sections-buffer {
     // width: set by js
