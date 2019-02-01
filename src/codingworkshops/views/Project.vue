@@ -12,6 +12,7 @@
       ): div save
       button.button(
         @click="publish"
+        :disabled="$rest.project.public"
       ): div publish
 
 div(v-else-if="$rest.loading")
@@ -40,7 +41,16 @@ export default {
     save () {
       this.$methods.updateProject({ project: this.$rest.project.id }, { project: this.projectData })
     },
-    publish () {},
+    publish () {
+      this.$methods.updateProject(
+        { project: this.$rest.project.id },
+        {
+          project: {
+            public: true,
+          },
+        },
+      )
+    },
   },
 }
 </script>
