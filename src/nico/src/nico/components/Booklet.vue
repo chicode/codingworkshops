@@ -101,6 +101,7 @@ h3 {
     height: 50px;
   }
   padding: padding;
+  margin-right: -2px;
   light-border()
   border-top-left-radius: borders.light.radius;
   border-bottom-left-radius: borders.light.radius;
@@ -121,7 +122,7 @@ h3 {
 
   .sections {
     light-border()
-    margin-left: -2px;
+    margin-left: 1px;
 
     padding: padding;
     display: flex;
@@ -131,8 +132,9 @@ h3 {
     width: sections-height;
     justify-content: flex-end;
 
-    & > * {
-      margin-left: 40px;
+    button {
+      font-size: 20px;
+      padding: 3px 7px;
     }
   }
 
