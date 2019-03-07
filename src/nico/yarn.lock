@@ -5783,6 +5783,11 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
+rustpython_wasm@0.1.0-pre-alpha.1:
+  version "0.1.0-pre-alpha.1"
+  resolved "https://registry.yarnpkg.com/rustpython_wasm/-/rustpython_wasm-0.1.0-pre-alpha.1.tgz#981b65f56a240e25d6c1d3ac0d3f52cc2cb0a8b0"
+  integrity sha512-AliaQtmlH7OZsXT81KBOuZQgIxBdEWxDcjUVhkhFPr4Gc7xKF65lW9992xgSb3xtSyJM19bExvnzA51AgAbZwg==
+
 rx-lite-aggregates@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite-aggregates/-/rx-lite-aggregates-4.0.8.tgz#753b87a89a11c95467c4ac1626c4efc4e05c67be"

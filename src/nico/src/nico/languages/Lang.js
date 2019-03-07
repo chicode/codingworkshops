@@ -1,13 +1,12 @@
 export default class Lang {
   needsLoading = false
 
-  constructor (mars) {
-    this.mars = mars
-  }
-
   cleanup () {}
 
-  convertWindowError ({ lineno: lineNumber, colno: columnNumber, ...other }, OFFSET = 0) {
+  convertWindowError (
+    { lineno: lineNumber, colno: columnNumber, ...other },
+    OFFSET = 0
+  ) {
     return Object.freeze({
       ...other,
 
