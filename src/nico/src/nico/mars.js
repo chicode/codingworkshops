@@ -187,21 +187,23 @@ export function initMars ({
   const DELAY = 1000 / 20
   let time = Date.now()
 
-  const main = (draw, update) => {
+  const main = () => {
+    const { updateFunc, drawFunc } = state
     try {
       if (!state.paused) {
         if (Date.now() - time >= DELAY) {
-          update()
+          updateFunc()
           time = Date.now()
         }
         if (clear) ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-        draw()
+        drawFunc()
       }
-      if (state.running) window.requestAnimationFrame(() => main(draw, update))
+      if (state.running) window.requestAnimationFrame(main)
       marsState.keysPressed = {}
       marsState.buttonsPressed = {}
     } catch (err) {
-      onError({ message: err })
+      console.error(err)
+      onError(language.transformError(err))
     }
   }
   return [main, mars]

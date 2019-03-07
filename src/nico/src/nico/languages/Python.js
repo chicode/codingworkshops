@@ -30,7 +30,7 @@ def draw():
     }
   }
 
-  async run (code, mars) {
+  async refresh (code, mars) {
     // https://github.com/brython-dev/brython/issues/937
 
     await rpProm
@@ -76,5 +76,9 @@ def draw():
     return `${this.translateName(name)}(${parameters |>
       _.map(this.translateName) |>
       _.join(', ')})`
+  }
+
+  transformError (err) {
+    return { message: err }
   }
 }

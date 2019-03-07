@@ -20,6 +20,9 @@ export default {
     langLoading: false,
     loadingTime: null,
     clicks: 0,
+    mars: null,
+    drawFunc: null,
+    updateFunc: null,
   },
 
   getters: {
@@ -43,6 +46,9 @@ export default {
       'clicks',
       'language',
       'langLoading',
+      'mars',
+      'drawFunc',
+      'updateFunc',
     ]),
 
     setView (state, view) {
@@ -89,24 +95,33 @@ export default {
       commit('setErrors', [])
       commit('setLoading', false)
 
+      const { language } = state
+
+      if (!state.mars) {
+        commit(
+          'setMars',
+          initMars({
+            state,
+            ctx: state.mainCtx,
+            sprites: rootGetters['sprite/sprite/sprites'],
+            clear: true,
+            tilemap: rootGetters['tile/sprite/tilemap'](),
+            flags: rootState.tile.flags,
+            language,
+            onError: err => {
+              commit('setErrors', [err])
+              commit('setRunning', false)
+            },
+          })
+        )
+      }
+
+      const [startMars, mars] = state.mars
+
       // this timeout is necessary for vuex to register the change in `loading`
       setTimeout(() => {
-        const { language } = state
-        const [startMars, mars] = initMars({
-          state,
-          ctx: state.mainCtx,
-          sprites: rootGetters['sprite/sprite/sprites'],
-          clear: true,
-          tilemap: rootGetters['tile/sprite/tilemap'](),
-          flags: rootState.tile.flags,
-          language,
-          onError: err => {
-            commit('setErrors', [err])
-            commit('setRunning', false)
-          },
-        })
         language
-          .run(state.code, mars)
+          .refresh(state.code, mars)
           .then(
             ({ success, draw, update, init, errors, warnings, blocked }) => {
               commit('setLoading', false)
@@ -117,8 +132,11 @@ export default {
                 commit('setRunning', true)
                 commit('setPaused', false)
 
+                commit('setDrawFunc', draw)
+                commit('setUpdateFunc', update)
+
                 init()
-                startMars(draw, update)
+                startMars()
               } else if (!blocked) {
                 commit('setErrors', errors)
               }
