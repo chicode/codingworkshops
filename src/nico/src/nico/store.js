@@ -117,6 +117,7 @@ export default {
                 commit('setRunning', true)
                 commit('setPaused', false)
 
+                init()
                 startMars(draw, update)
               } else if (!blocked) {
                 commit('setErrors', errors)
