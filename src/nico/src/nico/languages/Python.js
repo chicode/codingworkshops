@@ -57,6 +57,8 @@ def draw():
       vm.addToScope(this.translateName(func), mars[func])
     }
 
+    vm.setStdout()
+
     try {
       vm.exec(code)
     } catch (err) {
