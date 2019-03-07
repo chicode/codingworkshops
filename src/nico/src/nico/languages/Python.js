@@ -30,20 +30,6 @@ def draw():
     }
   }
 
-  convertSyntaxError (e) {
-    return {
-      message: `${e.msg}: ${e.text.trim()}`,
-      from: {
-        line: e.lineno - this.PYTHON_TEMPLATE_LENGTH,
-        ch: e.offset - 1,
-      },
-      to: {
-        line: e.lineno - this.PYTHON_TEMPLATE_LENGTH,
-        ch: e.offset,
-      },
-    }
-  }
-
   async run (code, mars) {
     // https://github.com/brython-dev/brython/issues/937
 

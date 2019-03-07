@@ -97,13 +97,14 @@ export function initMars ({
 
   marsState.keys = {}
   marsState.keysPressed = {}
+
   document.addEventListener('keydown', event => {
     marsState.keys[event.key] = true
     // console.log(`"${event.key}" pressed!`)
   })
 
   document.addEventListener('keyup', event => {
-    marsState.keys[event.key] = false
+    delete marsState.keys[event.key]
     marsState.keysPressed[event.key] = true
     // console.log(`"${event.key}" released!`)
   })
