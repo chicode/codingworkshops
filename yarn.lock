@@ -3091,10 +3091,6 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-"ecma-proposal-realms@https://github.com/tc39/proposal-realms.git":
-  version "1.0.0"
-  resolved "https://github.com/tc39/proposal-realms.git#5626dcd350392dc09eeeb17669d7f0795395fe34"
-
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -7515,6 +7511,11 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   integrity sha1-6Eg5bwV9Ij8kOGkkYY4laUFh7Ec=
   dependencies:
     aproba "^1.1.1"
+
+rustpython_wasm@^0.1.0-pre-alpha.1:
+  version "0.1.0-pre-alpha.1"
+  resolved "https://registry.yarnpkg.com/rustpython_wasm/-/rustpython_wasm-0.1.0-pre-alpha.1.tgz#981b65f56a240e25d6c1d3ac0d3f52cc2cb0a8b0"
+  integrity sha512-AliaQtmlH7OZsXT81KBOuZQgIxBdEWxDcjUVhkhFPr4Gc7xKF65lW9992xgSb3xtSyJM19bExvnzA51AgAbZwg==
 
 rx-lite-aggregates@^4.0.8:
   version "4.0.8"
