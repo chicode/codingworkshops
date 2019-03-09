@@ -97,23 +97,24 @@ export default {
 
       const { language } = state
 
-      if (!state.mars) {
-        commit(
-          'setMars',
-          initMars({
-            state,
-            ctx: state.mainCtx,
-            sprites: rootGetters['sprite/sprite/sprites'],
-            clear: true,
-            tilemap: rootGetters['tile/sprite/tilemap'](),
-            flags: rootState.tile.flags,
-            language,
-            onError: err => {
-              commit('setErrors', [err])
-              commit('setRunning', false)
-            },
-          })
-        )
+      const marsParams = {
+        state,
+        ctx: state.mainCtx,
+        sprites: rootGetters['sprite/sprite/sprites'],
+        clear: true,
+        tilemap: rootGetters['tile/sprite/tilemap'](),
+        flags: rootState.tile.flags,
+        language,
+        onError: err => {
+          commit('setErrors', [err])
+          commit('setRunning', false)
+        },
+      }
+      if (state.mars) {
+        const [, , updateMarsParams] = state.mars
+        updateMarsParams(marsParams)
+      } else {
+        commit('setMars', initMars(marsParams))
       }
 
       const [startMars, mars] = state.mars

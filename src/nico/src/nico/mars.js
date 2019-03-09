@@ -206,5 +206,24 @@ export function initMars ({
       onError(language.transformError(err))
     }
   }
-  return [main, mars]
+  const updateMarsParams = ({
+    state: state_,
+    ctx: ctx_,
+    sprites: sprites_,
+    clear: clear_,
+    tilemap: tilemap_,
+    flags: flags_,
+    language: language_,
+    onError: onError_,
+  }) => {
+    state = state_
+    ctx = ctx_
+    sprites = sprites_
+    clear = clear_
+    tilemap = tilemap_
+    flags = flags_
+    language = language_
+    onError = onError_
+  }
+  return [main, mars, updateMarsParams]
 }
