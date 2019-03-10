@@ -1,6 +1,7 @@
 # codingworkshops
 
 ## Project Structure
+```
 │
 └─install
     Files used for installing on the server
@@ -47,7 +48,7 @@
 
     auth.js
         Authentication "framework". Adds a "$auth" property to Vue components and Vuex so that it's easier to login/logout.
-
+```
 
 ## Rest.js
 Making requests to the server produces a lot of boilerplate-y code, so this is really just a mixin that removes some of the boilerplate that's needed for page components that need information from the server, like the list of workshops. A component can specify the endpoint it needs in a `rest` key, and then the information is automatically put in `$rest` and loading is tracked in `$rest.loading`. `endpoints.js` contains a mapping of endpoint keys that are used in components to actual endpoints.
