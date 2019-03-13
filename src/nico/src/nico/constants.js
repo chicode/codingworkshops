@@ -3,12 +3,14 @@ import _ from 'lodash/fp'
 export const FUNCTIONS = [
   {
     name: 'User',
-    description: 'You define these functions to tell nico how to run your game.',
+    description:
+      'You define these functions to tell nico how to run your game.',
     functions: [
       {
         name: 'init',
         parameters: [],
-        description: 'Contains any code that you should run in the very beginning.',
+        description:
+          'Contains any code that you should run in the very beginning.',
       },
       {
         name: 'update',
@@ -83,7 +85,8 @@ export const FUNCTIONS = [
       {
         name: 'keyPressed',
         parameters: ['key'],
-        description: 'Returns whether a key was pressed and then immediately released.',
+        description:
+          'Returns whether a key was pressed and then immediately released.',
       },
     ],
   },
@@ -110,7 +113,8 @@ export const FUNCTIONS = [
       {
         name: 'buttonPressed',
         parameters: ['button'],
-        description: 'Returns whether a button was pressed and then immediately released.',
+        description:
+          'Returns whether a button was pressed and then immediately released.',
       },
     ],
   },
@@ -121,12 +125,14 @@ export const FUNCTIONS = [
       {
         name: 'hasFlag',
         parameters: ['flag', 'x', 'y'],
-        description: 'Returns whether a tile has the flag. Flags are indexed starting with 0.',
+        description:
+          'Returns whether a tile has the flag. Flags are indexed starting with 0.',
       },
       {
         name: 'getTile',
         parameters: ['x', 'y'],
-        description: 'Returns the index of the sprite of a tile given its coordinates.',
+        description:
+          'Returns the index of the sprite of a tile given its coordinates.',
       },
       {
         name: 'changeTile',
@@ -140,6 +146,6 @@ export const FUNCTIONS = [
 
 export const FUNCTIONS_BARE =
   FUNCTIONS |>
-  _.filter((section) => section.name !== 'User') |>
+  _.filter(section => section.name !== 'User') |>
   _.flatMap('functions') |>
   _.map('name')
