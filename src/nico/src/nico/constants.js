@@ -29,28 +29,46 @@ export const FUNCTIONS = [
     functions: [
       {
         name: 'sprite',
-        parameters: ['i', 'x', 'y'],
+        parameters: [
+          { name: 'i', type: 'sprite' },
+          { name: 'x', type: 'num' },
+          { name: 'y', type: 'num' },
+        ],
         description:
           'Draws an 8x8 sprite given its index (the number in the top left corner of every grid square) and coordinates.',
       },
       {
         name: 'rect',
-        parameters: ['x', 'y', 'w', 'h'],
+        parameters: [
+          { name: 'x', type: 'num' },
+          { name: 'y', type: 'num' },
+          { name: 'w', type: 'num' },
+          { name: 'h', type: 'num' },
+        ],
         description: 'Draw a rectangle given its coordinates and size.',
       },
       {
         name: 'point',
-        parameters: ['x', 'y'],
+        parameters: [{ name: 'x', type: 'num' }, { name: 'y', type: 'num' }],
         description: 'Draws a point given its coordinates.',
       },
       {
         name: 'line',
-        parameters: ['x0', 'y0', 'x1', 'y1'],
+        parameters: [
+          { name: 'x0', type: 'num' },
+          { name: 'y0', type: 'num' },
+          { name: 'x1', type: 'num' },
+          { name: 'y1', type: 'num' },
+        ],
         description: 'Draws a line from point 0 to point 1.',
       },
       {
         name: 'text',
-        parameters: ['text', 'x', 'y'],
+        parameters: [
+          { name: 'text', type: 'str' },
+          { name: 'x', type: 'num' },
+          { name: 'y', type: 'num' },
+        ],
         description: 'Draws some text given its coordinates.',
       },
       {
@@ -72,17 +90,17 @@ export const FUNCTIONS = [
       },
       {
         name: 'keyDown',
-        parameters: ['key'],
+        parameters: [{ name: 'key', type: 'key' }],
         description: 'Returns whether a key is down.',
       },
       {
         name: 'keyUp',
-        parameters: ['key'],
+        parameters: [{ name: 'key', type: 'key' }],
         description: 'Returns whether a key is up.',
       },
       {
         name: 'keyPressed',
-        parameters: ['key'],
+        parameters: [{ name: 'key', type: 'key' }],
         description: 'Returns whether a key was pressed and then immediately released.',
       },
     ],
@@ -99,17 +117,17 @@ export const FUNCTIONS = [
       },
       {
         name: 'buttonDown',
-        parameters: ['button'],
+        parameters: [{ name: 'button', type: 'button' }],
         description: 'Returns whether a button is down.',
       },
       {
         name: 'buttonUp',
-        parameters: ['button'],
+        parameters: [{ name: 'button', type: 'button' }],
         description: 'Returns whether a button is up.',
       },
       {
         name: 'buttonPressed',
-        parameters: ['button'],
+        parameters: [{ name: 'button', type: 'button' }],
         description: 'Returns whether a button was pressed and then immediately released.',
       },
     ],
@@ -120,17 +138,21 @@ export const FUNCTIONS = [
     functions: [
       {
         name: 'hasFlag',
-        parameters: ['flag', 'x', 'y'],
+        parameters: ['flag', { name: 'x', type: 'num' }, { name: 'y', type: 'num' }],
         description: 'Returns whether a tile has the flag. Flags are indexed starting with 0.',
       },
       {
         name: 'getTile',
-        parameters: ['x', 'y'],
+        parameters: [{ name: 'x', type: 'num' }, { name: 'y', type: 'num' }],
         description: 'Returns the index of the sprite of a tile given its coordinates.',
       },
       {
         name: 'changeTile',
-        parameters: ['i', 'x', 'y'],
+        parameters: [
+          { name: 'i', type: 'sprite' },
+          { name: 'x', type: 'num' },
+          { name: 'y', type: 'num' },
+        ],
         description: 'Changes the sprite at a tile given its coordinates.',
       },
     ],
@@ -140,6 +162,6 @@ export const FUNCTIONS = [
 
 export const FUNCTIONS_BARE =
   FUNCTIONS |>
-  _.filter((section) => section.name !== 'User') |>
+  _.filter(section => section.name !== 'User') |>
   _.flatMap('functions') |>
   _.map('name')

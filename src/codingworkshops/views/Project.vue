@@ -1,6 +1,6 @@
 <template lang="pug">
 .full.d-flex.flex-column.justify-content-between(v-if="!$rest.loading && $rest.project.ok")
-  Nico.p-5(:show-greeting="false" language="Python" :script-boilerplate="false")
+  Nico.p-5(:show-greeting="false" language="Python" editorMode="block" :script-boilerplate="false")
   div.p-4.d-flex.justify-content-between.border-light.bt-only(style="height: 70px;")
     div
       router-link.mr-green(:to="{ name: 'home' }")

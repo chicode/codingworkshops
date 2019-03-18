@@ -111,7 +111,7 @@ export default {
     },
 
     async exportProject ({ commit, getters }) {
-      const { slug } = await this.$methods.createProject({
+      const { slug } = await this.$methods.createCodeProject({
         project: getters.projectData,
       })
       let nextPath = () => ({

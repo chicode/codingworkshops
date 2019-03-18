@@ -53,7 +53,7 @@ export default {
         matchBrackets: true,
         autoRefresh: true,
         extraKeys: {
-          Tab: (cm) => cm.execCommand('indentMore'),
+          'Tab': (cm) => cm.execCommand('indentMore'),
           'Shift-Tab': (cm) => cm.execCommand('indentLess'),
         },
       }
