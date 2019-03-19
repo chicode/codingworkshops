@@ -6,7 +6,7 @@
       input.w-25(
         type="number"
         v-bind:value="value"
-        v-on:input="$emit('input', $event.target.value)"
+        v-on:input="$emit('input', Number($event.target.value))"
       )
 </template>
 

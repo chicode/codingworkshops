@@ -44,7 +44,7 @@ export default {
     marsFuncs: () => FUNCTIONS_ONLY,
   },
   methods: {
-    onClone: data => _.cloneDeep(data),
+    onClone: _.cloneDeep,
   },
 }
 </script>
