@@ -1,13 +1,23 @@
 <template lang="pug">
   .d-inline
-    .d-inline(v-if="type.type === 'str'")
-      input(v-bind:value="value" v-on:input="$emit('input', $event.target.value)")
-    .d-inline(v-if="type.type === 'num'")
-      input.num(
-        type="number"
-        v-bind:value="value"
-        v-on:input="$emit('input', Number($event.target.value))"
+    input(
+      v-if="type.type === 'str'"
+      v-bind:value="value.value"
+      v-on:input="$emit('input', $event.target.value)"
+    )
+    input.num(
+      v-if="type.type === 'num'"
+      type="number"
+      v-bind:value="value.value"
+      v-on:input="setLiteral(Number($event.target.value))"
+    )
+    .d-inline(v-if="type.type === 'bool'")
+      select.mx-1(
+        v-bind:value="value.value" 
+        v-on:input="setLiteral(JSON.parse($event.target.value))"
       )
+        option(value="true") Yes
+        option(value="false") No
 </template>
 
 <script>
@@ -22,6 +32,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods: {
+    setLiteral (lit) {
+      this.$emit('input', { type: "literal", value: lit })
+    }
   },
 }
 </script>

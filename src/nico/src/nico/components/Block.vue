@@ -2,7 +2,8 @@
   draggable.dragArea(tag="ul" :list="children" :group="group" :clone="onClone")
     li(v-for="child in children")
       div.if(v-if="child.type === 'if'")
-        | if {{ child.condition }}
+        | if
+        BlockParamEditor(v-model="child.condition" :type="{ name: 'condition', type: 'bool' }")
         Block.child(:children="child.children")
       div(v-else-if="child.type === 'callMars'")
         | {{ child.func }}

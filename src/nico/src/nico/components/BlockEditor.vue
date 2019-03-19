@@ -8,12 +8,20 @@
       h6.font-weight-bold Nico
       Block(:children="nicoFuncs" :clone="true")
       | {{ blocksRoot }}
+      br
+      | {{ compiledBlocks }}
     .flex-grow-1.p-3
       Block(:children="blocksRoot")
 </template>
 
 <script>
 import Block from './Block'
+import { compile } from '../compileBlocks'
+
+const makeLit = value => ({
+  type: 'literal',
+  value
+})
 
 export default {
   name: 'BlockEditor',
@@ -26,6 +34,7 @@ export default {
       controlFlow: [
         {
           type: 'if',
+          condition: makeLit(false),
           children: [],
         },
       ],
@@ -33,11 +42,21 @@ export default {
         {
           type: 'callMars',
           func: 'sprite',
-          params: [],
+          params: [0, 0, 0].map(makeLit),
+        },
+        {
+          type: 'callMars',
+          func: 'rect',
+          params: [0, 0, 0, 0].map(makeLit),
         },
       ],
     }
   },
+  computed: {
+    compiledBlocks () {
+      return compile(this.blocksRoot)
+    }
+  }
 }
 </script>
 
