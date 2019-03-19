@@ -3,7 +3,7 @@
     .d-inline(v-if="type.type === 'str'")
       input(v-bind:value="value" v-on:input="$emit('input', $event.target.value)")
     .d-inline(v-if="type.type === 'num'")
-      input.w-25(
+      input.num(
         type="number"
         v-bind:value="value"
         v-on:input="$emit('input', Number($event.target.value))"
@@ -25,3 +25,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.num {
+  width: 75px;
+  outline: solid 1px;
+  margin: 0 5px;
+}
+</style>
+

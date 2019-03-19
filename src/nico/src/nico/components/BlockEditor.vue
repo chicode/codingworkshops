@@ -1,9 +1,10 @@
 <template lang="pug">
   .d-flex
-    .flex-grow-2
+    .flex-grow-2.m-3
       h6.font-weight-bold Control Flow
       Block(:children="controlFlow" :clone="true")
-    .flex-grow-2
+      // mw-35 just for displaying blocksRoot
+    .flex-grow-2.m-3.mw-35
       h6.font-weight-bold Nico
       Block(:children="nicoFuncs" :clone="true")
       | {{ blocksRoot }}
@@ -39,3 +40,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.mw-35 {
+  max-width: 35%;
+}
+</style>

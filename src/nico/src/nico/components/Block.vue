@@ -1,7 +1,7 @@
 <template lang="pug">
   draggable.dragArea(tag="ul" :list="children" :group="group" :clone="onClone")
     li(v-for="child in children")
-      div(v-if="child.type === 'if'")
+      div.if(v-if="child.type === 'if'")
         | if {{ child.condition }}
         Block.child(:children="child.children")
       div(v-else-if="child.type === 'callMars'")
@@ -49,13 +49,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .child {
   margin-left: 20px;
 }
 .dragArea {
   outline: 1px dotted;
   min-height: 20px;
-  padding-bottom: 50px;
+  padding: 10px;
+}
+.if {
+  > .dragArea {
+    padding-bottom: 20px;
+  }
+  padding-bottom: 15px;
 }
 </style>
