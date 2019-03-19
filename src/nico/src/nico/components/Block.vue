@@ -60,8 +60,9 @@ export default {
 }
 .if {
   > .dragArea {
-    padding-bottom: 20px;
+    min-height: 20px;
   }
-  padding-bottom: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 0;
 }
 </style>
