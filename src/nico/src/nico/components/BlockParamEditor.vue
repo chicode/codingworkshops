@@ -1,20 +1,23 @@
 <template lang="pug">
-  div
-    div(v-if)
+  .d-inline
+    .d-inline(v-if="type.type === 'str'")
+      input(v-bind:value="value" v-on:input="$emit('input', $event.target.value)")
+    .d-inline(v-if="type.type === 'num'")
+      input.w-25(
+        type="number"
+        v-bind:value="value"
+        v-on:input="$emit('input', $event.target.value)"
+      )
 </template>
 
 <script>
 export default {
   name: 'BlockParamEditor',
   props: {
-    param: {
-      type: {
-        name: String,
-        type: String,
-      },
+    value: {
       required: true,
     },
-    value: {
+    type: {
       required: true,
     }
   },

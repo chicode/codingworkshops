@@ -6,6 +6,7 @@
     .flex-grow-2
       h6.font-weight-bold Nico
       Block(:children="nicoFuncs" :clone="true")
+      | {{ blocksRoot }}
     .flex-grow-1.p-3
       Block(:children="blocksRoot")
 </template>
@@ -31,6 +32,7 @@ export default {
         {
           type: 'callMars',
           func: 'sprite',
+          params: [],
         },
       ],
     }

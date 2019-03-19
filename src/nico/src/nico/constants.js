@@ -160,8 +160,7 @@ export const FUNCTIONS = [
 ].reverse()
 // reverse is because the sections appear in reverse order due to the rotation
 
-export const FUNCTIONS_BARE =
-  FUNCTIONS |>
-  _.filter(section => section.name !== 'User') |>
-  _.flatMap('functions') |>
-  _.map('name')
+export const FUNCTIONS_ONLY =
+  FUNCTIONS |> _.filter(section => section.name !== 'User') |> _.flatMap('functions')
+
+export const FUNCTIONS_BARE = FUNCTIONS_ONLY |> _.map('name')
