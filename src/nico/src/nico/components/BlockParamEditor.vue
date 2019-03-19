@@ -15,11 +15,13 @@ export default {
   name: 'BlockParamEditor',
   props: {
     value: {
+      type: Object,
       required: true,
     },
     type: {
+      type: Object,
       required: true,
-    }
+    },
   },
 }
 </script>

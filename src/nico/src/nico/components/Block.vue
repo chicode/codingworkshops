@@ -15,9 +15,9 @@
 
 <script>
 import draggable from 'vuedraggable'
-import BlockParamEditor from "./BlockParamEditor"
-import { FUNCTIONS_ONLY } from "../constants"
-import _ from "lodash"
+import BlockParamEditor from './BlockParamEditor'
+import { FUNCTIONS_ONLY } from '../constants'
+import _ from 'lodash'
 
 export default {
   name: 'Block',
@@ -41,12 +41,10 @@ export default {
         ? { name: 'blocks', pull: 'clone', put: false }
         : { name: 'blocks' }
     },
-    marsFuncs: () => FUNCTIONS_ONLY
+    marsFuncs: () => FUNCTIONS_ONLY,
   },
   methods: {
-    onClone (data) {
-      return _.cloneDeep(data)
-    }
+    onClone: data => _.cloneDeep(data),
   },
 }
 </script>

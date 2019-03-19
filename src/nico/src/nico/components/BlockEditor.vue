@@ -25,8 +25,8 @@ export default {
       controlFlow: [
         {
           type: 'if',
-          children: []
-        }
+          children: [],
+        },
       ],
       nicoFuncs: [
         {
