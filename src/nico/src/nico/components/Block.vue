@@ -1,5 +1,8 @@
 <template lang="pug">
-  draggable.dragArea(tag="ul" :list="children" :group="group" :clone="onClone")
+  draggable(
+    :class="['dragArea', { clone }]"
+    tag="ul" :list="children" :group="group" :clone="onClone" @add="onAdd" ghostClass="ghost"
+  )
     li(v-for="child in children")
       div.if(v-if="child.type === 'if'")
         | if
@@ -39,13 +42,19 @@ export default {
   computed: {
     group () {
       return this.clone
-        ? { name: 'blocks', pull: 'clone', put: false }
+        ? { name: 'blocks', pull: 'clone' }
         : { name: 'blocks' }
     },
     marsFuncs: () => FUNCTIONS_ONLY,
   },
   methods: {
     onClone: _.cloneDeep,
+    onAdd (evt) {
+      if (this.clone) {
+        // remove the new index from children, effectively not putting it there at all
+        this.children.splice(evt.newIndex, 1)
+      }
+    },
   },
 }
 </script>
@@ -65,5 +74,8 @@ export default {
   }
   margin-bottom: 15px;
   padding-bottom: 0;
+}
+.dragArea.clone .ghost {
+  display: none;
 }
 </style>
