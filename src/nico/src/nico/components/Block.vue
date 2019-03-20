@@ -1,7 +1,7 @@
 <template lang="pug">
   draggable(
     :class="['dragArea', { clone }]"
-    tag="ul" :list="children" :group="group" :clone="onClone" @add="onAdd" ghostClass="ghost"
+    :list="children" :group="group" :clone="onClone" @add="onAdd" ghostClass="ghost" tag="ul"
   )
     li(v-for="child in children")
       div.if(v-if="child.type === 'if'")

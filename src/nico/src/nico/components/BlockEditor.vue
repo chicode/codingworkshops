@@ -2,7 +2,8 @@
   .d-flex
     .flex-grow-2.m-3
       h6.font-weight-bold Control Flow
-      Block(:children="controlFlow" :clone="true")
+      Block(:children="controlFlow" clone)
+      Expr(:exprs="exprs" clone)
       // mw-35 just for displaying blocksRoot
     .flex-grow-2.m-3.mw-35
       h6.font-weight-bold Nico
@@ -16,6 +17,7 @@
 
 <script>
 import Block from './Block'
+import Expr from './Expr'
 import { compile } from '../compileBlocks'
 
 const makeLit = value => ({
@@ -27,6 +29,7 @@ export default {
   name: 'BlockEditor',
   components: {
     Block,
+    Expr,
   },
   data () {
     return {
@@ -49,6 +52,12 @@ export default {
           func: 'rect',
           params: [0, 0, 0, 0].map(makeLit),
         },
+      ],
+      exprs: [
+        {
+          type: 'var',
+          varname: 'yee'
+        }
       ],
     }
   },
