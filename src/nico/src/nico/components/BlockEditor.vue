@@ -1,17 +1,17 @@
 <template lang="pug">
   .d-flex
-    .flex-grow-2.m-3
+    .flex-1.m-3
       h6.font-weight-bold Control Flow
       Block(:children="controlFlow" clone)
       Expr(:exprs="exprs" clone)
       // mw-35 just for displaying blocksRoot
-    .flex-grow-2.m-3.mw-35
+    .flex-1.m-3.mw-35
       h6.font-weight-bold Nico
       Block(:children="nicoFuncs" :clone="true")
       | {{ blocksRoot }}
       br
       | {{ compiledBlocks }}
-    .flex-grow-1.p-3
+    .flex-1.p-3.w-50
       Block(:children="blocksRoot")
 </template>
 
@@ -40,6 +40,11 @@ export default {
           condition: makeLit(false),
           children: [],
         },
+        {
+          type: 'while',
+          condition: makeLit(false),
+          children: [],
+        },
       ],
       nicoFuncs: [
         {
@@ -65,7 +70,7 @@ export default {
     compiledBlocks () {
       return compile(this.blocksRoot)
     }
-  }
+  },
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-  draggable(
+  draggable.my-3(
     :class="['dragArea', { clone }]"
     :list="children" :group="group" :clone="onClone" @add="onAdd" ghostClass="ghost" tag="ul"
   )
@@ -8,12 +8,17 @@
         | if
         BlockParamEditor(v-model="child.condition" :type="{ name: 'condition', type: 'bool' }")
         Block.child(:children="child.children")
+      div(v-else-if="child.type === 'while'")
+        | while
+        BlockParamEditor(v-model="child.condition" :type="{ name: 'condition', type: 'bool' }")
+        Block.child(:children="child.children")
       div(v-else-if="child.type === 'callMars'")
         | {{ child.func }}
         BlockParamEditor(
           v-for="(param, i) in marsFuncs.find(func => child.func === func.name).parameters"
           v-model="child.params[i]"
           :type="param"
+
         )
 </template>
 

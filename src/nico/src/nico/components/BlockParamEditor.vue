@@ -1,7 +1,7 @@
 <template lang="pug">
   .d-inline-block.param-editor
-    Expr.position-absolute(:exprs="expr")
-    div(:class="{'d-none':expr.length}")
+    Expr.position-absolute(:exprs="expr" :class="{ under: !hasExpr }")
+    div(:class="{'d-none':expr.length, under: hasExpr}")
       input(
         v-if="type.type === 'str'"
         v-bind:value="value.value"
@@ -20,15 +20,30 @@
         )
           option(value="true") Yes
           option(value="false") No
+      fragment(v-if="type.type === 'sprite'")
+        canvas.sprite(:width="8" :height="8" v-sprite="sprites[value.value]")
+        input.my-1.num(
+          type="number"
+          v-bind:value="value.value"
+          v-on:input="emitInput('sprite', Number($event.target.value))"
+        )
 </template>
 
 <script>
 import { Fragment } from 'vue-fragment'
 import draggable from 'vuedraggable'
 import Expr from './Expr'
+import { mapGetters } from "vuex"
 
 export default {
   name: 'BlockParamEditor',
+  directives: {
+    sprite (canvasElement, sprite) {
+      console.log(canvasElement, sprite.value)
+      const ctx = canvasElement.getContext("2d");
+      ctx.drawImage(sprite.value, 0, 0)
+    }
+  },
   components: {
     Expr,
     draggable,
@@ -51,7 +66,16 @@ export default {
     setLiteral (lit) {
       this.$emit('input', { type: 'literal', value: lit })
     },
+    emitInput (type, value) {
+      this.$emit('input', { type, value })
+    }
   },
+  computed: {
+    hasExpr () {
+      return this.expr[0] && this.expr[0].type != 'literal'
+    },
+    ...mapGetters("sprite/sprite", ["sprites"])
+  }
 }
 </script>
 <style scoped>
@@ -63,5 +87,12 @@ export default {
   margin: 0 5px;
   min-height: 30px;
   min-width: 60px;
+}
+.under {
+  z-index: -1;
+}
+.sprite {
+  height: 32px;
+  width: 32px;
 }
 </style>

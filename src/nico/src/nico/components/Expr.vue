@@ -41,9 +41,9 @@ export default {
         this.exprs.splice(evt.newIndex, 1)
       }
     },
-    canPut (evt) {
+    canPut (evt,a,b,c,d) {
       return this.clone || this.exprs.length === 0
-    }
+    },
   },
 }
 </script>
