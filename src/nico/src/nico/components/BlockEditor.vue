@@ -22,7 +22,7 @@ import { compile } from '../compileBlocks'
 
 const makeLit = value => ({
   type: 'literal',
-  value
+  value,
 })
 
 export default {
@@ -61,15 +61,15 @@ export default {
       exprs: [
         {
           type: 'var',
-          varname: 'yee'
-        }
+          varname: 'yee',
+        },
       ],
     }
   },
   computed: {
     compiledBlocks () {
       return compile(this.blocksRoot)
-    }
+    },
   },
 }
 </script>

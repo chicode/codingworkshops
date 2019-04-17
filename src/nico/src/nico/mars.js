@@ -1,13 +1,4 @@
-export function initMars ({
-  state,
-  ctx,
-  sprites,
-  clear,
-  tilemap,
-  flags,
-  language,
-  onError,
-}) {
+export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language, onError }) {
   ctx.font = '.3rem Karla'
   ctx.textBaseline = 'top'
 
@@ -24,12 +15,7 @@ export function initMars ({
     tilemap.forEach((row, y) =>
       row.forEach((spriteI, x) => {
         if (spriteI !== null) {
-          tilemapCtx.clearRect(
-            x * GRID_SIZE,
-            y * GRID_SIZE,
-            GRID_SIZE,
-            GRID_SIZE
-          )
+          tilemapCtx.clearRect(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE)
           tilemapCtx.drawImage(sprites[spriteI], x * GRID_SIZE, y * GRID_SIZE)
         }
       })
@@ -50,11 +36,7 @@ export function initMars ({
   }
 
   mars.sprite = (i, x, y) => {
-    ctx.drawImage(
-      sprites[i],
-      Math.floor(x) * GRID_SIZE,
-      Math.floor(y) * GRID_SIZE
-    )
+    ctx.drawImage(sprites[i], Math.floor(x) * GRID_SIZE, Math.floor(y) * GRID_SIZE)
   }
 
   mars.point = (x, y) => {

@@ -53,8 +53,8 @@ export default {
         matchBrackets: true,
         autoRefresh: true,
         extraKeys: {
-          'Tab': (cm) => cm.execCommand('indentMore'),
-          'Shift-Tab': (cm) => cm.execCommand('indentLess'),
+          'Tab': cm => cm.execCommand('indentMore'),
+          'Shift-Tab': cm => cm.execCommand('indentLess'),
         },
       }
     },
@@ -63,7 +63,7 @@ export default {
   watch: {
     errors (errors) {
       if (errors.length) {
-        if (this.marks) this.marks.forEach((mark) => mark.clear())
+        if (this.marks) this.marks.forEach(mark => mark.clear())
         this.marks = []
         for (let error of errors) {
           if (!error.from || !error.to) return

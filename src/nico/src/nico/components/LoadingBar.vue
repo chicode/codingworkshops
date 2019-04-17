@@ -26,7 +26,7 @@ export default {
     init () {
       this.start = Date.now()
       const main = () => {
-        this.progress = ((Date.now() - this.start) / 1000) / this.loadingTime
+        this.progress = (Date.now() - this.start) / 1000 / this.loadingTime
         if (this.progress < 1) window.requestAnimationFrame(main)
       }
       window.requestAnimationFrame(main)

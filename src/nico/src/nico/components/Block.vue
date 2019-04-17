@@ -46,9 +46,7 @@ export default {
   },
   computed: {
     group () {
-      return this.clone
-        ? { name: 'blocks', pull: 'clone' }
-        : { name: 'blocks' }
+      return this.clone ? { name: 'blocks', pull: 'clone' } : { name: 'blocks' }
     },
     marsFuncs: () => FUNCTIONS_ONLY,
   },

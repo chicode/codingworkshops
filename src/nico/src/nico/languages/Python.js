@@ -73,9 +73,7 @@ def draw():
   }
 
   getSyntax ({ name, parameters }) {
-    return `${this.translateName(name)}(${parameters |>
-      _.map(this.translateName) |>
-      _.join(', ')})`
+    return `${this.translateName(name)}(${parameters |> _.map(this.translateName) |> _.join(', ')})`
   }
 
   transformError (err) {

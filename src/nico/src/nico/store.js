@@ -80,10 +80,7 @@ export default {
   actions: {
     setLanguage ({ commit }, language) {
       commit('setLangLoading', true)
-      commit(
-        'setLanguage',
-        new languages[language](() => commit('setLangLoading', false))
-      )
+      commit('setLanguage', new languages[language](() => commit('setLangLoading', false)))
     },
 
     run ({ state, commit, rootGetters, rootState }) {
@@ -123,26 +120,24 @@ export default {
       setTimeout(() => {
         language
           .refresh(state.code, mars)
-          .then(
-            ({ success, draw, update, init, errors, warnings, blocked }) => {
-              commit('setLoading', false)
-              commit('setWarnings', warnings || [])
-              commit('setClicks', 0)
+          .then(({ success, draw, update, init, errors, warnings, blocked }) => {
+            commit('setLoading', false)
+            commit('setWarnings', warnings || [])
+            commit('setClicks', 0)
 
-              if (success) {
-                commit('setRunning', true)
-                commit('setPaused', false)
+            if (success) {
+              commit('setRunning', true)
+              commit('setPaused', false)
 
-                commit('setDrawFunc', draw)
-                commit('setUpdateFunc', update)
+              commit('setDrawFunc', draw)
+              commit('setUpdateFunc', update)
 
-                init()
-                startMars()
-              } else if (!blocked) {
-                commit('setErrors', errors)
-              }
+              init()
+              startMars()
+            } else if (!blocked) {
+              commit('setErrors', errors)
             }
-          )
+          })
         // delay helps make sure that the old game stops
       }, 100)
     },

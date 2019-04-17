@@ -42,7 +42,13 @@ export default {
     showTabs: {
       type: Object,
       required: false,
-      default: () => ({ game: true, editor: true, sprite: true, tile: true, settings: false }),
+      default: () => ({
+        game: true,
+        editor: true,
+        sprite: true,
+        tile: true,
+        settings: false,
+      }),
     },
     language: {
       type: String,

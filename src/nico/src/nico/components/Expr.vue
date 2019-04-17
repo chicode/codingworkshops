@@ -30,7 +30,11 @@ export default {
   },
   computed: {
     group () {
-      return { name: 'exprs', pull: this.clone ? 'clone' : true, put: this.canPut }
+      return {
+        name: 'exprs',
+        pull: this.clone ? 'clone' : true,
+        put: this.canPut,
+      }
     },
   },
   methods: {
@@ -41,7 +45,7 @@ export default {
         this.exprs.splice(evt.newIndex, 1)
       }
     },
-    canPut (evt,a,b,c,d) {
+    canPut (evt, a, b, c, d) {
       return this.clone || this.exprs.length === 0
     },
   },
@@ -57,5 +61,3 @@ export default {
   min-width: 60px;
 }
 </style>
-
-

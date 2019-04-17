@@ -33,25 +33,24 @@
 import { Fragment } from 'vue-fragment'
 import draggable from 'vuedraggable'
 import Expr from './Expr'
-import { mapGetters } from "vuex"
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'BlockParamEditor',
   directives: {
     sprite (canvasElement, sprite) {
       console.log(canvasElement, sprite.value)
-      const ctx = canvasElement.getContext("2d");
+      canvasElement.width = 8
+      canvasElement.height = 8
+      const ctx = canvasElement.getContext('2d')
       ctx.drawImage(sprite.value, 0, 0)
-    }
+    },
   },
   components: {
     Expr,
     draggable,
     Fragment,
   },
-  data: () => ({
-    expr: [],
-  }),
   props: {
     value: {
       type: Object,
@@ -62,20 +61,23 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    expr: [],
+  }),
   methods: {
     setLiteral (lit) {
       this.$emit('input', { type: 'literal', value: lit })
     },
     emitInput (type, value) {
       this.$emit('input', { type, value })
-    }
+    },
   },
   computed: {
     hasExpr () {
       return this.expr[0] && this.expr[0].type != 'literal'
     },
-    ...mapGetters("sprite/sprite", ["sprites"])
-  }
+    ...mapGetters('sprite/sprite', ['sprites']),
+  },
 }
 </script>
 <style scoped>
@@ -94,5 +96,6 @@ export default {
 .sprite {
   height: 32px;
   width: 32px;
+  image-rendering: pixelated;
 }
 </style>
