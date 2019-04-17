@@ -3,12 +3,14 @@ import _ from 'lodash/fp'
 export const FUNCTIONS = [
   {
     name: 'User',
-    description: 'You define these functions to tell nico how to run your game.',
+    description:
+      'You define these functions to tell nico how to run your game.',
     functions: [
       {
         name: 'init',
         parameters: [],
-        description: 'Contains any code that you should run in the very beginning.',
+        description:
+          'Contains any code that you should run in the very beginning.',
       },
       {
         name: 'update',
