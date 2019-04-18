@@ -4,7 +4,8 @@
     :clone="onClone" @add="onAdd" :list="exprs" :group="group" ghostClass="ghost"
   )
     .d-inline(v-for="expr in exprs")
-      div(v-if="expr.type === 'var'") {{ expr.varname }}
+      div(v-if="expr.type === 'getVar'")
+        input.var(v-model="expr.varname")
 </template>
 
 <script>
@@ -59,5 +60,10 @@ export default {
 .dragArea {
   min-height: 30px;
   min-width: 60px;
+}
+.var {
+  width: 75px;
+  outline: solid 1px;
+  margin: 0 10px;
 }
 </style>

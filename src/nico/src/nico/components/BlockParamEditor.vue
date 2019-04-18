@@ -1,22 +1,22 @@
 <template lang="pug">
   .d-inline-block.param-editor
     Expr.position-absolute(:exprs="expr" :class="{ under: !hasExpr }")
-    div(:class="{'d-none':expr.length, under: hasExpr}")
-      input(
+    div(:class="{'d-none': hasExpr, under: hasExpr}")
+      input.str(
         v-if="type.type === 'str'"
         v-bind:value="value.value"
-        v-on:input="$emit('input', $event.target.value)"
+        v-on:input="emitLiteral($event.target.value)"
       )
-      input.my-1.num(
+      input.num.my-1(
         v-if="type.type === 'num'"
         type="number"
         v-bind:value="value.value"
-        v-on:input="setLiteral(Number($event.target.value))"
+        v-on:input="emitLiteral(Number($event.target.value))"
       )
       fragment(v-if="type.type === 'bool'")
         select.mx-1(
           v-bind:value="value.value"
-          v-on:input="setLiteral(JSON.parse($event.target.value))"
+          v-on:input="emitLiteral(JSON.parse($event.target.value))"
         )
           option(value="true") Yes
           option(value="false") No
@@ -64,9 +64,14 @@ export default {
   data: () => ({
     expr: [],
   }),
+  mounted () {
+    if (this.value.type != 'literal') {
+      this.expr.push(this.value)
+    }
+  },
   methods: {
-    setLiteral (lit) {
-      this.$emit('input', { type: 'literal', value: lit })
+    emitLiteral (lit) {
+      this.emitInput('literal', lit)
     },
     emitInput (type, value) {
       this.$emit('input', { type, value })
@@ -78,10 +83,21 @@ export default {
     },
     ...mapGetters('sprite/sprite', ['sprites']),
   },
+  watch: {
+    expr: {
+      handler () {
+        if (this.hasExpr) {
+          this.$emit('input', this.expr[0])
+        }
+      },
+      deep: true,
+    }
+  }
 }
 </script>
 <style scoped>
-.num {
+.num,
+.str {
   width: 75px;
   outline: solid 1px;
 }

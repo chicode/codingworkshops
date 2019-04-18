@@ -3,11 +3,11 @@
     .flex-1.m-3
       h6.font-weight-bold Control Flow
       Block(:children="controlFlow" clone)
-      Expr(:exprs="exprs" clone)
+      Expr(:exprs="vars" clone)
       // mw-35 just for displaying blocksRoot
     .flex-1.m-3.mw-35
       h6.font-weight-bold Nico
-      Block(:children="nicoFuncs" :clone="true")
+      Block(:children="nicoFuncs" clone)
       | {{ blocksRoot }}
       br
       | {{ compiledBlocks }}
@@ -45,6 +45,11 @@ export default {
           condition: makeLit(false),
           children: [],
         },
+        {
+          type: 'setVar',
+          varname: '',
+          expr: makeLit(''),
+        },
       ],
       nicoFuncs: [
         {
@@ -58,9 +63,9 @@ export default {
           params: [0, 0, 0, 0].map(makeLit),
         },
       ],
-      exprs: [
+      vars: [
         {
-          type: 'var',
+          type: 'getVar',
           varname: 'yee',
         },
       ],

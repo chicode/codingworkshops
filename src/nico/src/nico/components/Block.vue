@@ -8,17 +8,24 @@
         | if
         BlockParamEditor(v-model="child.condition" :type="{ name: 'condition', type: 'bool' }")
         Block.child(:children="child.children")
-      div(v-else-if="child.type === 'while'")
+      div(v-if="child.type === 'while'")
         | while
         BlockParamEditor(v-model="child.condition" :type="{ name: 'condition', type: 'bool' }")
         Block.child(:children="child.children")
-      div(v-else-if="child.type === 'callMars'")
+      div(v-if="child.type === 'callMars'")
         | {{ child.func }}
         BlockParamEditor(
           v-for="(param, i) in marsFuncs.find(func => child.func === func.name).parameters"
           v-model="child.params[i]"
           :type="param"
-
+        )
+      div(v-if="child.type === 'setVar'")
+        | set
+        input.var(v-model="child.varname")
+        | =
+        BlockParamEditor(
+          :type="{name: 'var', type: 'str'}"
+          v-model="child.expr"
         )
 </template>
 
@@ -80,5 +87,10 @@ export default {
 }
 .dragArea.clone .ghost {
   display: none;
+}
+.var {
+  max-width: 100px;
+  outline: solid 1px;
+  margin: 0 10px;
 }
 </style>
