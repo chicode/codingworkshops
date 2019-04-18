@@ -39,7 +39,6 @@ export default {
   name: 'BlockParamEditor',
   directives: {
     sprite (canvasElement, sprite) {
-      console.log(canvasElement, sprite.value)
       canvasElement.width = 8
       canvasElement.height = 8
       const ctx = canvasElement.getContext('2d')
@@ -91,8 +90,8 @@ export default {
         }
       },
       deep: true,
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped>
