@@ -4,12 +4,14 @@ import * as languages from './languages'
 import { initMars } from './mars'
 import { compile } from './compileBlocks'
 
+const localStorageBlocks = window.localStorage.getItem('blocks')
+
 export default {
   namespaced: true,
 
   state: {
     code: window.localStorage.getItem('code') || '',
-    blocks: [],
+    blocks: localStorageBlocks ? JSON.parse(localStorageBlocks) : [],
     errors: [],
     warnings: [],
     view: window.localStorage.getItem('view') || 'game',
@@ -74,6 +76,7 @@ export default {
     },
     setBlocks (state, blocks) {
       state.blocks = blocks
+      window.localStorage.setItem('blocks', JSON.stringify(state.blocks))
     },
     setRunning (state, running) {
       state.running = running

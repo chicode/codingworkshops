@@ -20,7 +20,7 @@
 import Block from './Block'
 import Expr from './Expr'
 import { compile } from '../compileBlocks'
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 const makeLit = value => ({
   type: 'literal',
@@ -34,8 +34,9 @@ export default {
     Expr,
   },
   data () {
+    const localStorageBlocks = window.localStorage.getItem('blocks')
     return {
-      blocksRoot: [],
+      blocksRoot: localStorageBlocks ? JSON.parse(localStorageBlocks) : [],
       controlFlow: [
         {
           type: 'if',
@@ -79,6 +80,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('nico', ['blocks']),
     compiledBlocks () {
       return compile(this.blocksRoot)
     },
