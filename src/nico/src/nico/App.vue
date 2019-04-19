@@ -4,7 +4,7 @@
 
   Game(v-if="showTabs.game" v-show="view === 'game'" :show-greeting="showGreeting")
   Editor(v-if="showTabs.editor && editorMode == 'code'" v-show="view === 'editor'" :language="language")
-  BlockEditor(v-if="showTabs.editor && editorMode == 'block'" v-show="view === 'editor'")
+  BlockEditor(v-if="showTabs.editor && editorMode == 'blocks'" v-show="view === 'editor'")
   Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'")
   Tile(v-if="showTabs.tile" v-show="view === 'tile'")
   Settings(v-if="showTabs.settings" v-show="view === 'settings'")
@@ -68,11 +68,12 @@ export default {
     ...mapState('nico', ['view']),
   },
   mounted () {
-    this.setLanguage(this.language)
+    this.setEditorMode(this.editorMode)
+    if (this.editorMode === 'code') this.setLanguage(this.language)
     if (this.scriptBoilerplate) this.loadBoilerplate()
   },
   methods: {
-    ...mapMutations('nico', ['loadBoilerplate']),
+    ...mapMutations('nico', ['loadBoilerplate', 'setEditorMode']),
     ...mapActions('nico', ['setLanguage']),
   },
 }
