@@ -67,8 +67,23 @@ export default {
         },
         {
           type: 'callMars',
+          func: 'point',
+          params: [0, 0].map(makeLit),
+        },
+        {
+          type: 'callMars',
+          func: 'line',
+          params: [0, 0, 0, 0].map(makeLit),
+        },
+        {
+          type: 'callMars',
           func: 'text',
           params: ['', 0, 0].map(makeLit),
+        },
+        {
+          type: 'callMars',
+          func: 'tilemap',
+          params: [],
         }
       ],
       vars: [
