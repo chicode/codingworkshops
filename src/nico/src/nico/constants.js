@@ -138,7 +138,11 @@ export const FUNCTIONS = [
     functions: [
       {
         name: 'hasFlag',
-        parameters: ['flag', { name: 'x', type: 'num' }, { name: 'y', type: 'num' }],
+        parameters: [
+          { name: 'flag', type: 'str' },
+          { name: 'x', type: 'num' },
+          { name: 'y', type: 'num' },
+        ],
         description: 'Returns whether a tile has the flag. Flags are indexed starting with 0.',
       },
       {

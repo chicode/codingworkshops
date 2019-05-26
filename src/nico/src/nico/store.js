@@ -2,9 +2,6 @@ import generateSet from '@/generateSet'
 import * as languages from './languages'
 
 import { initMars } from './mars'
-import { compile } from './compileBlocks'
-
-const localStorageBlocks = window.localStorage.getItem('blocks')
 
 export default {
   namespaced: true,

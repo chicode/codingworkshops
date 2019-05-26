@@ -10,8 +10,6 @@
         h6.font-weight-bold Nico
         Block(:children="nicoFuncs" clone)
         | {{ blocksRoot }}
-        br
-        | {{ compiledBlocks }}
       .flex-1.p-3.w-50
         Block(:children="blocksRoot")
 </template>
@@ -19,7 +17,6 @@
 <script>
 import Block from './Block'
 import Expr from './Expr'
-import { compile } from '../compileBlocks'
 import { mapMutations, mapState } from 'vuex';
 
 const makeLit = value => ({
@@ -98,12 +95,6 @@ export default {
         },
       ],
     }
-  },
-  computed: {
-    // ...mapState('nico', ['blocks']),
-    compiledBlocks () {
-      return compile(this.blocksRoot)
-    },
   },
   watch: {
     blocksRoot: {

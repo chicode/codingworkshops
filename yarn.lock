@@ -681,6 +681,11 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@chicode/lisa-vm@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@chicode/lisa-vm/-/lisa-vm-0.1.1.tgz#bd8849a8ea9430e562e37ebcf6571e0fa9d0e1ca"
+  integrity sha512-tGVHaGwUJkpitnCFI1yfcLSE99bGPhstRmtSN0TydqnOtNfezy1KFAyis7rHya+RgYglLly5mlyjyzzsv4ylVA==
+
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@intervolga/optimize-cssnano-plugin/-/optimize-cssnano-plugin-1.0.6.tgz#be7c7846128b88f6a9b1d1261a0ad06eb5c0fdf8"
@@ -7963,7 +7968,7 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rustpython_wasm@^0.1.0-pre-alpha.1:
+rustpython_wasm@0.1.0-pre-alpha.1:
   version "0.1.0-pre-alpha.1"
   resolved "https://registry.yarnpkg.com/rustpython_wasm/-/rustpython_wasm-0.1.0-pre-alpha.1.tgz#981b65f56a240e25d6c1d3ac0d3f52cc2cb0a8b0"
   integrity sha512-AliaQtmlH7OZsXT81KBOuZQgIxBdEWxDcjUVhkhFPr4Gc7xKF65lW9992xgSb3xtSyJM19bExvnzA51AgAbZwg==
