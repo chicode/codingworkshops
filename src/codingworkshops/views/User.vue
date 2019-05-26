@@ -10,8 +10,7 @@
     div
       p.error(v-if="errors.name") {{ errors.name[0] }}
       input.input(v-model="data.name" placeholder="name")
-    button.button.mt-1(@click="createBlock"): div new block project
-    button.button.mt-1(@click="createCode"): div new code project
+    button.button.mt-1(@click="createProject"): div new code project
 </template>
 
 <script>
@@ -34,24 +33,8 @@ export default {
     },
   },
   methods: {
-    async createCode () {
+    async createProject () {
       const { ok, errors, slug } = await this.$methods.createCodeProject({
-        project: this.data,
-      })
-      if (ok) {
-        this.$router.push({
-          name: 'project',
-          params: {
-            user: this.$route.params.user,
-            project: slug,
-          },
-        })
-      } else {
-        this.errors = errors
-      }
-    },
-    async createBlock () {
-      const { ok, errors, slug } = await this.$methods.createBlockProject({
         project: this.data,
       })
       if (ok) {

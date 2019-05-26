@@ -22,8 +22,7 @@ export default {
       createWorkshop: '/workshops',
       loadWorkshop: '/workshops/:workshop/load',
 
-      createCodeProject: '/projects',
-      createBlockProject: '/projects',
+      createProject: '/projects',
     },
     PATCH: {
       updateWorkshop: '/workshops/:workshop',

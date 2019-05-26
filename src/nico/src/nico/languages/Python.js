@@ -21,7 +21,6 @@ def draw():
 
   constructor (onLoad) {
     super()
-
     if (onLoad && !rustpython) {
       rpProm = import('rustpython_wasm').then(rp => {
         rustpython = rp
@@ -31,8 +30,6 @@ def draw():
   }
 
   async refresh (code, mars) {
-    // https://github.com/brython-dev/brython/issues/937
-
     await rpProm
 
     // clear previous state

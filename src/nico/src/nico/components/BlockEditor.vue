@@ -33,10 +33,15 @@ export default {
     Block,
     Expr,
   },
+  props: {
+    root: {
+      type: Array,
+      required: true,
+    },
+  },
   data () {
-    const localStorageBlocks = window.localStorage.getItem('blocks')
     return {
-      blocksRoot: localStorageBlocks ? JSON.parse(localStorageBlocks) : [],
+      blocksRoot: this.root,
       controlFlow: [
         {
           type: 'if',
@@ -95,18 +100,15 @@ export default {
     }
   },
   computed: {
-    ...mapState('nico', ['blocks']),
+    // ...mapState('nico', ['blocks']),
     compiledBlocks () {
       return compile(this.blocksRoot)
     },
   },
-  methods: {
-    ...mapMutations('nico', ['setCode', 'setBlocks'])
-  },
   watch: {
     blocksRoot: {
       handler () {
-        this.setBlocks(this.blocksRoot)
+        this.$emit("input", this.blocksRoot)
       },
       deep: true,
     }
