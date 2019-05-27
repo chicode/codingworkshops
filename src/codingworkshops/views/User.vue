@@ -8,9 +8,13 @@
 
   div.mt-5
     div
-      p.error(v-if="errors.name") {{ errors.name[0] }}
+      p.error(v-if="errors && errors.name") {{ errors.name[0] }}
       input.input(v-model="data.name" placeholder="name")
-    button.button.mt-1(@click="createProject"): div new code project
+      select(v-model="data.language")
+        option Blocks
+        option Lisa
+        option Python
+    button.button.mt-1(@click="createProject"): div new project
 </template>
 
 <script>
@@ -24,6 +28,18 @@ export default {
       errors: {},
       data: {
         name: '',
+        language: 'Blocks',
+        get code() {
+          return {
+            "Blocks": "[]",
+            "Lisa": "(defunc draw ()\n  (rect 1 1 10 10))\n",
+            "Python": "def draw():\n    rect(1, 1, 10, 10)\n"
+          }[this.language]
+        },
+        spritesheet: "[]",
+        tilesheet: "[]",
+        flags: "null",
+        public: false
       },
     }
   },
@@ -34,7 +50,7 @@ export default {
   },
   methods: {
     async createProject () {
-      const { ok, errors, slug } = await this.$methods.createCodeProject({
+      const { ok, errors, slug } = await this.$methods.createProject({
         project: this.data,
       })
       if (ok) {
