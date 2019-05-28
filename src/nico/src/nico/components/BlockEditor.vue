@@ -17,7 +17,7 @@
 <script>
 import Block from './Block'
 import Expr from './Expr'
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex'
 
 const makeLit = value => ({
   type: 'literal',
@@ -86,7 +86,7 @@ export default {
           type: 'callMars',
           func: 'tilemap',
           params: [],
-        }
+        },
       ],
       vars: [
         {
@@ -99,11 +99,11 @@ export default {
   watch: {
     blocksRoot: {
       handler () {
-        this.$emit("input", this.blocksRoot)
+        this.$emit('input', this.blocksRoot)
       },
       deep: true,
-    }
-  }
+    },
+  },
 }
 </script>
 

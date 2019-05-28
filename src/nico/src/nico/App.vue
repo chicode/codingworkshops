@@ -3,7 +3,7 @@
   Header(:show-tabs='showTabs')
 
   Game(v-if="showTabs.game" v-show="view === 'game'" :show-greeting="showGreeting")
-  Editor(v-show="view === 'editor'" :language="language")
+  Editor(v-show="view === 'editor'" :language="projectData.language")
   Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'")
   Tile(v-if="showTabs.tile" v-show="view === 'tile'")
   Settings(v-if="showTabs.settings" v-show="view === 'settings'")
@@ -49,8 +49,8 @@ export default {
         settings: false,
       }),
     },
-    language: {
-      type: String,
+    projectData: {
+      type: Object,
       required: true,
     },
     scriptBoilerplate: {
@@ -62,12 +62,18 @@ export default {
   computed: {
     ...mapState('nico', ['view']),
   },
-  mounted () {
-    this.setLanguage(this.language)
+  beforeMount () {
+    const { projectData } = this
+    this.setLanguage(projectData.language)
+    this.setCode(projectData.code)
+    this.setSpritesheet(projectData.spritesheet)
+    this.setTilesheet(projectData.tilesheet)
     if (this.scriptBoilerplate) this.loadBoilerplate()
   },
   methods: {
-    ...mapMutations('nico', ['loadBoilerplate',]),
+    ...mapMutations('nico', ['loadBoilerplate', 'setCode']),
+    ...mapMutations('sprite/sprite', ['setSpritesheet']),
+    ...mapMutations('tile/sprite', ['setTilesheet']),
     ...mapActions('nico', ['setLanguage']),
   },
 }

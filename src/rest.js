@@ -16,7 +16,7 @@ const generateReq = (root, defaultOptions) => (uri, options) => {
           'Accept': 'application/json',
         },
       },
-    ]),
+    ])
   )
 }
 
@@ -51,7 +51,7 @@ const generateMethod = (req, name, method, path, prepareBody, processResult) => 
       return makeReq(toPath(pathParams), method, body)
     }
   } else {
-    return (body) => {
+    return body => {
       return makeReq(path, method, body)
     }
   }
@@ -72,8 +72,8 @@ export default function prepare ({
       (paths, method) =>
         paths
         |> mapValuesKey((path, name) =>
-          generateMethod(req, name, method, path, prepareBody, processResult),
-        ),
+          generateMethod(req, name, method, path, prepareBody, processResult)
+        )
     )
     |> _.mergeAll
 
@@ -122,7 +122,7 @@ function init () {
 
   rest
     |> _.keys
-    |> _.forEach((key) => {
+    |> _.forEach(key => {
       this.$set(this.$rest, key, null)
     })
   this.$rest.loading = true
@@ -130,7 +130,7 @@ function init () {
   const reqOpts =
     rest
     |> _.values
-    |> _.map((val) => {
+    |> _.map(val => {
       if (_.isFunction(val)) val = val.call(this)
       if (_.isArray(val)) return { name: val[0], opts: val[1] }
       return { name: val }
@@ -142,7 +142,7 @@ function init () {
       if (!(name in this.$methods)) throw new Error(`Method ${name} is undefined`)
       return this.$methods[name](opts)
     })
-  Promise.all(reqs).then((res) => {
+  Promise.all(reqs).then(res => {
     res
       |> _.zip(rest |> _.keys)
       |> _.forEach(([key, result]) => {

@@ -7,7 +7,7 @@ export default {
   namespaced: true,
 
   state: {
-    code: window.localStorage.getItem('code') || '',
+    code: '',
     errors: [],
     warnings: [],
     view: window.localStorage.getItem('view') || 'game',
@@ -15,7 +15,7 @@ export default {
     running: false,
     mainCtx: null,
     hasBeenRun: false,
-    language: new languages.Python(),
+    language: null,
     loading: false,
     langLoading: false,
     loadingTime: null,
@@ -66,11 +66,6 @@ export default {
     },
     setCode (state, code) {
       state.code = code
-      window.localStorage.setItem('code', state.code)
-    },
-    setBlocks (state, blocks) {
-      state.blocks = blocks
-      window.localStorage.setItem('blocks', JSON.stringify(state.blocks))
     },
     setRunning (state, running) {
       state.running = running

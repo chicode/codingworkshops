@@ -29,17 +29,29 @@ export default {
       data: {
         name: '',
         language: 'Blocks',
-        get code() {
+        get code () {
+          console.log('heyo', this.language)
           return {
-            "Blocks": "[]",
-            "Lisa": "(defunc draw ()\n  (rect 1 1 10 10))\n",
-            "Python": "def draw():\n    rect(1, 1, 10, 10)\n"
+            Blocks: JSON.stringify([
+              {
+                type: 'callMars',
+                func: 'rect',
+                params: [
+                  { type: 'literal', value: 10 },
+                  { type: 'literal', value: 10 },
+                  { type: 'literal', value: 10 },
+                  { type: 'literal', value: 10 },
+                ],
+              },
+            ]),
+            Lisa: '(defunc draw ()\n  (rect 1 1 10 10))\n',
+            Python: 'def draw():\n    rect(1, 1, 10, 10)\n',
           }[this.language]
         },
-        spritesheet: "[]",
-        tilesheet: "[]",
-        flags: "null",
-        public: false
+        spritesheet: '[]',
+        tilesheet: '[]',
+        flags: 'null',
+        public: false,
       },
     }
   },
@@ -50,6 +62,7 @@ export default {
   },
   methods: {
     async createProject () {
+      console.log(JSON.stringify(this.data))
       const { ok, errors, slug } = await this.$methods.createProject({
         project: this.data,
       })
