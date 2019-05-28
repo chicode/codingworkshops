@@ -30,15 +30,14 @@ export default {
         name: '',
         language: 'Blocks',
         get code () {
-          console.log('heyo', this.language)
           return {
             Blocks: JSON.stringify([
               {
                 type: 'callMars',
                 func: 'rect',
                 params: [
-                  { type: 'literal', value: 10 },
-                  { type: 'literal', value: 10 },
+                  { type: 'literal', value: 1 },
+                  { type: 'literal', value: 1 },
                   { type: 'literal', value: 10 },
                   { type: 'literal', value: 10 },
                 ],
@@ -62,7 +61,6 @@ export default {
   },
   methods: {
     async createProject () {
-      console.log(JSON.stringify(this.data))
       const { ok, errors, slug } = await this.$methods.createProject({
         project: this.data,
       })
