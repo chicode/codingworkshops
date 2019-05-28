@@ -44,6 +44,12 @@ export default {
 
   components: { codemirror, Booklet, BlockEditor },
 
+  data () {
+    return {
+      marks: [],
+    }
+  },
+
   computed: {
     ...mapState('nico', ['code', 'view', 'errors', 'language']),
     cm () {
@@ -66,15 +72,14 @@ export default {
 
   watch: {
     errors (errors) {
+      this.marks.forEach(mark => mark.clear())
+      this.marks = []
       if (errors.length) {
-        if (this.marks) this.marks.forEach(mark => mark.clear())
-        this.marks = []
         for (let error of errors) {
           if (!error.from || !error.to) return
 
           let mark = this.cm.markText(error.from, error.to, {
             className: 'inline-error',
-            atomic: true,
           })
           // error is in area that doesn't have a character, eg no colon in python function definition
           if (!mark.lines.length) {

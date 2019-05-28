@@ -1,5 +1,7 @@
 export default class Lang {
-  needsLoading = false
+  constructor (onLoad) {
+    if (onLoad) onLoad()
+  }
 
   cleanup () {}
 }

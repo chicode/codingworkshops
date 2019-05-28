@@ -75,11 +75,6 @@ export default class Blocks extends Lang {
   name = 'Blocks'
   boilerplate = '[]'
 
-  constructor (onLoad) {
-    super()
-    onLoad()
-  }
-
   async refresh (code, mars) {
     const programScope = initMarsProgram(mars)
     lisavm.evalExpression(programScope, {
