@@ -7,9 +7,9 @@ function paramTypeToLisaType (type) {
   switch (type) {
     case 'str':
     case 'button':
+    case 'key':
       return 'str'
     case 'num':
-    case 'key':
     case 'sprite':
       return 'num'
   }
