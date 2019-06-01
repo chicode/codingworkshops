@@ -1,19 +1,23 @@
 <template lang="pug">
-.editor
-  Booklet
-  codemirror(
-    ref="cm"
-    :options="cmOptions"
-    :value="code"
-    class="vue-CodeMirror"
-    @input="setCode"
-    @ready="init"
-  )
+div
+  div(v-if="language.name === 'Blocks'")
+    BlockEditor(:root="JSON.parse(code)" @input="inp => setCode(JSON.stringify(inp))")
+  .editor(v-else)
+    Booklet
+    codemirror(
+      ref="cm"
+      :options="cmOptions"
+      :value="code"
+      class="vue-CodeMirror"
+      @input="setCode"
+      @ready="init"
+    )
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { codemirror } from 'vue-codemirror'
+import BlockEditor from './BlockEditor'
 
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/mode/python/python.js'
@@ -38,7 +42,13 @@ function getModeFromLanguage (language) {
 export default {
   name: 'Editor',
 
-  components: { codemirror, Booklet },
+  components: { codemirror, Booklet, BlockEditor },
+
+  data () {
+    return {
+      marks: [],
+    }
+  },
 
   computed: {
     ...mapState('nico', ['code', 'view', 'errors', 'language']),
@@ -53,8 +63,8 @@ export default {
         matchBrackets: true,
         autoRefresh: true,
         extraKeys: {
-          Tab: (cm) => cm.execCommand('indentMore'),
-          'Shift-Tab': (cm) => cm.execCommand('indentLess'),
+          'Tab': cm => cm.execCommand('indentMore'),
+          'Shift-Tab': cm => cm.execCommand('indentLess'),
         },
       }
     },
@@ -62,15 +72,14 @@ export default {
 
   watch: {
     errors (errors) {
+      this.marks.forEach(mark => mark.clear())
+      this.marks = []
       if (errors.length) {
-        if (this.marks) this.marks.forEach((mark) => mark.clear())
-        this.marks = []
         for (let error of errors) {
           if (!error.from || !error.to) return
 
           let mark = this.cm.markText(error.from, error.to, {
             className: 'inline-error',
-            atomic: true,
           })
           // error is in area that doesn't have a character, eg no colon in python function definition
           if (!mark.lines.length) {
@@ -87,7 +96,7 @@ export default {
 
     view (view) {
       if (view === 'editor') {
-        this.cm.refresh()
+        if (this.cm) this.cm.refresh()
       }
     },
 
@@ -115,7 +124,7 @@ export default {
 </style>
 
 <style lang="stylus">
-@import '../../styles/defs.styl'
+@import '../../styles/defs.styl';
 
 .editor .CodeMirror {
   height: 100%;

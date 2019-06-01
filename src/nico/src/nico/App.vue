@@ -3,7 +3,7 @@
   Header(:show-tabs='showTabs')
 
   Game(v-if="showTabs.game" v-show="view === 'game'" :show-greeting="showGreeting")
-  Editor(v-if="showTabs.editor" v-show="view === 'editor'" :language="language")
+  Editor(v-show="view === 'editor'" :language="projectData.language")
   Sprite(v-if="showTabs.sprite" v-show="view === 'sprite'")
   Tile(v-if="showTabs.tile" v-show="view === 'tile'")
   Settings(v-if="showTabs.settings" v-show="view === 'settings'")
@@ -14,6 +14,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 
 import Game from './components/Game'
 import Editor from './components/Editor'
+import BlockEditor from './components/BlockEditor'
 import Settings from './components/Settings'
 import Sprite from '../sprite/App'
 import Tile from '../tile/App'
@@ -29,6 +30,7 @@ export default {
     Sprite,
     Settings,
     Tile,
+    BlockEditor,
   },
   props: {
     showGreeting: {
@@ -39,10 +41,16 @@ export default {
     showTabs: {
       type: Object,
       required: false,
-      default: () => ({ game: true, editor: true, sprite: true, tile: true, settings: false }),
+      default: () => ({
+        game: true,
+        editor: true,
+        sprite: true,
+        tile: true,
+        settings: false,
+      }),
     },
-    language: {
-      type: String,
+    projectData: {
+      type: Object,
       required: true,
     },
     scriptBoilerplate: {
@@ -54,12 +62,18 @@ export default {
   computed: {
     ...mapState('nico', ['view']),
   },
-  mounted () {
-    this.setLanguage(this.language)
+  beforeMount () {
+    const { projectData } = this
+    this.setLanguage(projectData.language)
+    this.setCode(projectData.code)
+    this.setSpritesheet(projectData.spritesheet)
+    this.setTilesheet(projectData.tilesheet)
     if (this.scriptBoilerplate) this.loadBoilerplate()
   },
   methods: {
-    ...mapMutations('nico', ['loadBoilerplate']),
+    ...mapMutations('nico', ['loadBoilerplate', 'setCode']),
+    ...mapMutations('sprite/sprite', ['setSpritesheet']),
+    ...mapMutations('tile/sprite', ['setTilesheet']),
     ...mapActions('nico', ['setLanguage']),
   },
 }

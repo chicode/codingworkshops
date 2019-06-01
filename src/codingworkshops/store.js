@@ -32,7 +32,7 @@ export default {
     },
     routeContext: (_state, _getters, rootState) => (excludes = []) => {
       return ['user', 'workshop', 'lesson', 'slide']
-        .filter((item) => !excludes.includes(item))
+        .filter(item => !excludes.includes(item))
         .reduce((acc, val) => ({ ...acc, [val]: rootState.router.params[val] }), {})
     },
     projectData (_state, _getters, rootState) {
@@ -80,7 +80,7 @@ export default {
     setDirectionIndexFromStorage ({ getters, commit }) {
       commit(
         'setDirectionIndex',
-        parseInt(getNamespacedVar('directionIndex', getters.routeContext())) || 0,
+        parseInt(getNamespacedVar('directionIndex', getters.routeContext())) || 0
       )
     },
 

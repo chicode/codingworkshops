@@ -5,6 +5,12 @@
       p(v-if='iview !== "settings"') {{ iview }}
       img(v-else src='../assets/settings.svg')
   div.buttons
+    input.input.libLevel(
+      v-if="language && language.name === 'Lisa'"
+      :value="libLevel"
+      @input="setLibLevel(parseInt($event.target.value))"
+      type="number"
+    )
     // super hacky way to make the button update on scroll
     // this is necessary because of a chromium bug (?) that stops position: absolute elements
     // from moving with the scroll when a parent's overflow is set to auto or scroll
@@ -32,10 +38,10 @@ export default {
   }),
   computed: {
     ...mapGetters('nico', ['pauseDisabled']),
-    ...mapState('nico', ['view', 'paused', 'langLoading']),
+    ...mapState('nico', ['view', 'paused', 'langLoading', 'language', 'libLevel']),
   },
   methods: {
-    ...mapMutations('nico', ['togglePause', 'setView']),
+    ...mapMutations('nico', ['togglePause', 'setView', 'setLibLevel']),
     ...mapActions('nico', ['run']),
   },
 }
@@ -50,6 +56,7 @@ export default {
   .views {
     display: flex;
     align-items: center;
+
     & > * {
       margin-right: 10px;
     }
@@ -63,5 +70,11 @@ export default {
   .run {
     margin-right: 20px;
   }
+}
+
+.libLevel {
+  width: 75px;
+  margin-bottom: 0;
+  margin-right: 20px;
 }
 </style>

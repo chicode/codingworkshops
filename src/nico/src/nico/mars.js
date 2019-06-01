@@ -1,35 +1,22 @@
-export function initMars ({
-  state,
-  ctx,
-  sprites,
-  clear,
-  tilemap,
-  flags,
-  language,
-  onError,
-}) {
+export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language, onError }) {
   ctx.font = '.3rem Karla'
   ctx.textBaseline = 'top'
 
   const marsState = {}
 
-  const mars = {}
+  const mars = { state: marsState }
 
   const tilemapCanvas = document.createElement('canvas')
   const tilemapCtx = tilemapCanvas.getContext('2d')
 
   const GRID_SIZE = 8
+  mars.coordMulti = 1
 
   function updateTilemapCanvas () {
     tilemap.forEach((row, y) =>
       row.forEach((spriteI, x) => {
         if (spriteI !== null) {
-          tilemapCtx.clearRect(
-            x * GRID_SIZE,
-            y * GRID_SIZE,
-            GRID_SIZE,
-            GRID_SIZE
-          )
+          tilemapCtx.clearRect(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE)
           tilemapCtx.drawImage(sprites[spriteI], x * GRID_SIZE, y * GRID_SIZE)
         }
       })
@@ -41,7 +28,12 @@ export function initMars ({
   // drawing
 
   mars.rect = (x, y, width, height, outline = false, color = null) => {
-    ctx.rect(x, y, width, height)
+    ctx.rect(
+      x * mars.coordMulti,
+      y * mars.coordMulti,
+      width * mars.coordMulti,
+      height * mars.coordMulti
+    )
     if (outline) {
       ctx.stroke()
     } else {
@@ -50,15 +42,11 @@ export function initMars ({
   }
 
   mars.sprite = (i, x, y) => {
-    ctx.drawImage(
-      sprites[i],
-      Math.floor(x) * GRID_SIZE,
-      Math.floor(y) * GRID_SIZE
-    )
+    ctx.drawImage(sprites[i], Math.floor(x) * GRID_SIZE, Math.floor(y) * GRID_SIZE)
   }
 
   mars.point = (x, y) => {
-    ctx.rect(x, y, 1, 1)
+    ctx.rect(x * mars.coordMulti, y * mars.coordMulti, mars.coordMulti, mars.coordMulti)
     ctx.fill()
   }
 
@@ -86,7 +74,7 @@ export function initMars ({
   }
 
   mars.text = (text, x, y) => {
-    ctx.fillText(text, x, y)
+    ctx.fillText(text, x * mars.coordMulti, y * mars.coordMulti)
   }
 
   mars.tilemap = () => {
@@ -144,9 +132,9 @@ export function initMars ({
     marsState.buttonsPressed[mouseButtons[event.button]] = true
   })
 
-  let mouseCoordinates = [0, 0]
+  marsState.mouseCoordinates = [0, 0]
   document.addEventListener('mousemove', event => {
-    mouseCoordinates = [event.pageX, event.pageY]
+    marsState.mouseCoordinates = [event.pageX, event.pageY]
   })
 
   mars.getButtons = () => marsState.buttons
@@ -184,14 +172,14 @@ export function initMars ({
     } catch (e) {}
   }
 
-  const DELAY = 1000 / 20
+  mars.delay = 1000 / 20
   let time = Date.now()
 
   const main = () => {
     const { updateFunc, drawFunc } = state
     try {
       if (!state.paused) {
-        if (Date.now() - time >= DELAY) {
+        if (Date.now() - time >= mars.delay) {
           updateFunc()
           time = Date.now()
         }

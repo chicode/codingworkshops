@@ -21,7 +21,6 @@ def draw():
 
   constructor (onLoad) {
     super()
-
     if (onLoad && !rustpython) {
       rpProm = import('rustpython_wasm').then(rp => {
         rustpython = rp
@@ -31,8 +30,6 @@ def draw():
   }
 
   async refresh (code, mars) {
-    // https://github.com/brython-dev/brython/issues/937
-
     await rpProm
 
     // clear previous state
@@ -40,7 +37,7 @@ def draw():
     const vm = rustpython.vmStore.init('mars', false)
 
     for (const func of FUNCTIONS_BARE) {
-      vm.addToScope(this.translateName(func), mars[func])
+      vm.addToScope(_.snakeCase(func), mars[func])
     }
 
     vm.setStdout()
@@ -68,14 +65,8 @@ def draw():
     return ret
   }
 
-  translateName (name) {
-    return _.snakeCase(name)
-  }
-
   getSyntax ({ name, parameters }) {
-    return `${this.translateName(name)}(${parameters |>
-      _.map(this.translateName) |>
-      _.join(', ')})`
+    return `${_.snakeCase(name)}(${parameters.map(({ name }) => _.snakeCase(name)).join(', ')})`
   }
 
   transformError (err) {

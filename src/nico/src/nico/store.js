@@ -7,7 +7,7 @@ export default {
   namespaced: true,
 
   state: {
-    code: window.localStorage.getItem('code') || '',
+    code: '',
     errors: [],
     warnings: [],
     view: window.localStorage.getItem('view') || 'game',
@@ -15,7 +15,7 @@ export default {
     running: false,
     mainCtx: null,
     hasBeenRun: false,
-    language: new languages.Python(),
+    language: null,
     loading: false,
     langLoading: false,
     loadingTime: null,
@@ -23,6 +23,7 @@ export default {
     mars: null,
     drawFunc: null,
     updateFunc: null,
+    libLevel: 1,
   },
 
   getters: {
@@ -49,6 +50,7 @@ export default {
       'mars',
       'drawFunc',
       'updateFunc',
+      'libLevel',
     ]),
 
     setView (state, view) {
@@ -66,7 +68,6 @@ export default {
     },
     setCode (state, code) {
       state.code = code
-      window.localStorage.setItem('code', state.code)
     },
     setRunning (state, running) {
       state.running = running
@@ -80,10 +81,7 @@ export default {
   actions: {
     setLanguage ({ commit }, language) {
       commit('setLangLoading', true)
-      commit(
-        'setLanguage',
-        new languages[language](() => commit('setLangLoading', false))
-      )
+      commit('setLanguage', new languages[language](() => commit('setLangLoading', false)))
     },
 
     run ({ state, commit, rootGetters, rootState }) {
@@ -122,27 +120,31 @@ export default {
       // this timeout is necessary for vuex to register the change in `loading`
       setTimeout(() => {
         language
-          .refresh(state.code, mars)
-          .then(
-            ({ success, draw, update, init, errors, warnings, blocked }) => {
-              commit('setLoading', false)
-              commit('setWarnings', warnings || [])
-              commit('setClicks', 0)
+          .refresh(state.code, mars, state.libLevel)
+          .then(({ success, draw, update, init, errors, warnings, blocked }) => {
+            commit('setLoading', false)
+            commit('setWarnings', warnings || [])
+            commit('setClicks', 0)
 
-              if (success) {
-                commit('setRunning', true)
-                commit('setPaused', false)
+            if (success) {
+              commit('setRunning', true)
+              commit('setPaused', false)
 
-                commit('setDrawFunc', draw)
-                commit('setUpdateFunc', update)
+              commit('setDrawFunc', draw)
+              commit('setUpdateFunc', update)
 
+              try {
                 init()
-                startMars()
-              } else if (!blocked) {
-                commit('setErrors', errors)
+              } catch (err) {
+                console.error(err)
+                commit('setErrors', [language.transformError(err)])
+                commit('setRunning', false)
               }
+              startMars()
+            } else if (!blocked) {
+              commit('setErrors', errors)
             }
-          )
+          })
         // delay helps make sure that the old game stops
       }, 100)
     },

@@ -9,7 +9,9 @@ import { transformData } from '../../image-editor/helpers'
 import { getCoordsFromIndex } from '../../image-editor/bucket-fill'
 import { GRID_NUMBER, GRID_SIZE, CANVAS_SIZE, SCALE } from '../../image-editor/constants'
 
-export const history = historyPlugin(['tile', 'sprite'], (store) => {
+import generateSet from '@/generateSet'
+
+export const history = historyPlugin(['tile', 'sprite'], store => {
   // hacky fix to save spritesheet without mutation
   window.localStorage.setItem('tilesheet', store.state.sprite.sprite.spritesheet)
   window.lastCoords = [null, null]
@@ -23,7 +25,7 @@ export function getStoredFlags () {
     } catch (e) {}
   }
   return _.range(GRID_NUMBER).map(() =>
-    _.range(GRID_NUMBER).map(() => Array(FLAG_NUMBER).fill(false)),
+    _.range(GRID_NUMBER).map(() => Array(FLAG_NUMBER).fill(false))
   )
 }
 
@@ -35,20 +37,20 @@ export default _.merge(sprite('tile', CANVAS_SIZE), {
           const sprites = rootGetters['sprite/sprite/rawSprites']
           const tilemap = getters.tilemap()
 
-          return transformData(null, (ctx) => {
+          return transformData(null, ctx => {
             tilemap.forEach((row, y) =>
               row.forEach((spriteI, x) => {
                 if (spriteI !== null) {
                   ctx.putImageData(sprites[spriteI], x * GRID_SIZE, y * GRID_SIZE)
                 }
-              }),
+              })
             )
           })
         },
-        tilemap: (state) => () => {
+        tilemap: state => () => {
           const result = _.range(GRID_NUMBER).map(() => Array(GRID_NUMBER))
 
-          _.range(0, state.spritesheet.length, 4).forEach((i) => {
+          _.range(0, state.spritesheet.length, 4).forEach(i => {
             const spriteX = state.spritesheet[i]
             const spriteY = state.spritesheet[i + 1]
             const [y, x] = getCoordsFromIndex(i)
@@ -63,6 +65,9 @@ export default _.merge(sprite('tile', CANVAS_SIZE), {
           return result
         },
       },
+      mutations: {
+        ...generateSet(['tilesheet']),
+      },
     },
     tileSelect,
   },
@@ -73,8 +78,8 @@ export default _.merge(sprite('tile', CANVAS_SIZE), {
   mutations: {
     setFlags (state, flags) {
       const newFlags = _.cloneDeep(state.flags)
-      const [x, y] = state.tileSelect.selectStart.map((coord) =>
-        Math.floor(coord / (GRID_SIZE * SCALE)),
+      const [x, y] = state.tileSelect.selectStart.map(coord =>
+        Math.floor(coord / (GRID_SIZE * SCALE))
       )
       newFlags[x][y] = flags
       state.flags = newFlags
@@ -89,8 +94,8 @@ export default _.merge(sprite('tile', CANVAS_SIZE), {
     },
   },
   getters: {
-    getCoordsFromEvent: (state) => (event) => {
-      return [event.offsetX, event.offsetY].map((coord) => Math.floor(coord / SCALE / GRID_SIZE))
+    getCoordsFromEvent: state => event => {
+      return [event.offsetX, event.offsetY].map(coord => Math.floor(coord / SCALE / GRID_SIZE))
     },
     currentFlags: (state, getters) => {
       const [x, y] = getters['tileSelect/selectStartCoords']
