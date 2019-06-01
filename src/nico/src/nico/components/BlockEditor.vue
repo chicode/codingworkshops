@@ -57,7 +57,6 @@ export default {
         },
       ],
       nicoFuncs: [
-        // kebab-case names for mars functions here
         {
           type: 'callMars',
           func: 'sprite',

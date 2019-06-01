@@ -23,6 +23,7 @@ export default {
     mars: null,
     drawFunc: null,
     updateFunc: null,
+    libLevel: 1,
   },
 
   getters: {
@@ -49,6 +50,7 @@ export default {
       'mars',
       'drawFunc',
       'updateFunc',
+      'libLevel',
     ]),
 
     setView (state, view) {
@@ -118,7 +120,7 @@ export default {
       // this timeout is necessary for vuex to register the change in `loading`
       setTimeout(() => {
         language
-          .refresh(state.code, mars)
+          .refresh(state.code, mars, state.libLevel)
           .then(({ success, draw, update, init, errors, warnings, blocked }) => {
             commit('setLoading', false)
             commit('setWarnings', warnings || [])
@@ -131,7 +133,13 @@ export default {
               commit('setDrawFunc', draw)
               commit('setUpdateFunc', update)
 
-              init()
+              try {
+                init()
+              } catch (err) {
+                console.error(err)
+                commit('setErrors', [language.transformError(err)])
+                commit('setRunning', false)
+              }
               startMars()
             } else if (!blocked) {
               commit('setErrors', errors)

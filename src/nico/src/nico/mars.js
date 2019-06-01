@@ -4,12 +4,13 @@ export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language
 
   const marsState = {}
 
-  const mars = {}
+  const mars = { state: marsState }
 
   const tilemapCanvas = document.createElement('canvas')
   const tilemapCtx = tilemapCanvas.getContext('2d')
 
   const GRID_SIZE = 8
+  mars.coordMulti = 1
 
   function updateTilemapCanvas () {
     tilemap.forEach((row, y) =>
@@ -27,7 +28,12 @@ export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language
   // drawing
 
   mars.rect = (x, y, width, height, outline = false, color = null) => {
-    ctx.rect(x, y, width, height)
+    ctx.rect(
+      x * mars.coordMulti,
+      y * mars.coordMulti,
+      width * mars.coordMulti,
+      height * mars.coordMulti
+    )
     if (outline) {
       ctx.stroke()
     } else {
@@ -40,7 +46,7 @@ export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language
   }
 
   mars.point = (x, y) => {
-    ctx.rect(x, y, 1, 1)
+    ctx.rect(x * mars.coordMulti, y * mars.coordMulti, mars.coordMulti, mars.coordMulti)
     ctx.fill()
   }
 
@@ -68,7 +74,7 @@ export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language
   }
 
   mars.text = (text, x, y) => {
-    ctx.fillText(text, x, y)
+    ctx.fillText(text, x * mars.coordMulti, y * mars.coordMulti)
   }
 
   mars.tilemap = () => {
@@ -126,9 +132,9 @@ export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language
     marsState.buttonsPressed[mouseButtons[event.button]] = true
   })
 
-  let mouseCoordinates = [0, 0]
+  marsState.mouseCoordinates = [0, 0]
   document.addEventListener('mousemove', event => {
-    mouseCoordinates = [event.pageX, event.pageY]
+    marsState.mouseCoordinates = [event.pageX, event.pageY]
   })
 
   mars.getButtons = () => marsState.buttons
@@ -166,14 +172,14 @@ export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language
     } catch (e) {}
   }
 
-  const DELAY = 1000 / 20
+  mars.delay = 1000 / 20
   let time = Date.now()
 
   const main = () => {
     const { updateFunc, drawFunc } = state
     try {
       if (!state.paused) {
-        if (Date.now() - time >= DELAY) {
+        if (Date.now() - time >= mars.delay) {
           updateFunc()
           time = Date.now()
         }

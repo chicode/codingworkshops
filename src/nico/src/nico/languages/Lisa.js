@@ -1,8 +1,7 @@
 import { Elm } from './lisa/src/Main.elm'
 import Lang from './Lang'
 import _ from 'lodash'
-import * as lisavm from '@chicode/lisa-vm'
-import { initMarsProgram } from './lisaCommon'
+import { makeExecutor } from '../pureMars'
 
 const app = Elm.Main.init()
 
@@ -22,6 +21,8 @@ const processLisa = source =>
   })
 
 export default class Lisa extends Lang {
+  name = 'Lisa'
+
   transformError (err) {
     return {
       message: err.msg || err.message,
@@ -36,24 +37,12 @@ export default class Lisa extends Lang {
     }
   }
 
-  async refresh (code, mars) {
+  async refresh (code, mars, libLevel) {
     try {
       const program = await processLisa(code)
-      const programScope = initMarsProgram(mars)
-      lisavm.evalExpressions(programScope, program)
-      const ret = {
-        success: true,
-      }
-      for (const funcName of ['draw', 'update', 'init']) {
-        ret[funcName] = () => {
-          const func = programScope.getVar(funcName)
-          if (func) {
-            lisavm.callFunction(func.value, null, [])
-          }
-        }
-      }
-      return ret
+      return makeExecutor(program, mars, libLevel)
     } catch (e) {
+      console.error(e)
       return {
         success: false,
         errors: [this.transformError(e)],
@@ -62,6 +51,6 @@ export default class Lisa extends Lang {
   }
 
   getSyntax ({ name, parameters }) {
-    return `(${_.kebabCase(name)}${parameters.map(({ name }) => ' ' + _.kebabCase(name))})`
+    return `(${name}${parameters.map(({ name }) => ' ' + name)})`
   }
 }

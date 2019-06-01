@@ -15,8 +15,9 @@ update msg () =
     case msg of
         Request s ->
             ( ()
-            , out <|
-                Lisa.parseProgramToJson s { macros = Dict.fromList [ ( "key", keyMacro ) ] }
+            , s
+                |> Lisa.parseProgramToJson { macros = Dict.fromList [ ( "key", keyMacro ) ] }
+                |> out
             )
 
 
