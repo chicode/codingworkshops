@@ -75,6 +75,22 @@ function drawShape (mars, loc, value) {
       switch (shape.type) {
         case 'rect':
           mars.rect(shape.x.value, shape.y.value, shape.w.value, shape.h.value)
+          break
+        case 'point':
+          mars.point(shape.x.value, shape.y.value)
+          break
+        case 'sprite':
+          mars.sprite(shape.i.value, shape.x.value, shape.y.value)
+          break
+        case 'line':
+          mars.line(shape.x.value, shape.y.value, shape.x1.value, shape.y1.value)
+          break
+        case 'text':
+          mars.text(shape.text.value, shape.x.value, shape.y.value)
+          break
+        case 'tilemap':
+          mars.tilemap()
+          break
       }
       break
     case 'none':

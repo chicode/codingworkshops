@@ -4,7 +4,9 @@ export function initMars ({ state, ctx, sprites, clear, tilemap, flags, language
 
   const marsState = {}
 
-  const mars = { state: marsState }
+  const mars = {}
+
+  mars.state = marsState
 
   const tilemapCanvas = document.createElement('canvas')
   const tilemapCtx = tilemapCanvas.getContext('2d')
