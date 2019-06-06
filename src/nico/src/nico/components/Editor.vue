@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   div(v-if="language.name === 'Blocks'")
-    BlockEditor(:root="JSON.parse(code)" @input="inp => setCode(JSON.stringify(inp))")
+    BlockEditor(:data="JSON.parse(code)" @input="inp => setCode(JSON.stringify(inp))")
   .editor(v-else)
     Booklet
     codemirror(

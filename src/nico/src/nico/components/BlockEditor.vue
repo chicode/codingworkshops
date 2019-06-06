@@ -9,9 +9,13 @@
       .flex-1.m-3.mw-35
         h6.font-weight-bold Nico
         Block(:children="nicoFuncs" clone)
-        | {{ blocksRoot }}
       .flex-1.p-3.w-50
-        Block(:children="blocksRoot")
+        code init
+        Block(:children="init")
+        code draw
+        Block(:children="draw")
+        code update
+        Block(:children="update")
 </template>
 
 <script>
@@ -31,14 +35,16 @@ export default {
     Expr,
   },
   props: {
-    root: {
-      type: Array,
+    data: {
+      type: Object,
       required: true,
     },
   },
   data () {
     return {
-      blocksRoot: this.root,
+      init: this.data.init,
+      draw: this.data.draw,
+      update: this.data.update,
       controlFlow: [
         {
           type: 'if',
@@ -96,8 +102,29 @@ export default {
       ],
     }
   },
+  computed: {
+    blocksRoot() {
+      return {
+        init: this.init,
+        draw: this.draw,
+        update: this.update,
+      }
+    },
+  },
   watch: {
-    blocksRoot: {
+    init: {
+      handler () {
+        this.$emit('input', this.blocksRoot)
+      },
+      deep: true,
+    },
+    draw: {
+      handler () {
+        this.$emit('input', this.blocksRoot)
+      },
+      deep: true,
+    },
+    update: {
       handler () {
         this.$emit('input', this.blocksRoot)
       },
