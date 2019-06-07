@@ -31,18 +31,22 @@ export default {
         language: 'Blocks',
         get code () {
           return {
-            Blocks: JSON.stringify([
-              {
-                type: 'callMars',
-                func: 'rect',
-                params: [
-                  { type: 'literal', value: 1 },
-                  { type: 'literal', value: 1 },
-                  { type: 'literal', value: 10 },
-                  { type: 'literal', value: 10 },
-                ],
-              },
-            ]),
+            Blocks: JSON.stringify({
+              init: [],
+              draw: [
+                {
+                  type: 'callStdlib',
+                  func: 'rect',
+                  params: [
+                    { type: 'literal', value: 1 },
+                    { type: 'literal', value: 1 },
+                    { type: 'literal', value: 10 },
+                    { type: 'literal', value: 10 },
+                  ],
+                },
+              ],
+              update: [],
+            }),
             Lisa: '(defunc draw ()\n  (rect 1 1 10 10))\n',
             Python: 'def draw():\n    rect(1, 1, 10, 10)\n',
           }[this.language]

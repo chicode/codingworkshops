@@ -8,11 +8,20 @@
         | if
         BlockParamEditor(v-model="child.condition" :type="{ name: 'condition', type: 'bool' }")
         Block.child(:children="child.children")
-      div(v-if="child.type === 'while'")
-        | while
-        BlockParamEditor(v-model="child.condition" :type="{ name: 'condition', type: 'bool' }")
-        Block.child(:children="child.children")
-      div(v-if="child.type === 'callMars'")
+      div(v-if="child.type === 'getVar'")
+        input.var(v-model="child.varname")
+      div.if(v-if="child.type === 'let'")
+        | let
+        div.child.my-2(v-for="(def, i) in child.defs")
+          button.button.d-inline.mr-2(@click="child.defs.splice(i, 1)"): .text-danger x
+          input.var(v-model="def.name")
+          BlockParamEditor(v-model="def.value" :type="{ name: 'value', type: 'str' }")
+        .child: button.button.d-.mt-2(
+          @click="child.defs.push(({ type: 'literal', value: '' }))"
+        ): div add def
+        | in
+        Block.child(onlyOne :children="child.body")
+      div(v-if="child.type === 'callStdlib'")
         | {{ child.func }}
         BlockParamEditor(
           v-for="(param, i) in marsFuncs.find(func => child.func === func.name).parameters"
@@ -50,10 +59,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    onlyOne: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     group () {
-      return this.clone ? { name: 'blocks', pull: 'clone' } : { name: 'blocks' }
+      return {
+        name: 'blocks',
+        put: () => !console.log(this.onlyOne ? this.children.length === 0 : true),
+        ...(this.clone ? { pull: 'clone' } : {}),
+      }
     },
     marsFuncs: () => FUNCTIONS_ONLY,
   },

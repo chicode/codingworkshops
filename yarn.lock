@@ -681,10 +681,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@chicode/lisa-vm@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@chicode/lisa-vm/-/lisa-vm-1.0.4.tgz#a3ced90181e1b9c379e3fdb9f221934b9b892fa4"
-  integrity sha512-xI6/0QAHbYcdtWQdKmjH6af9FFHTknquQvZqVxn8iaky8/KVY3EPHRDA4rNc3wbZAF/k6EstzMzDeKoTyjrXOw==
+"@chicode/lisa-vm@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@chicode/lisa-vm/-/lisa-vm-1.0.5.tgz#726ab349f1e8290d8a92516096583d05f1210885"
+  integrity sha512-b4dOjVwpcdVOpyZ78aAe1BmuaubqO5dy02SyjbhzUZo61IoCeH/AFndoT2BDlZPWU8Lyxqqimry2NElPRNxXKA==
 
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"

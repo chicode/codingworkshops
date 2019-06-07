@@ -4,11 +4,12 @@
       .flex-1.m-3
         h6.font-weight-bold Control Flow
         Block(:children="controlFlow" clone)
-        Expr(:exprs="vars" clone)
+        Block(:children="vars" clone)
         // mw-35 just for displaying blocksRoot
       .flex-1.m-3.mw-35
         h6.font-weight-bold Nico
         Block(:children="nicoFuncs" clone)
+        | {{ this.draw }}
       .flex-1.p-3.w-50
         code init
         Block(:children="init")
@@ -20,7 +21,6 @@
 
 <script>
 import Block from './Block'
-import Expr from './Expr'
 import { mapMutations, mapState } from 'vuex'
 
 const makeLit = value => ({
@@ -32,7 +32,6 @@ export default {
   name: 'BlockEditor',
   components: {
     Block,
-    Expr,
   },
   props: {
     data: {
@@ -52,44 +51,39 @@ export default {
           children: [],
         },
         {
-          type: 'while',
-          condition: makeLit(false),
-          children: [],
-        },
-        {
-          type: 'setVar',
-          varname: '',
-          expr: makeLit(''),
+          type: 'let',
+          defs: [{ name: 'name', value: makeLit('') }],
+          body: [],
         },
       ],
       nicoFuncs: [
         {
-          type: 'callMars',
+          type: 'callStdlib',
           func: 'sprite',
           params: [0, 0, 0].map(makeLit),
         },
         {
-          type: 'callMars',
+          type: 'callStdlib',
           func: 'rect',
           params: [0, 0, 0, 0].map(makeLit),
         },
         {
-          type: 'callMars',
+          type: 'callStdlib',
           func: 'point',
           params: [0, 0].map(makeLit),
         },
         {
-          type: 'callMars',
+          type: 'callStdlib',
           func: 'line',
           params: [0, 0, 0, 0].map(makeLit),
         },
         {
-          type: 'callMars',
+          type: 'callStdlib',
           func: 'text',
           params: ['', 0, 0].map(makeLit),
         },
         {
-          type: 'callMars',
+          type: 'callStdlib',
           func: 'tilemap',
           params: [],
         },
@@ -103,7 +97,7 @@ export default {
     }
   },
   computed: {
-    blocksRoot() {
+    blocksRoot () {
       return {
         init: this.init,
         draw: this.draw,

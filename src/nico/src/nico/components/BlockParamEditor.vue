@@ -1,6 +1,6 @@
 <template lang="pug">
   .d-inline-block.param-editor
-    Expr.position-absolute(:exprs="expr" :class="{ under: !hasExpr }")
+    Block.position-absolute(:children="expr" onlyOne :class="{ under: !hasExpr }")
     div(:class="{'d-none': hasExpr, under: hasExpr}")
       input.str(
         v-if="type.type === 'str'"
@@ -32,7 +32,7 @@
 <script>
 import { Fragment } from 'vue-fragment'
 import draggable from 'vuedraggable'
-import Expr from './Expr'
+import Block from './Block'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -46,7 +46,7 @@ export default {
     },
   },
   components: {
-    Expr,
+    Block,
     draggable,
     Fragment,
   },

@@ -15,29 +15,27 @@ export function compileBlock (block) {
   switch (block.type) {
     case 'if':
       return {
-        type: 'if',
-        cond: compileExpr(block.condition),
-        body: compileBlocks(block.children),
+        type: 'cond',
+        clauses: [
+          {
+            cond: compileExpr(block.condition),
+            val: compileBlocks(block.children),
+          },
+        ],
+        otherwise: {
+          type: 'noneLit',
+        },
       }
-    case 'while':
-      return {
-        type: 'while',
-        cond: compileExpr(block.condition),
-        body: compileBlocks(block.children),
-      }
-    case 'callMars':
+    case 'callStdlib':
       return {
         type: 'funcCall',
         func: {
-          name: block.func,
+          type: 'getTopLevelSymbol',
+          symbol: {
+            name: block.func,
+          },
         },
         args: block.params.map(compileExpr),
-      }
-    case 'setVar':
-      return {
-        type: 'setVar',
-        var: block.varname,
-        val: compileExpr(block.expr),
       }
     default:
       throw new Error(`invalid block type: ${JSON.stringify(block)}`)
