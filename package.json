@@ -11,7 +11,7 @@
     "@chicode/lisa-vm": "^1.0.5",
     "bootstrap": "^4.1.3",
     "highlight.js": "^9.13.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "marked": "^0.5.0",
     "path-to-regexp": "^3.0.0",
     "rustpython_wasm": "0.1.0-pre-alpha.1",
